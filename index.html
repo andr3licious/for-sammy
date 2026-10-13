@@ -188,6 +188,14 @@
       box-shadow: inset 0 1px 2px rgba(255,255,255,.55);
     }
     .music-control.is-playing .music-symbol { background: #fff8fa; }
+    @media (max-width: 639px) {
+      .music-control {
+        width: 3.25rem;
+        justify-content: center;
+        padding: 0;
+      }
+      #music-label { display: none; }
+    }
     .modal-backdrop { background: rgba(53, 41, 49, .58); backdrop-filter: blur(10px); }
     .letter-paper {
       background:
@@ -306,26 +314,28 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
 
   <script>
     const photos = [
-      { src: "./assets/photos/photo1.jpg", caption: "A little late-night glow ✨", alt: "Sammy in a warm, softly grainy portrait", kind: "Sammy" },
-      { src: "./assets/photos/photo12.jpg", caption: "Not amused. Not even a little. 😾", alt: "A tabby cat with the caption saying it is not amused", kind: "Cat" },
-      { src: "./assets/photos/photo2.jpg", caption: "The most distinguished smile in town 🎩", alt: "Sammy playfully wearing glasses and a curled moustache filter", kind: "Sammy" },
-      { src: "./assets/photos/photo14.jpeg", caption: "One more treat, pretty please? 🥺", alt: "A white cat looking up with big, pleading eyes", kind: "Cat" },
-      { src: "./assets/photos/photo3.jpg", caption: "A whole main-character moment 🎬", alt: "Sammy in a striped top with a warm portrait filter", kind: "Sammy" },
-      { src: "./assets/photos/photo15.jpeg", caption: "A tiny face full of feelings 🥹", alt: "A close-up of a wide-eyed white and gray cat", kind: "Cat" },
-      { src: "./assets/photos/photo4.jpg", caption: "That soft smile, on repeat 🤍", alt: "Sammy smiling in a black-and-white striped top", kind: "Sammy" },
-      { src: "./assets/photos/photo16.jpeg", caption: "Cuddle mode: fully activated 🐈", alt: "A gray cat enjoying a close, cozy cuddle", kind: "Cat" },
-      { src: "./assets/photos/photo5.jpg", caption: "That warm filter was made for you ✨", alt: "Sammy in a warm portrait filter with a filmstrip below", kind: "Sammy" },
-      { src: "./assets/photos/photo17.jpeg", caption: "The coziest little blanket burrito 🌯", alt: "A cat tucked snugly inside a soft blanket", kind: "Cat" },
-      { src: "./assets/photos/photo6.jpg", caption: "That smile is already a win ✨", alt: "Sammy taking a selfie in a black Manchester United shirt", kind: "Sammy" },
-      { src: "./assets/photos/photo18.jpeg", caption: "No thoughts, just a tiny blep 😹", alt: "A silly close-up meme of a cat sticking out its tongue", kind: "Cat" },
-      { src: "./assets/photos/photo7.jpg", caption: "A little red-and-black fan moment ⚽", alt: "Sammy smiling in a black Manchester United football shirt", kind: "Sammy" },
-      { src: "./assets/photos/photo19.jpeg", caption: "Cuteness mission: under way 🚀", alt: "An orange cat peeking out from a clear cozy hood", kind: "Cat" },
-      { src: "./assets/photos/photo8.jpg", caption: "Four frames of your self-care glow 🤍", alt: "A four-photo collage of Sammy wearing a sheet face mask", kind: "Sammy" },
-      { src: "./assets/photos/photo20.jpeg", caption: "Sending you a little meowah 💋", alt: "A close-up kitten meme with a mwah caption", kind: "Cat" },
-      { src: "./assets/photos/photo9.jpg", caption: "A timeless look in every frame 🖤", alt: "A black-and-white portrait collage of Sammy", kind: "Sammy" },
-      { src: "./assets/photos/photo10.jpg", caption: "A little birdie charm 🐦", alt: "Sammy with a playful pink-bird filter", kind: "Sammy" },
-      { src: "./assets/photos/photo11.jpg", caption: "A vintage kind of lovely 🌙", alt: "Sammy in a softly grainy, moody portrait", kind: "Sammy" },
-      { src: "./assets/photos/photo13.jpeg", caption: "The tiniest peekaboo expert 🐾", alt: "A small cream-colored pet peeking around a doorway", kind: "Pet" }
+      { src: "./assets/photos/photo1.jpg", caption: "Pink birds and a little side-eye 🐦", alt: "Sammy looking upward as a playful filter adds pink birds around her head", kind: "Sammy" },
+      { src: "./assets/photos/photo14.jpeg", caption: "Those eyes are asking very politely 🥺", alt: "A close-up of a white cat with oversized, pleading eyes", kind: "Cat" },
+      { src: "./assets/photos/photo2.jpg", caption: "Four frames of your face-mask era 🤍", alt: "A four-photo collage of Sammy wearing a sheet face mask", kind: "Sammy" },
+      { src: "./assets/photos/photo16.jpeg", caption: "Tiny face, maximum puppy eyes 🥹", alt: "A close-up meme of a white cat with oversized glossy eyes", kind: "Cat" },
+      { src: "./assets/photos/photo3.jpg", caption: "That dramatic warm-filter glow ✨", alt: "Sammy in a striped top with a dramatic warm portrait filter", kind: "Sammy" },
+      { src: "./assets/photos/photo15.jpeg", caption: "A curious little orange floof 🐈", alt: "An orange tabby looking to the side behind a clear curved barrier", kind: "Cat" },
+      { src: "./assets/photos/photo4.jpg", caption: "A distinguished little disguise 🎩", alt: "Sammy wearing oversized black glasses and a curled moustache filter", kind: "Sammy" },
+      { src: "./assets/photos/photo13.jpeg", caption: "Two moods, one very expressive kitty 😹", alt: "A two-panel meme showing a white cat looking calm and then opening its mouth", kind: "Cat" },
+      { src: "./assets/photos/photo5.jpg", caption: "The dramatic warm-filter era 🎞️", alt: "Sammy in a striped top using a dramatic warm filter, with filter options below", kind: "Sammy" },
+      { src: "./assets/photos/photo21.jpeg", caption: "When the meow turns into a full speech 😹", alt: "A gray tabby cat opening its mouth with a CapCut watermark", kind: "Cat" },
+      { src: "./assets/photos/photo6.jpg", caption: "Three lovely looks in a row 🤍", alt: "A three-photo collage of Sammy taking selfies in a black-and-white striped top", kind: "Sammy" },
+      { src: "./assets/photos/photo17.jpeg", caption: "Cuddle pile, no personal space 🐈", alt: "Two cats cuddled close together, nose to nose", kind: "Cat" },
+      { src: "./assets/photos/photo7.jpg", caption: "A little match-day mood ⚽", alt: "Sammy taking a selfie in a black Manchester United jersey", kind: "Sammy" },
+      { src: "./assets/photos/photo18.jpeg", caption: "A tiny blep in progress 😛", alt: "A cartoon-like white cat sticking out its tongue", kind: "Cat" },
+      { src: "./assets/photos/photo8.jpg", caption: "Red and black look good on you ⚽", alt: "Sammy taking a selfie in a black Manchester United jersey", kind: "Sammy" },
+      { src: "./assets/photos/photo12.jpg", caption: "A tiny doorway supervisor 🐶", alt: "A small fluffy cream-colored dog peeking around a doorway", kind: "Pet" },
+      { src: "./assets/photos/photo9.jpg", caption: "A grainy little film-star moment 🌙", alt: "Sammy resting her cheek on her hand in a grainy, warm-toned portrait", kind: "Sammy" },
+      { src: "./assets/photos/photo19.jpeg", caption: "Blanket burrito, perfectly tucked in 🐾", alt: "A small cat peeking out from a soft gray blanket", kind: "Cat" },
+      { src: "./assets/photos/photo10.jpg", caption: "Double the classic bob-hair charm 🖤", alt: "A black-and-white side-by-side portrait collage of Sammy with a short bob haircut", kind: "Sammy" },
+      { src: "./assets/photos/photo22.jpeg", caption: "Head full of hearts, just as it should be 💗", alt: "A gray kitten with pink heart stickers and sparkles around its head", kind: "Cat" },
+      { src: "./assets/photos/photo11.jpg", caption: "The original look, captured like a Polaroid 🖤", alt: "A black-and-white portrait of Sammy with a short bob and black top, shown with a filter preview below", kind: "Sammy" },
+      { src: "./assets/photos/photo20.jpeg", caption: "Sending you a little meowah 💋", alt: "A close-up kitten meme with the words mwah above its face", kind: "Cat" }
     ];
     const tiltClasses = ["-rotate-2", "rotate-1", "rotate-2", "-rotate-1", "rotate-1", "-rotate-2", "rotate-2", "-rotate-1", "rotate-1", "-rotate-2", "rotate-2"];
     const gallery = document.getElementById("gallery");
@@ -366,7 +376,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
     for (let index = 1; index <= 3; index++) {
       const card = document.createElement("article");
       card.className = "card-lift overflow-hidden rounded-3xl border border-white bg-white/75 p-3 shadow-[0_8px_26px_rgba(93,69,78,.09)] backdrop-blur-md";
-      card.innerHTML = `<div class="relative overflow-hidden rounded-2xl border-4 border-[#f8e6ec] bg-[#f6eef0]"><video class="video-player block aspect-video w-full object-cover" src="./assets/videos/video${index}.mp4" playsinline preload="metadata" controls aria-label="Highlight reel ${index}"></video><button class="video-play" aria-label="Play highlight reel ${index}">▶</button><button class="video-mute absolute right-3 top-3 flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/85 text-lg shadow-md" aria-label="Unmute highlight reel ${index}" aria-pressed="true">🔇</button></div><p class="handwriting px-2 pb-1 pt-3 text-center text-2xl font-semibold text-[#725c65]">${videoCaptions[index - 1]}</p>`;
+      card.innerHTML = `<div class="relative overflow-hidden rounded-2xl border-4 border-[#f8e6ec] bg-[#f6eef0]"><video class="video-player block aspect-video w-full object-cover" src="./assets/videos/video${index}.mp4" playsinline preload="metadata" controls aria-label="Highlight reel ${index}"></video><button type="button" class="video-play" aria-label="Play highlight reel ${index}">▶</button><button type="button" class="video-mute absolute right-3 top-3 flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/85 text-lg shadow-md" aria-label="Unmute highlight reel ${index}" aria-pressed="true">🔇</button></div><p class="handwriting px-2 pb-1 pt-3 text-center text-2xl font-semibold text-[#725c65]">${videoCaptions[index - 1]}</p>`;
       const player = card.querySelector("video");
       const playButton = card.querySelector(".video-play");
       const muteButton = card.querySelector(".video-mute");
