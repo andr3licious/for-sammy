@@ -113,30 +113,6 @@
       background: repeating-linear-gradient(135deg, rgba(255,255,255,.46) 0 5px, transparent 5px 10px), #f6c8d7;
     }
     .gallery-photo { aspect-ratio: 4 / 3; }
-    .cat-meme-card {
-      box-shadow: 0 8px 24px rgba(93, 69, 78, .09);
-      transition: transform .6s cubic-bezier(.22,.7,.25,1), box-shadow .6s ease;
-    }
-    .cat-meme-card:hover { transform: translateY(-4px) rotate(0deg) scale(1.01); box-shadow: 0 15px 32px rgba(93,69,78,.13); }
-    .cat-meme-art { position: relative; overflow: hidden; aspect-ratio: 4 / 3; border-radius: .2rem; }
-    #videos .cat-meme-art { aspect-ratio: 16 / 9; }
-    .cat-meme-art svg { display: block; width: 100%; height: 100%; }
-    .cat-meme-tag {
-      position: absolute;
-      top: .65rem;
-      left: .65rem;
-      border: 1px solid rgba(255,255,255,.8);
-      border-radius: 9999px;
-      background: rgba(255,255,255,.78);
-      padding: .25rem .6rem;
-      color: #79626c;
-      font-size: .58rem;
-      font-weight: 900;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      backdrop-filter: blur(6px);
-    }
-    .cat-meme-caption { min-height: 3.3rem; }
     .quote-card { animation: fade-up .65s cubic-bezier(.22,.7,.25,1) both; }
     .filter-btn { transition: color .2s ease, background-color .2s ease, transform .2s ease, box-shadow .2s ease; }
     .filter-btn:hover { transform: translateY(-2px); }
@@ -329,17 +305,28 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
   <div id="site-toast" class="pointer-events-none fixed bottom-24 left-1/2 z-[70] max-w-[calc(100%-2rem)] -translate-x-1/2 translate-y-2 rounded-2xl bg-[#594850] px-5 py-3 text-center text-sm font-bold text-white opacity-0 shadow-xl transition" role="status" aria-live="polite"></div>
 
   <script>
-    const captions = [
-      "A little moment to keep 🌷", "One for the happy file ✨", "A soft spot in the day ☁️",
-      "The kind of day you replay 🌼", "A smile, just because 💛", "Little things, big feelings 🍓",
-      "A lovely little blur 💫", "Here’s to this moment 🌿", "A pocket-sized memory 🧸",
-      "More good days like this 🌸", "A favorite kind of feeling 🫶"
+    const photos = [
+      { src: "./assets/photos/photo1.jpg", caption: "A little late-night glow ✨", alt: "Sammy in a warm, softly grainy portrait", kind: "Sammy" },
+      { src: "./assets/photos/photo2.jpg", caption: "The most distinguished smile in town 🎩", alt: "Sammy playfully wearing glasses and a curled moustache filter", kind: "Sammy" },
+      { src: "./assets/photos/photo12.jpg", caption: "Not amused. Not even a little. 😾", alt: "A tabby cat with the caption saying it is not amused", kind: "Cat" },
+      { src: "./assets/photos/photo3.jpg", caption: "A whole main-character moment 🎬", alt: "Sammy in a striped top with a warm portrait filter", kind: "Sammy" },
+      { src: "./assets/photos/photo13.jpeg", caption: "The tiniest peekaboo expert 🐾", alt: "A small cream-colored pet peeking around a doorway", kind: "Pet" },
+      { src: "./assets/photos/photo4.jpg", caption: "That soft smile, on repeat 🤍", alt: "Sammy smiling in a black-and-white striped top", kind: "Sammy" },
+      { src: "./assets/photos/photo14.jpeg", caption: "One more treat, pretty please? 🥺", alt: "A white cat looking up with big, pleading eyes", kind: "Cat" },
+      { src: "./assets/photos/photo5.jpg", caption: "Three frames, one lovely mood 📸", alt: "A three-photo collage of Sammy in her striped top", kind: "Sammy" },
+      { src: "./assets/photos/photo15.jpeg", caption: "A tiny face full of feelings 🥹", alt: "A close-up of a wide-eyed white and gray cat", kind: "Cat" },
+      { src: "./assets/photos/photo6.jpg", caption: "Game-day look, sweetest smile ⚽", alt: "Sammy taking a selfie in a black sports shirt", kind: "Sammy" },
+      { src: "./assets/photos/photo16.jpeg", caption: "Cuddle mode: fully activated 🐈", alt: "A gray cat enjoying a close, cozy cuddle", kind: "Cat" },
+      { src: "./assets/photos/photo7.jpg", caption: "A little game-day glow ✨", alt: "Sammy smiling in her black sports shirt", kind: "Sammy" },
+      { src: "./assets/photos/photo17.jpeg", caption: "The coziest little blanket burrito 🌯", alt: "A cat tucked snugly inside a soft blanket", kind: "Cat" },
+      { src: "./assets/photos/photo8.jpg", caption: "Four frames of floral-day charm 🌷", alt: "A four-photo collage of Sammy in a floral top", kind: "Sammy" },
+      { src: "./assets/photos/photo18.jpeg", caption: "No thoughts, just a tiny blep 😹", alt: "A silly close-up meme of a cat sticking out its tongue", kind: "Cat" },
+      { src: "./assets/photos/photo9.jpg", caption: "A timeless look in every frame 🖤", alt: "A black-and-white portrait collage of Sammy", kind: "Sammy" },
+      { src: "./assets/photos/photo19.jpeg", caption: "Cuteness mission: under way 🚀", alt: "An orange cat peeking out from a clear cozy hood", kind: "Cat" },
+      { src: "./assets/photos/photo10.jpg", caption: "A little birdie charm 🐦", alt: "Sammy with a playful pink-bird filter", kind: "Sammy" },
+      { src: "./assets/photos/photo20.jpeg", caption: "Sending you a little meowah 💋", alt: "A close-up kitten meme with a mwah caption", kind: "Cat" },
+      { src: "./assets/photos/photo11.jpg", caption: "A vintage kind of lovely 🌙", alt: "Sammy in a softly grainy, moody portrait", kind: "Sammy" }
     ];
-    const photos = captions.map((caption, index) => ({
-      src: `./assets/photos/photo${index + 1}.jpg`,
-      caption,
-      alt: `Sammy's memory ${index + 1}`
-    }));
     const tiltClasses = ["-rotate-2", "rotate-1", "rotate-2", "-rotate-1", "rotate-1", "-rotate-2", "rotate-2", "-rotate-1", "rotate-1", "-rotate-2", "rotate-2"];
     const gallery = document.getElementById("gallery");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -363,44 +350,15 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       else element.classList.add("is-visible");
     }
 
-    const catMemes = [
-      { caption: "Me, pretending I didn’t notice you were cute.", coat: "#f2c276", bg: "#fff1c5", accent: "#f3a7a9", face: "smile" },
-      { caption: "POV: you said “just one more photo.”", coat: "#a69bc7", bg: "#e8d7f1", accent: "#d7a5bd", face: "wide" },
-      { caption: "Waiting for your reply like… 🐾", coat: "#d89f7d", bg: "#ffe5d9", accent: "#ec9b9e", face: "hopeful" },
-      { caption: "Current mood: professionally adorable.", coat: "#94b99a", bg: "#d8f3dc", accent: "#dca1b5", face: "smile" },
-      { caption: "Powered by snacks & a little attention.", coat: "#8d98bd", bg: "#cbe4f9", accent: "#edaaaa", face: "wide" }
-    ];
-
-    function createCatMemeCard(index, location) {
-      const meme = catMemes[index % catMemes.length];
-      const isGallery = location === "gallery";
-      const card = document.createElement("article");
-      card.className = isGallery
-        ? "cat-meme-card relative rounded-sm border border-white/90 bg-white p-3 pb-4 shadow-md"
-        : "cat-meme-card overflow-hidden rounded-3xl border border-white bg-white/75 p-3 shadow-[0_8px_26px_rgba(93,69,78,.09)] backdrop-blur-md";
-      card.setAttribute("aria-label", `Cute cat meme: ${meme.caption}`);
-      const eyes = meme.face === "wide"
-        ? '<ellipse cx="151" cy="112" rx="8" ry="12" fill="#514149"/><ellipse cx="209" cy="112" rx="8" ry="12" fill="#514149"/><circle cx="153" cy="108" r="2.5" fill="white"/><circle cx="211" cy="108" r="2.5" fill="white"/>'
-        : meme.face === "hopeful"
-          ? '<path d="M140 114q12-13 24 0M196 114q12-13 24 0" fill="none" stroke="#514149" stroke-width="6" stroke-linecap="round"/><ellipse cx="152" cy="126" rx="7" ry="4" fill="#514149"/><ellipse cx="208" cy="126" rx="7" ry="4" fill="#514149"/>'
-          : '<path d="M139 118q13-11 26 0M195 118q13-11 26 0" fill="none" stroke="#514149" stroke-width="6" stroke-linecap="round"/>';
-      card.innerHTML = `<div class="cat-meme-art" style="background:${meme.bg}"><svg viewBox="0 0 360 270" role="img" aria-label="A cute illustrated ${meme.coat} cat"><path d="M0 205Q75 176 137 207t117 0q55-24 106 2v61H0Z" fill="rgba(255,255,255,.42)"/><circle cx="45" cy="57" r="12" fill="rgba(255,255,255,.52)"/><circle cx="311" cy="72" r="8" fill="rgba(255,255,255,.55)"/><path d="M118 182q-38 3-40 35t38 20M238 181q40 0 43 34t-38 22" fill="none" stroke="${meme.coat}" stroke-width="20" stroke-linecap="round"/><ellipse cx="180" cy="205" rx="72" ry="59" fill="${meme.coat}"/><ellipse cx="180" cy="214" rx="39" ry="36" fill="#fffaf5"/><path d="M111 84 121 26l48 38M249 84l-10-58-48 38" fill="${meme.coat}" stroke="#65545a" stroke-width="5" stroke-linejoin="round"/><path d="m124 54 27 21-31 1M236 54l-27 21 31 1" fill="${meme.accent}"/><ellipse cx="180" cy="105" rx="76" ry="65" fill="${meme.coat}" stroke="#65545a" stroke-width="5"/><ellipse cx="149" cy="144" rx="15" ry="8" fill="${meme.accent}" opacity=".55"/><ellipse cx="211" cy="144" rx="15" ry="8" fill="${meme.accent}" opacity=".55"/>${eyes}<path d="m173 137 7 5 7-5q-1 12-7 12t-7-12Z" fill="#d98591"/><path d="M180 154q-8 12-18 2M180 154q8 12 18 2" fill="none" stroke="#65545a" stroke-width="3" stroke-linecap="round"/><path d="M121 137 76 129M122 148 77 151M239 137l45-8M238 148l45 3" fill="none" stroke="#65545a" stroke-width="3" stroke-linecap="round"/><path d="M165 191q15-18 30 0" fill="none" stroke="#fffaf5" stroke-width="8" stroke-linecap="round"/><path d="m255 59 4 9 10 1-8 6 2 10-8-6-8 6 2-10-8-6 10-1Z" fill="white" opacity=".9"/></svg><span class="cat-meme-tag">tiny cat thought</span></div><p class="cat-meme-caption handwriting px-1 pt-3 text-center text-[1.45rem] font-semibold leading-tight text-[#77616a]">${meme.caption}</p>`;
-      watchReveal(card);
-      return card;
-    }
-
     photos.forEach((photo, index) => {
       const card = document.createElement("button");
       card.type = "button";
-      card.className = `polaroid card-lift group relative rounded-sm bg-white p-3 pb-4 text-left ${tiltClasses[index]}`;
-      card.setAttribute("aria-label", `Open photo ${index + 1}: ${photo.caption}`);
+      card.className = `polaroid card-lift group relative rounded-sm bg-white p-3 pb-4 text-left ${tiltClasses[index % tiltClasses.length]}`;
+      card.setAttribute("aria-label", `Open ${photo.kind.toLowerCase()} photo ${index + 1}: ${photo.caption}`);
       card.innerHTML = `<span class="washi" aria-hidden="true"></span><img class="gallery-photo w-full rounded-sm bg-[#f8f2f0] object-cover" src="${photo.src}" alt="${photo.alt}" loading="lazy" decoding="async"><span class="handwriting mt-3 block text-center text-[1.55rem] leading-tight text-[#77616a]">${photo.caption}</span>`;
       card.addEventListener("click", () => openPhoto(index));
       gallery.append(card);
       watchReveal(card);
-      if ((index + 1) % 3 === 0 && index < photos.length - 1) {
-        gallery.append(createCatMemeCard((index + 1) / 3 - 1, "gallery"));
-      }
     });
 
     const videoCaptions = ["A little scene-stealer 🎞️", "A moment in motion 🌿", "Press play for a smile ✨"];
@@ -444,7 +402,6 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       });
       videos.append(card);
       watchReveal(card);
-      if (index < 3) videos.append(createCatMemeCard(index + 2, "video"));
     }
 
     const quoteData = [
