@@ -113,6 +113,30 @@
       background: repeating-linear-gradient(135deg, rgba(255,255,255,.46) 0 5px, transparent 5px 10px), #f6c8d7;
     }
     .gallery-photo { aspect-ratio: 4 / 3; }
+    .cat-meme-card {
+      box-shadow: 0 8px 24px rgba(93, 69, 78, .09);
+      transition: transform .6s cubic-bezier(.22,.7,.25,1), box-shadow .6s ease;
+    }
+    .cat-meme-card:hover { transform: translateY(-4px) rotate(0deg) scale(1.01); box-shadow: 0 15px 32px rgba(93,69,78,.13); }
+    .cat-meme-art { position: relative; overflow: hidden; aspect-ratio: 4 / 3; border-radius: .2rem; }
+    #videos .cat-meme-art { aspect-ratio: 16 / 9; }
+    .cat-meme-art svg { display: block; width: 100%; height: 100%; }
+    .cat-meme-tag {
+      position: absolute;
+      top: .65rem;
+      left: .65rem;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 9999px;
+      background: rgba(255,255,255,.78);
+      padding: .25rem .6rem;
+      color: #79626c;
+      font-size: .58rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+    .cat-meme-caption { min-height: 3.3rem; }
     .quote-card { animation: fade-up .65s cubic-bezier(.22,.7,.25,1) both; }
     .filter-btn { transition: color .2s ease, background-color .2s ease, transform .2s ease, box-shadow .2s ease; }
     .filter-btn:hover { transform: translateY(-2px); }
@@ -339,6 +363,32 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       else element.classList.add("is-visible");
     }
 
+    const catMemes = [
+      { caption: "Me, pretending I didn’t notice you were cute.", coat: "#f2c276", bg: "#fff1c5", accent: "#f3a7a9", face: "smile" },
+      { caption: "POV: you said “just one more photo.”", coat: "#a69bc7", bg: "#e8d7f1", accent: "#d7a5bd", face: "wide" },
+      { caption: "Waiting for your reply like… 🐾", coat: "#d89f7d", bg: "#ffe5d9", accent: "#ec9b9e", face: "hopeful" },
+      { caption: "Current mood: professionally adorable.", coat: "#94b99a", bg: "#d8f3dc", accent: "#dca1b5", face: "smile" },
+      { caption: "Powered by snacks & a little attention.", coat: "#8d98bd", bg: "#cbe4f9", accent: "#edaaaa", face: "wide" }
+    ];
+
+    function createCatMemeCard(index, location) {
+      const meme = catMemes[index % catMemes.length];
+      const isGallery = location === "gallery";
+      const card = document.createElement("article");
+      card.className = isGallery
+        ? "cat-meme-card relative rounded-sm border border-white/90 bg-white p-3 pb-4 shadow-md"
+        : "cat-meme-card overflow-hidden rounded-3xl border border-white bg-white/75 p-3 shadow-[0_8px_26px_rgba(93,69,78,.09)] backdrop-blur-md";
+      card.setAttribute("aria-label", `Cute cat meme: ${meme.caption}`);
+      const eyes = meme.face === "wide"
+        ? '<ellipse cx="151" cy="112" rx="8" ry="12" fill="#514149"/><ellipse cx="209" cy="112" rx="8" ry="12" fill="#514149"/><circle cx="153" cy="108" r="2.5" fill="white"/><circle cx="211" cy="108" r="2.5" fill="white"/>'
+        : meme.face === "hopeful"
+          ? '<path d="M140 114q12-13 24 0M196 114q12-13 24 0" fill="none" stroke="#514149" stroke-width="6" stroke-linecap="round"/><ellipse cx="152" cy="126" rx="7" ry="4" fill="#514149"/><ellipse cx="208" cy="126" rx="7" ry="4" fill="#514149"/>'
+          : '<path d="M139 118q13-11 26 0M195 118q13-11 26 0" fill="none" stroke="#514149" stroke-width="6" stroke-linecap="round"/>';
+      card.innerHTML = `<div class="cat-meme-art" style="background:${meme.bg}"><svg viewBox="0 0 360 270" role="img" aria-label="A cute illustrated ${meme.coat} cat"><path d="M0 205Q75 176 137 207t117 0q55-24 106 2v61H0Z" fill="rgba(255,255,255,.42)"/><circle cx="45" cy="57" r="12" fill="rgba(255,255,255,.52)"/><circle cx="311" cy="72" r="8" fill="rgba(255,255,255,.55)"/><path d="M118 182q-38 3-40 35t38 20M238 181q40 0 43 34t-38 22" fill="none" stroke="${meme.coat}" stroke-width="20" stroke-linecap="round"/><ellipse cx="180" cy="205" rx="72" ry="59" fill="${meme.coat}"/><ellipse cx="180" cy="214" rx="39" ry="36" fill="#fffaf5"/><path d="M111 84 121 26l48 38M249 84l-10-58-48 38" fill="${meme.coat}" stroke="#65545a" stroke-width="5" stroke-linejoin="round"/><path d="m124 54 27 21-31 1M236 54l-27 21 31 1" fill="${meme.accent}"/><ellipse cx="180" cy="105" rx="76" ry="65" fill="${meme.coat}" stroke="#65545a" stroke-width="5"/><ellipse cx="149" cy="144" rx="15" ry="8" fill="${meme.accent}" opacity=".55"/><ellipse cx="211" cy="144" rx="15" ry="8" fill="${meme.accent}" opacity=".55"/>${eyes}<path d="m173 137 7 5 7-5q-1 12-7 12t-7-12Z" fill="#d98591"/><path d="M180 154q-8 12-18 2M180 154q8 12 18 2" fill="none" stroke="#65545a" stroke-width="3" stroke-linecap="round"/><path d="M121 137 76 129M122 148 77 151M239 137l45-8M238 148l45 3" fill="none" stroke="#65545a" stroke-width="3" stroke-linecap="round"/><path d="M165 191q15-18 30 0" fill="none" stroke="#fffaf5" stroke-width="8" stroke-linecap="round"/><path d="m255 59 4 9 10 1-8 6 2 10-8-6-8 6 2-10-8-6 10-1Z" fill="white" opacity=".9"/></svg><span class="cat-meme-tag">tiny cat thought</span></div><p class="cat-meme-caption handwriting px-1 pt-3 text-center text-[1.45rem] font-semibold leading-tight text-[#77616a]">${meme.caption}</p>`;
+      watchReveal(card);
+      return card;
+    }
+
     photos.forEach((photo, index) => {
       const card = document.createElement("button");
       card.type = "button";
@@ -348,6 +398,9 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       card.addEventListener("click", () => openPhoto(index));
       gallery.append(card);
       watchReveal(card);
+      if ((index + 1) % 3 === 0 && index < photos.length - 1) {
+        gallery.append(createCatMemeCard((index + 1) / 3 - 1, "gallery"));
+      }
     });
 
     const videoCaptions = ["A little scene-stealer 🎞️", "A moment in motion 🌿", "Press play for a smile ✨"];
@@ -391,6 +444,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       });
       videos.append(card);
       watchReveal(card);
+      if (index < 3) videos.append(createCatMemeCard(index + 2, "video"));
     }
 
     const quoteData = [
