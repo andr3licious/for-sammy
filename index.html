@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff9f5">
+  <meta name="description" content="A little pastel corner of the web, made just for Sammy.">
+  <title>For Sammy ✨ | A Little Corner of the Web</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #50434a;
+      --muted: #887b80;
+      --pink: #fad2e1;
+      --pink-deep: #f4b6c2;
+      --sage: #d8f3dc;
+      --sage-deep: #b7e4c7;
+      --paper: #fffdfa;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 8% 20%, rgba(250, 210, 225, .25), transparent 35rem),
+        radial-gradient(ellipse at 92% 56%, rgba(216, 243, 220, .26), transparent 34rem),
+        #fffaf7;
+      font-family: "Nunito", sans-serif;
+      overflow-x: hidden;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #bd8cc8; outline-offset: 4px; }
+    .handwriting { font-family: "Caveat", cursive; }
+    .hero-wash {
+      background: linear-gradient(125deg, #fff1f5 0%, #fff8ed 36%, #effaf1 72%, #f3edff 100%);
+      background-size: 180% 180%;
+      animation: wash 15s ease-in-out infinite alternate;
+    }
+    @keyframes wash { to { background-position: 100% 80%; } }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(8deg); } }
+    @keyframes heart-bounce { 0%, 100% { transform: scale(1) translateY(0); } 40% { transform: scale(1.23) translateY(-7px); } }
+    @keyframes heart-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .sparkle { position: absolute; pointer-events: none; animation: float 4s ease-in-out infinite; }
+    .card-lift { transition: transform .25s ease, box-shadow .25s ease; }
+    .card-lift:hover { transform: translateY(-5px); box-shadow: 0 18px 38px rgba(115, 82, 96, .13); }
+    .polaroid { box-shadow: 0 8px 24px rgba(93, 69, 78, .10); }
+    .polaroid:hover { transform: translateY(-5px) rotate(0deg) scale(1.015); }
+    .washi {
+      position: absolute;
+      z-index: 2;
+      top: -9px;
+      left: 50%;
+      width: 58px;
+      height: 19px;
+      transform: translateX(-50%) rotate(-4deg);
+      opacity: .83;
+      background: repeating-linear-gradient(135deg, rgba(255,255,255,.46) 0 5px, transparent 5px 10px), #f6c8d7;
+    }
+    .gallery-photo { aspect-ratio: 4 / 3; }
+    .quote-card { animation: fade-up .28s ease both; }
+    .filter-btn[aria-pressed="true"] { color: #604954; background: #f8dce6; box-shadow: inset 0 0 0 1px rgba(222, 158, 181, .24); }
+    #secret-hint {
+      animation: secretHintFade 2.2s ease-in-out infinite alternate;
+    }
+    @keyframes secretHintFade {
+      0% { opacity: 0.15; transform: translateY(2px) scale(0.98); }
+      40% { opacity: 0.7; }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .music-disc { background: conic-gradient(#f7cbd9 0 25%, #e9d9f3 25% 50%, #d8efdc 50% 75%, #fce8ba 75%); }
+    .music-disc.is-playing { animation: spin 4s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .modal-backdrop { background: rgba(53, 41, 49, .58); backdrop-filter: blur(10px); }
+    .letter-paper {
+      background:
+        linear-gradient(rgba(249, 231, 223, .26) 1px, transparent 1px) 0 35px / 100% 34px,
+        #fffaf0;
+    }
+    .no-scrollbar { scrollbar-width: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero-wash relative isolate min-h-[590px] overflow-hidden rounded-b-[3rem] sm:min-h-[650px]">
+    <div class="sparkle left-[9%] top-[22%] text-2xl text-pink-300" aria-hidden="true">✦</div>
+    <div class="sparkle right-[12%] top-[27%] text-xl text-amber-300" style="animation-delay: -1.3s" aria-hidden="true">✧</div>
+    <div class="sparkle left-[20%] bottom-[18%] text-lg text-purple-300" style="animation-delay: -2.2s" aria-hidden="true">✧</div>
+    <div class="sparkle right-[24%] bottom-[15%] text-2xl text-rose-300" style="animation-delay: -.7s" aria-hidden="true">✦</div>
+    <div class="relative mx-auto flex min-h-[590px] max-w-6xl flex-col items-center justify-center px-5 py-20 text-center sm:min-h-[650px]">
+      <span class="mb-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/80 bg-white/60 px-5 py-2 text-sm font-extrabold tracking-wide text-[#79626c] shadow-sm backdrop-blur-md">🌸 A Little Corner of the Web</span>
+      <p class="handwriting mb-1 text-3xl font-semibold text-[#bd879a] sm:text-4xl">a little something for you</p>
+      <h1 class="max-w-4xl text-4xl font-black leading-[1.12] tracking-tight text-[#514149] sm:text-6xl md:text-7xl">Just for You,<br class="sm:hidden"> Sammy <span class="inline-block text-[#e6a8b8]">✨</span></h1>
+      <p class="mt-6 max-w-xl text-base font-semibold leading-relaxed text-[#796c72] sm:text-lg">Two months of great conversations, good laughs, and great vibes diaych.</p>
+      <a href="#memories" class="mt-9 inline-flex min-h-12 items-center gap-2 rounded-full bg-white/75 px-6 py-3 font-extrabold text-[#765965] shadow-md backdrop-blur transition hover:-translate-y-1 hover:shadow-lg">Wander a little <span aria-hidden="true">↓</span></a>
+      <div class="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-[.22em] text-[#a38c94]"><span class="h-px w-8 bg-[#dfc4cc]"></span> made with a little extra care <span class="h-px w-8 bg-[#dfc4cc]"></span></div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 pb-24 sm:px-7">
+    <section id="memories" class="scroll-mt-8 py-20 sm:py-24">
+      <div class="mb-9 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="mb-2 text-xs font-black uppercase tracking-[.22em] text-[#c48da0]">little snapshots, lovely feelings</p>
+          <h2 class="handwriting text-5xl font-bold text-[#594850] sm:text-6xl">Moments &amp; Memories</h2>
+        </div>
+        <p class="max-w-xs text-sm leading-relaxed text-[#8b7d82]">A tiny collection of moments, saved here just for you. Tap a photo to take a closer look ✨</p>
+      </div>
+      <div id="gallery" class="grid grid-cols-1 gap-x-6 gap-y-9 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+    </section>
+
+    <section id="reels" class="scroll-mt-8 py-14 sm:py-20">
+      <div class="mb-9 text-center">
+        <p class="mb-2 text-xs font-black uppercase tracking-[.22em] text-[#85a98e]">press play, stay awhile</p>
+        <h2 class="handwriting text-5xl font-bold text-[#594850] sm:text-6xl">Highlight Reels</h2>
+        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-[#8b7d82]">A few little moving memories. Sound is yours to choose.</p>
+      </div>
+      <div id="videos" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+
+    <section id="kind-words" class="scroll-mt-8 py-14 sm:py-20">
+      <div class="mb-8 text-center">
+        <p class="mb-2 text-xs font-black uppercase tracking-[.22em] text-[#b092bd]">a little boost, or a little giggle</p>
+        <h2 class="handwriting text-5xl font-bold text-[#594850] sm:text-6xl">Kind Words &amp; Giggles</h2>
+      </div>
+      <div class="mb-8 flex flex-wrap justify-center gap-2" role="group" aria-label="Filter quotes">
+        <button class="filter-btn min-h-11 rounded-full px-5 text-sm font-extrabold text-[#796c72] transition hover:bg-white/80" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn min-h-11 rounded-full px-5 text-sm font-extrabold text-[#796c72] transition hover:bg-white/80" data-filter="motivation" aria-pressed="false">Daily Motivation</button>
+        <button class="filter-btn min-h-11 rounded-full px-5 text-sm font-extrabold text-[#796c72] transition hover:bg-white/80" data-filter="laughs" aria-pressed="false">Quick Laughs</button>
+      </div>
+      <div id="quotes" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+  </main>
+
+  <footer class="relative overflow-hidden rounded-t-[3rem] bg-gradient-to-br from-[#fff0f4] via-[#fffaf2] to-[#eff8ef] px-5 py-12 text-center">
+    <p class="handwriting text-3xl font-semibold text-[#846b75]">That’s all for now, Sammy.</p>
+    <p class="mt-2 text-sm text-[#93858a]">Hope this little corner made you smile today.</p>
+    <p class="mt-5 text-xs font-bold text-[#aa9ba0]">made with ♡, just for you</p>
+    <button id="secret-heart" class="mt-4 inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-2xl transition hover:scale-110" aria-label="A tiny secret" title="A tiny secret">🤍</button>
+    <p id="secret-hint" class="mt-2 text-[11px] font-black uppercase tracking-[.22em] text-[#b99aa5] opacity-0 transition-opacity duration-700">psst… tap the heart</p>
+    <p id="heart-toast" class="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-sm font-extrabold text-[#a67489] opacity-0 transition-opacity" role="status" aria-live="polite"></p>
+  </footer>
+
+  <button id="music-toggle" class="fixed bottom-5 right-5 z-30 flex min-h-14 min-w-14 items-center justify-center rounded-full border border-white/80 bg-white/85 shadow-lg backdrop-blur-md transition hover:-translate-y-1 hover:shadow-xl sm:bottom-7 sm:right-7" aria-label="Play background music" title="Play background music">
+    <span id="music-icon" class="music-disc flex h-10 w-10 items-center justify-center rounded-full text-lg shadow-inner">♫</span>
+  </button>
+  <audio id="background-music" src="./assets/audio/bgm.mp3" loop preload="none"></audio>
+
+  <div id="lightbox" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-8" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lightbox-close absolute right-4 top-4 z-10 flex min-h-12 min-w-12 items-center justify-center rounded-full bg-white/90 text-2xl text-[#65525a] shadow-lg" aria-label="Close photo viewer">×</button>
+    <button id="photo-prev" class="absolute left-2 top-1/2 z-10 flex min-h-12 min-w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-2xl text-[#65525a] shadow-lg sm:left-6" aria-label="Previous photo">‹</button>
+    <figure class="max-h-[88vh] max-w-[88vw] text-center">
+      <img id="lightbox-image" class="mx-auto max-h-[76vh] max-w-full rounded-2xl object-contain shadow-2xl" alt="">
+      <figcaption id="lightbox-caption" class="handwriting mt-3 text-3xl font-semibold text-white"></figcaption>
+      <p id="lightbox-count" class="mt-1 text-xs font-bold tracking-widest text-white/80"></p>
+    </figure>
+    <button id="photo-next" class="absolute right-2 top-1/2 z-10 flex min-h-12 min-w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-2xl text-[#65525a] shadow-lg sm:right-6" aria-label="Next photo">›</button>
+  </div>
+
+  <div id="letter-modal" class="modal-backdrop fixed inset-0 z-[60] hidden items-center justify-center overflow-y-auto p-4" role="dialog" aria-modal="true" aria-labelledby="letter-title">
+    <article class="letter-paper relative my-auto w-full max-w-2xl rounded-[2rem] border-2 border-[#f3d2da] p-6 shadow-2xl sm:p-10">
+      <button id="letter-close-x" class="absolute right-3 top-3 flex min-h-11 min-w-11 items-center justify-center rounded-full text-2xl text-[#9a7c85] hover:bg-[#f9e5e9]" aria-label="Close letter">×</button>
+      <div class="mb-5 text-center text-3xl" aria-hidden="true">💌</div>
+      <h2 id="letter-title" class="handwriting mb-4 text-center text-5xl font-bold text-[#815e6d]">A little note for you</h2>
+      <div class="handwriting whitespace-pre-line text-[1.45rem] leading-[1.55] text-[#65545a] sm:text-[1.65rem]">Oych Sammy, you found the hidden note diaych. ✨
+
+I know it's only been around two months since we met, but getting to know you has easily been one of the best parts of my recent weeks, bitaw.
+
+You just have this effortless way of making even the most random conversations feel so fun. Di man ko super showy or anything botbota sa dili showy HAHAHAHA, but I genuinely appreciate you and how comfortable it is to talk to you.
+
+No heavy speeches, just wanted you to know that you're appreciated. Hope this made your day a little brighter today!</div>
+      <div class="mt-7 text-center">
+        <button id="letter-close" class="min-h-12 rounded-full bg-[#f4d5df] px-7 py-3 font-extrabold text-[#70545f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#efc4d2]">Close (Amping always, Sammy!)</button>
+      </div>
+    </article>
+  </div>
+
+  <div id="site-toast" class="pointer-events-none fixed bottom-24 left-1/2 z-[70] max-w-[calc(100%-2rem)] -translate-x-1/2 translate-y-2 rounded-2xl bg-[#594850] px-5 py-3 text-center text-sm font-bold text-white opacity-0 shadow-xl transition" role="status" aria-live="polite"></div>
+
+  <script>
+    const captions = [
+      "A little moment to keep 🌷", "One for the happy file ✨", "A soft spot in the day ☁️",
+      "The kind of day you replay 🌼", "A smile, just because 💛", "Little things, big feelings 🍓",
+      "A lovely little blur 💫", "Here’s to this moment 🌿", "A pocket-sized memory 🧸",
+      "More good days like this 🌸", "A favorite kind of feeling 🫶"
+    ];
+    const photos = captions.map((caption, index) => ({
+      src: `./assets/photos/photo${index + 1}.jpg`,
+      caption,
+      alt: `Sammy's memory ${index + 1}`
+    }));
+    const tiltClasses = ["-rotate-2", "rotate-1", "rotate-2", "-rotate-1", "rotate-1", "-rotate-2", "rotate-2", "-rotate-1", "rotate-1", "-rotate-2", "rotate-2"];
+    const gallery = document.getElementById("gallery");
+
+    photos.forEach((photo, index) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = `polaroid card-lift group relative rounded-sm bg-white p-3 pb-4 text-left ${tiltClasses[index]}`;
+      card.setAttribute("aria-label", `Open photo ${index + 1}: ${photo.caption}`);
+      card.innerHTML = `<span class="washi" aria-hidden="true"></span><img class="gallery-photo w-full rounded-sm bg-[#f8f2f0] object-cover" src="${photo.src}" alt="${photo.alt}" loading="lazy" decoding="async"><span class="handwriting mt-3 block text-center text-[1.55rem] leading-tight text-[#77616a]">${photo.caption}</span>`;
+      card.addEventListener("click", () => openPhoto(index));
+      gallery.append(card);
+    });
+
+    const videoCaptions = ["A little scene-stealer 🎞️", "A moment in motion 🌿", "Press play for a smile ✨"];
+    const videos = document.getElementById("videos");
+    for (let index = 1; index <= 3; index++) {
+      const card = document.createElement("article");
+      card.className = "card-lift overflow-hidden rounded-3xl border border-white bg-white/75 p-3 shadow-[0_8px_26px_rgba(93,69,78,.09)] backdrop-blur-md";
+      card.innerHTML = `<div class="relative overflow-hidden rounded-2xl border-4 border-[#f8e6ec] bg-[#f6eef0]"><video class="video-player block aspect-video w-full object-cover" src="./assets/videos/video${index}.mp4" playsinline preload="metadata" controls aria-label="Highlight reel ${index}"></video><button class="video-play absolute inset-0 flex items-center justify-center bg-[#4b3942]/15 text-white transition hover:bg-[#4b3942]/25" aria-label="Play highlight reel ${index}"><span class="flex h-14 w-14 items-center justify-center rounded-full border border-white/80 bg-white/75 pl-1 text-2xl text-[#795d68] shadow-lg backdrop-blur">▶</span></button><button class="video-mute absolute right-3 top-3 flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/85 text-lg shadow-md" aria-label="Unmute highlight reel ${index}" aria-pressed="true">🔇</button></div><p class="handwriting px-2 pb-1 pt-3 text-center text-2xl font-semibold text-[#725c65]">${videoCaptions[index - 1]}</p>`;
+      const player = card.querySelector("video");
+      const playButton = card.querySelector(".video-play");
+      const muteButton = card.querySelector(".video-mute");
+      player.muted = true;
+      playButton.addEventListener("click", async () => {
+        if (player.paused) {
+          try {
+            await player.play();
+          } catch (error) {
+            showToast("This video couldn’t be played. Please check the video file and try again.");
+            console.error("Video playback failed:", error);
+          }
+        } else {
+          player.pause();
+        }
+      });
+      player.addEventListener("play", () => { playButton.classList.add("hidden"); });
+      player.addEventListener("pause", () => { playButton.classList.remove("hidden"); });
+      player.addEventListener("ended", () => { playButton.classList.remove("hidden"); });
+      muteButton.addEventListener("click", () => {
+        player.muted = !player.muted;
+        muteButton.textContent = player.muted ? "🔇" : "🔊";
+        muteButton.setAttribute("aria-label", `${player.muted ? "Unmute" : "Mute"} highlight reel ${index}`);
+        muteButton.setAttribute("aria-pressed", String(player.muted));
+      });
+      player.addEventListener("error", () => {
+        showToast(`Highlight reel ${index} could not be loaded. Please check its video file.`);
+      });
+      videos.append(card);
+    }
+
+    const quoteData = [
+      { type: "motivation", text: "You are capable of amazing things—don't let a bad day trick you into thinking you aren't." },
+      { type: "motivation", text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+      { type: "motivation", text: "Just a reminder: you’ve survived 100% of your hardest days so far. You've got this." },
+      { type: "motivation", text: "Do something today that your future self will thank you for." },
+      { type: "motivation", text: "Whatever you bring to the table today is more than enough. Be kind to yourself." },
+      { type: "laughs", text: "Life is short. Smile while you still have teeth.", author: "Mallory Hopkins" },
+      { type: "laughs", text: "If Plan A fails, stay cool. The alphabet still has 25 more letters." },
+      { type: "laughs", text: "If you think you're too small to make a difference, try sleeping in a room with a mosquito.", author: "Dalai Lama" },
+      { type: "laughs", text: "May your coffee be strong, your focus be sharp, and your day be surprisingly easy." },
+      { type: "laughs", text: "Remember: you are completely unique... just like everyone else.", author: "Margaret Mead" }
+    ];
+    const quoteColors = ["#fff1c5", "#e8d7f1", "#cbe4f9", "#ffe5d9", "#d8f3dc"];
+    const quoteGrid = document.getElementById("quotes");
+    function renderQuotes(filter) {
+      quoteGrid.replaceChildren();
+      quoteData.filter(quote => filter === "all" || quote.type === filter).forEach((quote, index) => {
+        const card = document.createElement("article");
+        card.className = "quote-card card-lift flex min-h-44 flex-col justify-between rounded-3xl border border-white/80 p-6 shadow-[0_7px_22px_rgba(93,69,78,.07)]";
+        card.style.backgroundColor = quoteColors[index % quoteColors.length];
+        const text = document.createElement("p");
+        text.className = "text-base font-bold leading-relaxed text-[#5f5157]";
+        text.textContent = `“${quote.text}”`;
+        card.append(text);
+        if (quote.author) {
+          const author = document.createElement("p");
+          author.className = "mt-4 text-right text-xs font-extrabold tracking-wide text-[#8a737c]";
+          author.textContent = `— ${quote.author}`;
+          card.append(author);
+        }
+        quoteGrid.append(card);
+      });
+    }
+    renderQuotes("all");
+    document.querySelectorAll(".filter-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(tab => tab.setAttribute("aria-pressed", String(tab === button)));
+        renderQuotes(button.dataset.filter);
+      });
+    });
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const lightboxCount = document.getElementById("lightbox-count");
+    let activePhoto = 0;
+    let touchStartX = null;
+    function showPhoto(index) {
+      activePhoto = (index + photos.length) % photos.length;
+      const photo = photos[activePhoto];
+      lightboxImage.src = photo.src;
+      lightboxImage.alt = photo.alt;
+      lightboxCaption.textContent = photo.caption;
+      lightboxCount.textContent = `${activePhoto + 1} / ${photos.length}`;
+    }
+    function openPhoto(index) {
+      showPhoto(index);
+      lightbox.classList.remove("hidden");
+      lightbox.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      document.querySelector(".lightbox-close").focus();
+    }
+    function closePhoto() {
+      lightbox.classList.add("hidden");
+      lightbox.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+    document.getElementById("photo-prev").addEventListener("click", () => showPhoto(activePhoto - 1));
+    document.getElementById("photo-next").addEventListener("click", () => showPhoto(activePhoto + 1));
+    document.querySelector(".lightbox-close").addEventListener("click", closePhoto);
+    lightbox.addEventListener("click", event => { if (event.target === lightbox) closePhoto(); });
+    lightbox.addEventListener("touchstart", event => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
+    lightbox.addEventListener("touchend", event => {
+      if (touchStartX === null) return;
+      const delta = event.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(delta) > 45) showPhoto(activePhoto + (delta < 0 ? 1 : -1));
+      touchStartX = null;
+    }, { passive: true });
+
+    const letterModal = document.getElementById("letter-modal");
+    const heart = document.getElementById("secret-heart");
+    const heartToast = document.getElementById("heart-toast");
+    const secretHint = document.getElementById("secret-hint");
+    let heartTaps = 0;
+    let toastTimer;
+
+    setTimeout(() => {
+      secretHint.classList.remove("opacity-0");
+      secretHint.classList.add("opacity-100");
+    }, 1600);
+    function showToast(message) {
+      const toast = document.getElementById("site-toast");
+      toast.textContent = message;
+      toast.classList.remove("opacity-0", "translate-y-2");
+      toast.classList.add("opacity-100", "translate-y-0");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add("opacity-0", "translate-y-2");
+        toast.classList.remove("opacity-100", "translate-y-0");
+      }, 2800);
+    }
+    function openLetter() {
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 85, spread: 75, startVelocity: 28, origin: { y: .72 }, colors: ["#FAD2E1", "#F4B6C2", "#D8F3DC", "#E8D7F1", "#FFF1C5", "#CBE4F9"] });
+      } else {
+        showToast("Your secret note is ready ✨");
+      }
+      letterModal.classList.remove("hidden");
+      letterModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      document.getElementById("letter-close-x").focus();
+    }
+    function closeLetter() {
+      letterModal.classList.add("hidden");
+      letterModal.classList.remove("flex");
+      document.body.style.overflow = "";
+      heartTaps = 0;
+      heart.classList.remove("animate-[heart-pulse_.45s_ease-in-out_infinite]");
+    }
+    heart.addEventListener("click", () => {
+      secretHint.classList.add("opacity-0");
+      secretHint.classList.remove("opacity-100");
+      heartTaps++;
+      if (heartTaps === 1) {
+        heart.animate([{ transform: "scale(1)" }, { transform: "scale(1.25) translateY(-5px)" }, { transform: "scale(1)" }], { duration: 520, easing: "ease-out" });
+      } else if (heartTaps === 2) {
+        heart.animate([{ transform: "scale(1)" }, { transform: "scale(1.28)" }, { transform: "scale(1)" }, { transform: "scale(1.28)" }, { transform: "scale(1)" }], { duration: 560, easing: "ease-in-out" });
+        heartToast.textContent = "Wait... tap one more time ✨";
+        heartToast.classList.remove("opacity-0");
+        heartToast.classList.add("opacity-100");
+        setTimeout(() => { heartToast.classList.add("opacity-0"); heartToast.classList.remove("opacity-100"); }, 1900);
+      } else {
+        heartTaps = 0;
+        openLetter();
+      }
+    });
+    document.getElementById("letter-close").addEventListener("click", closeLetter);
+    document.getElementById("letter-close-x").addEventListener("click", closeLetter);
+    letterModal.addEventListener("click", event => { if (event.target === letterModal) closeLetter(); });
+    document.addEventListener("keydown", event => {
+      if (!lightbox.classList.contains("hidden")) {
+        if (event.key === "Escape") closePhoto();
+        if (event.key === "ArrowLeft") showPhoto(activePhoto - 1);
+        if (event.key === "ArrowRight") showPhoto(activePhoto + 1);
+      } else if (!letterModal.classList.contains("hidden") && event.key === "Escape") {
+        closeLetter();
+      }
+    });
+
+    const music = document.getElementById("background-music");
+    const musicToggle = document.getElementById("music-toggle");
+    const musicIcon = document.getElementById("music-icon");
+    musicToggle.addEventListener("click", async () => {
+      if (music.paused) {
+        try {
+          await music.play();
+          musicToggle.setAttribute("aria-label", "Pause background music");
+          musicToggle.title = "Pause background music";
+          musicIcon.classList.add("is-playing");
+        } catch (error) {
+          showToast("Background music isn’t available yet. Add your track at assets/audio/bgm.mp3.");
+          console.error("Background music playback failed:", error);
+        }
+      } else {
+        music.pause();
+        musicToggle.setAttribute("aria-label", "Play background music");
+        musicToggle.title = "Play background music";
+        musicIcon.classList.remove("is-playing");
+      }
+    });
+    music.addEventListener("error", () => {
+      musicIcon.classList.remove("is-playing");
+      musicToggle.setAttribute("aria-label", "Play background music");
+    });
+  </script>
+</body>
+</html>
