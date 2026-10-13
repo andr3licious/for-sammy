@@ -43,7 +43,7 @@
       isolation: isolate;
       background: linear-gradient(125deg, #fff1f5 0%, #fff8ed 36%, #effaf1 72%, #f3edff 100%);
       background-size: 180% 180%;
-      animation: wash 15s ease-in-out infinite alternate;
+      animation: wash 24s ease-in-out infinite alternate;
     }
     .hero-wash::before {
       position: absolute;
@@ -64,11 +64,11 @@
       filter: blur(2px);
       opacity: .55;
       pointer-events: none;
-      animation: glow-drift 12s ease-in-out infinite alternate;
+      animation: glow-drift 22s ease-in-out infinite alternate;
     }
     .hero-glow--pink { top: 8%; left: -18%; background: radial-gradient(circle, rgba(248,194,213,.62), transparent 68%); }
     .hero-glow--sage { right: -16%; bottom: -20%; background: radial-gradient(circle, rgba(183,228,199,.68), transparent 68%); animation-delay: -5s; }
-    .hero-content > * { animation: hero-arrive .75s cubic-bezier(.2,.75,.25,1) both; }
+    .hero-content > * { animation: hero-arrive .95s cubic-bezier(.22,.7,.25,1) both; }
     .hero-content > :nth-child(1) { animation-delay: .1s; }
     .hero-content > :nth-child(2) { animation-delay: .2s; }
     .hero-content > :nth-child(3) { animation-delay: .3s; }
@@ -80,27 +80,27 @@
     .hero-cta span { transition: transform .25s ease; }
     .hero-cta:hover span { transform: translateY(3px); }
     @keyframes wash { to { background-position: 100% 80%; } }
-    @keyframes glow-drift { to { transform: translate3d(6%, -4%, 0) scale(1.12); } }
-    @keyframes hero-arrive { from { opacity: 0; transform: translateY(20px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(8deg); } }
-    @keyframes petal-drift { 0%, 100% { transform: translate3d(0,0,0) rotate(-8deg); } 50% { transform: translate3d(7px,-15px,0) rotate(12deg); } }
+    @keyframes glow-drift { to { transform: translate3d(3%, -2%, 0) scale(1.05); } }
+    @keyframes hero-arrive { from { opacity: 0; transform: translateY(12px) scale(.995); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(3deg); } }
+    @keyframes petal-drift { 0%, 100% { transform: translate3d(0,0,0) rotate(-4deg); } 50% { transform: translate3d(4px,-8px,0) rotate(6deg); } }
     @keyframes heart-bounce { 0%, 100% { transform: scale(1) translateY(0); } 40% { transform: scale(1.23) translateY(-7px); } }
     @keyframes heart-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
     @keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes modal-in { from { opacity: 0; transform: translateY(16px) scale(.975); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
-    .sparkle { position: absolute; pointer-events: none; animation: float 4s ease-in-out infinite; }
-    .card-lift { transition: transform .35s cubic-bezier(.2,.75,.25,1), box-shadow .35s ease; }
-    .card-lift:hover { transform: translateY(-7px); box-shadow: 0 20px 42px rgba(115, 82, 96, .15); }
+    .sparkle { position: absolute; pointer-events: none; animation: float 7s ease-in-out infinite; }
+    .card-lift { transition: transform .55s cubic-bezier(.22,.7,.25,1), box-shadow .55s ease; }
+    .card-lift:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(115, 82, 96, .12); }
     .polaroid {
       box-shadow: 0 8px 24px rgba(93, 69, 78, .10);
-      transition: transform .4s cubic-bezier(.2,.75,.25,1), box-shadow .4s ease;
+      transition: transform .6s cubic-bezier(.22,.7,.25,1), box-shadow .6s ease;
     }
-    .polaroid:hover { transform: translateY(-7px) rotate(0deg) scale(1.025); box-shadow: 0 21px 42px rgba(93,69,78,.16); }
-    .polaroid img { transition: transform .7s cubic-bezier(.2,.75,.25,1), filter .4s ease; }
-    .polaroid:hover img { transform: scale(1.045); filter: saturate(1.07); }
-    .polaroid .washi { transition: transform .35s ease; }
-    .polaroid:hover .washi { transform: translateX(-50%) rotate(3deg) translateY(-2px); }
+    .polaroid:hover { transform: translateY(-4px) rotate(0deg) scale(1.015); box-shadow: 0 15px 32px rgba(93,69,78,.13); }
+    .polaroid img { transition: transform .85s cubic-bezier(.22,.7,.25,1), filter .65s ease; }
+    .polaroid:hover img { transform: scale(1.025); filter: saturate(1.04); }
+    .polaroid .washi { transition: transform .55s ease; }
+    .polaroid:hover .washi { transform: translateX(-50%) rotate(-2deg) translateY(-1px); }
     .washi {
       position: absolute;
       z-index: 2;
@@ -113,7 +113,7 @@
       background: repeating-linear-gradient(135deg, rgba(255,255,255,.46) 0 5px, transparent 5px 10px), #f6c8d7;
     }
     .gallery-photo { aspect-ratio: 4 / 3; }
-    .quote-card { animation: fade-up .28s ease both; }
+    .quote-card { animation: fade-up .65s cubic-bezier(.22,.7,.25,1) both; }
     .filter-btn { transition: color .2s ease, background-color .2s ease, transform .2s ease, box-shadow .2s ease; }
     .filter-btn:hover { transform: translateY(-2px); }
     .filter-btn[aria-pressed="true"] { color: #604954; background: #f8dce6; box-shadow: inset 0 0 0 1px rgba(222, 158, 181, .24), 0 5px 15px rgba(198,139,160,.12); }
@@ -142,18 +142,22 @@
     .reveal { opacity: 1; transform: none; }
     .motion-ready .reveal {
       opacity: 0;
-      transform: translateY(24px) scale(.99);
-      transition: opacity .75s ease, transform .75s cubic-bezier(.2,.75,.25,1);
+      transform: translateY(14px);
+      transition: opacity .85s ease, transform .85s cubic-bezier(.22,.7,.25,1);
     }
-    .motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0) scale(1); }
-    .motion-ready #gallery .reveal:nth-child(4n + 2) { transition-delay: .08s; }
-    .motion-ready #gallery .reveal:nth-child(4n + 3) { transition-delay: .16s; }
-    .motion-ready #gallery .reveal:nth-child(4n + 4) { transition-delay: .24s; }
+    .motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .motion-ready #gallery .reveal:nth-child(4n + 2) { transition-delay: .05s; }
+    .motion-ready #gallery .reveal:nth-child(4n + 3) { transition-delay: .1s; }
+    .motion-ready #gallery .reveal:nth-child(4n + 4) { transition-delay: .15s; }
+    .motion-ready #videos .reveal:nth-child(3n + 2),
+    .motion-ready #quotes .reveal:nth-child(3n + 2) { transition-delay: .05s; }
+    .motion-ready #videos .reveal:nth-child(3n + 3),
+    .motion-ready #quotes .reveal:nth-child(3n + 3) { transition-delay: .1s; }
     .modal-backdrop.flex { animation: backdrop-in .24s ease both; }
     #lightbox.flex figure { animation: modal-in .35s cubic-bezier(.2,.75,.25,1) both; }
     #letter-modal.flex article { animation: modal-in .42s cubic-bezier(.2,.75,.25,1) both; }
-    #secret-heart { transition: transform .25s ease, filter .25s ease; }
-    #secret-heart:hover { transform: scale(1.14) rotate(-8deg); filter: drop-shadow(0 5px 9px rgba(214,151,173,.42)); }
+    #secret-heart { transition: transform .45s ease, filter .45s ease; }
+    #secret-heart:hover { transform: scale(1.06) rotate(-4deg); filter: drop-shadow(0 3px 7px rgba(214,151,173,.32)); }
     #secret-hint {
       animation: secretHintFade 2.2s ease-in-out infinite alternate;
     }
@@ -175,7 +179,7 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-      .motion-ready .reveal { opacity: 1; transform: none; }
+      .motion-ready .reveal { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
@@ -239,7 +243,7 @@
     <p class="mt-2 text-sm text-[#93858a]">Hope this little corner made you smile today.</p>
     <p class="mt-5 text-xs font-bold text-[#aa9ba0]">made with ♡, just for you</p>
     <p class="mt-2 text-[11px] text-[#aa9ba0]">Music: “Beautiful Dream” by Diego Nava · <a class="underline decoration-[#d8b8c4] underline-offset-2 hover:text-[#765965]" href="https://mixkit.co/free-stock-music/mood/romantic/" target="_blank" rel="noopener noreferrer">Mixkit Free Stock Music</a></p>
-    <button id="secret-heart" class="mt-4 inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-2xl transition hover:scale-110" aria-label="A tiny secret" title="A tiny secret">🤍</button>
+    <button id="secret-heart" class="mt-4 inline-flex min-h-12 min-w-12 items-center justify-center rounded-full" aria-label="A tiny secret" title="A tiny secret"><svg class="h-7 w-7 drop-shadow-sm" viewBox="0 0 24 24" fill="#F4B6C2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></svg></button>
     <p id="secret-hint" class="mt-2 text-[11px] font-black uppercase tracking-[.22em] text-[#b99aa5] opacity-0 transition-opacity duration-700">psst… tap the heart</p>
     <p id="heart-toast" class="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-sm font-extrabold text-[#a67489] opacity-0 transition-opacity" role="status" aria-live="polite"></p>
   </footer>
@@ -370,16 +374,24 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
     }
 
     const quoteData = [
-      { type: "motivation", text: "You are capable of amazing things—don't let a bad day trick you into thinking you aren't." },
-      { type: "motivation", text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
-      { type: "motivation", text: "Just a reminder: you’ve survived 100% of your hardest days so far. You've got this." },
-      { type: "motivation", text: "Do something today that your future self will thank you for." },
-      { type: "motivation", text: "Whatever you bring to the table today is more than enough. Be kind to yourself." },
-      { type: "laughs", text: "Life is short. Smile while you still have teeth.", author: "Mallory Hopkins" },
-      { type: "laughs", text: "If Plan A fails, stay cool. The alphabet still has 25 more letters." },
-      { type: "laughs", text: "If you think you're too small to make a difference, try sleeping in a room with a mosquito.", author: "Dalai Lama" },
-      { type: "laughs", text: "May your coffee be strong, your focus be sharp, and your day be surprisingly easy." },
-      { type: "laughs", text: "Remember: you are completely unique... just like everyone else.", author: "Margaret Mead" }
+      { type: "motivation", text: "You are capable of amazing things—don't let a bad day trick you into thinking you aren't.", author: "Anonymous" },
+      { type: "motivation", text: "Be yourself; everyone else is already taken.", author: "Anonymous" },
+      { type: "motivation", text: "Just a reminder: you’ve survived 100% of your hardest days so far. You've got this.", author: "Anonymous" },
+      { type: "motivation", text: "Do something today that your future self will thank you for.", author: "Anonymous" },
+      { type: "motivation", text: "Whatever you bring to the table today is more than enough. Be kind to yourself.", author: "Anonymous" },
+      { type: "motivation", text: "Hope is the thing with feathers that perches in the soul.", author: "Emily Dickinson · “Hope is the thing with feathers”" },
+      { type: "motivation", text: "To thine own self be true.", author: "William Shakespeare · Hamlet" },
+      { type: "motivation", text: "I am no bird; and no net ensnares me: I am a free human being with an independent will.", author: "Charlotte Brontë · Jane Eyre" },
+      { type: "motivation", text: "There is no charm equal to tenderness of heart.", author: "Jane Austen · Emma" },
+      { type: "laughs", text: "Life is short. Smile while you still have teeth.", author: "Anonymous" },
+      { type: "laughs", text: "If Plan A fails, stay cool. The alphabet still has 25 more letters.", author: "Anonymous" },
+      { type: "laughs", text: "If you think you're too small to make a difference, try sleeping in a room with a mosquito.", author: "Anonymous" },
+      { type: "laughs", text: "May your coffee be strong, your focus be sharp, and your day be surprisingly easy.", author: "Anonymous" },
+      { type: "laughs", text: "Remember: you are completely unique... just like everyone else.", author: "Anonymous" },
+      { type: "laughs", text: "I can resist everything except temptation.", author: "Oscar Wilde · Lady Windermere’s Fan" },
+      { type: "laughs", text: "I never travel without my diary. One should always have something sensational to read in the train.", author: "Oscar Wilde · The Importance of Being Earnest" },
+      { type: "laughs", text: "The truth is rarely pure and never simple.", author: "Oscar Wilde · The Importance of Being Earnest" },
+      { type: "laughs", text: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.", author: "Jane Austen · Pride and Prejudice" }
     ];
     const quoteColors = ["#fff1c5", "#e8d7f1", "#cbe4f9", "#ffe5d9", "#d8f3dc"];
     const quoteGrid = document.getElementById("quotes");
@@ -393,12 +405,10 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
         text.className = "text-base font-bold leading-relaxed text-[#5f5157]";
         text.textContent = `“${quote.text}”`;
         card.append(text);
-        if (quote.author) {
-          const author = document.createElement("p");
-          author.className = "mt-4 text-right text-xs font-extrabold tracking-wide text-[#8a737c]";
-          author.textContent = `— ${quote.author}`;
-          card.append(author);
-        }
+        const author = document.createElement("p");
+        author.className = "mt-4 text-right text-xs font-extrabold tracking-wide text-[#8a737c]";
+        author.textContent = `— ${quote.author}`;
+        card.append(author);
         quoteGrid.append(card);
         watchReveal(card);
       });
