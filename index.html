@@ -2449,11 +2449,26 @@
   <div id="site-toast" class="opacity-0 translate-y-2" role="status" aria-live="polite"></div>
 
   <script>
-    /* PWA Service Worker with Cache Purge */
+    /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
+    if ("caches" in window) {
+      caches.keys().then((keys) =>
+        Promise.all(keys.map((k) => (k !== "for-sammy-v22" ? caches.delete(k) : null)))
+      ).catch(() => {});
+    }
     if ("serviceWorker" in navigator) {
       if (window.location.protocol === "https:" || window.location.hostname === "localhost") {
-        navigator.serviceWorker.register("./sw.js?v=21").then((reg) => {
-          reg.update();
+        const hadController = Boolean(navigator.serviceWorker.controller);
+        let swReloadPending = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (!hadController || swReloadPending) return;
+          swReloadPending = true;
+          if (!sessionStorage.getItem("for-sammy-sw-reloaded-22")) {
+            sessionStorage.setItem("for-sammy-sw-reloaded-22", "1");
+            window.location.reload();
+          }
+        });
+        navigator.serviceWorker.register("./sw.js?v=22", { updateViaCache: "none" }).then((reg) => {
+          reg.update().catch(() => {});
         }).catch(() => {});
       }
     }
@@ -2642,7 +2657,7 @@
       "Amping kanunay, Sammy! Don't let small annoyances ruin your good day. Kebs ra na sila! \ud83d\udc85",
       "Kung kapoy na gani, huna-hunaa na lang ang mga iring nga nag-meowah para nimo. Instant recharge! \ud83d\udc3e",
       "Naa na pud koy nakit-an nga funny meme ganina unya ikaw dayon akong nahunahunaan. Share nako puhon! \ud83d\ude02",
-      "Ka-cute sa filter sa photo #4! Sophisticated Sammy with the moustache is still undefeated. \ud83c\udfa9",
+      "Ka-cute sa filter sa photo #7! Sophisticated Sammy with the moustache is still undefeated. \ud83c\udfa9",
       "Ayaw ka-guol kung medyo messy ang schedule today. Bisan unsa pa ka-busy, kaya kaayo na nimo! \ud83c\udf1f",
       "Sammy, kung pangutan-on ko unsa'y best part sa recent months: meeting you is definitely top tier, no cap. \u2728",
       "Basin nag-overthink na pud ka diha ha? Undang na ana, overthinking does not look good on someone as pretty as you. \ud83d\ude1c",
@@ -2655,7 +2670,7 @@
       "If a cat could talk, it would look at you and say: 10/10 human, would definitely purr on your lap. \ud83d\udc31",
       "Sending you an emergency meowah: *kiss on your forehead!* Keep shining today, Sammy! \ud83d\udc8b",
       "May your day be as peaceful as an orange cat taking an afternoon nap in a sunbeam. \u2600\ufe0f\ud83d\udc08",
-      "Whenever you need a laugh, remember photo #14's giant pleading eyes. Nobody can resist that face! \ud83e\udd7a",
+      "Whenever you need a laugh, remember photo #2's giant pleading eyes. Nobody can resist that face! \ud83e\udd7a",
       "Cat wisdom for today: If something does not serve your peace, gently knock it off the table like a glass of water. \ud83d\ude39",
       "You have that warm energy that makes even the shyest cats want to come over and say hi. \ud83e\udd0d",
       "Sending you fluffy purrs and sweet paws to dissolve any stress you might be feeling. \ud83d\udc3e\u2728",
