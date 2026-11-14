@@ -1,19 +1,20 @@
-const CACHE_NAME = "for-sammy-v1";
+const CACHE_NAME = "for-sammy-v7";
 const ASSETS_TO_CACHE = [
-  "./",
-  "./index.html",
   "./manifest.webmanifest",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
   "./assets/apple-touch-icon.png",
   "./assets/videos/poster1.jpg",
   "./assets/videos/poster2.jpg",
-  "./assets/videos/poster3.jpg"
+  "./assets/videos/poster3.jpg",
+  "./assets/qr/jar-appreciation-card.png",
+  "./assets/qr/qr-code.png"
 ];
 
 self.addEventListener("install", (event) => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE)).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE)).catch(() => {})
   );
 });
 
@@ -27,7 +28,24 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-  // Network first with cache fallback
+
+  // Navigation requests (HTML) are ALWAYS fetched fresh from network so updates apply immediately
+  if (event.request.mode === "navigate" || event.request.destination === "document") {
+    event.respondWith(
+      fetch(event.request, { cache: "no-cache" })
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Network first with cache fallback for other assets
   event.respondWith(
     fetch(event.request)
       .then((networkResponse) => {

@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fff9f5" id="meta-theme-color">
   <meta name="description" content="A real-time pastel corner of the web, made just for Sammy.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta property="og:title" content="For Sammy ✨ | A Little Corner of the Web">
   <meta property="og:description" content="Real-time scrapbook, Polaroids, highlight reels, and smiles since August 16, 2026 at 11:30 PM — made just for Sammy.">
   <meta property="og:type" content="website">
@@ -2419,17 +2422,18 @@
       <button type="button" id="letter-close-x" aria-label="Close letter">×</button>
       <div class="letter-seal" aria-hidden="true">💌</div>
       <h2 id="letter-title" class="handwriting">A little note for you 💌</h2>
-      <div class="handwriting letter-body">Oych Sammy, you found the secret note again! ✨
+      <div class="handwriting letter-body">Oych Sammy, you found the hidden note diaych. ✨
 
-Happy, happy birthday! Another year of memories, and one step closer to that white coat and having “RN” proudly beside your name. 🩺🤍
+I know it’s only been a few months since we first started talking at 11:30 PM back on August 16, 2026, but getting to know you has easily been one of the best parts of my recent days.
 
-I know nursing school and the clinical grind can get exhausting with the endless study sessions, exams, and early mornings. But seeing how dedicated you are, I have zero doubt you are going to be such a compassionate, incredible nurse. Any patient who gets you as their caregiver is going to be so lucky.
+You just have this effortless, natural way of making even the most ordinary conversations fun and comforting. Di man ko showy or anything (botbota sa dili showy HAHAHAHA), but I genuinely appreciate you, your humor, and how easy it is to talk to you about anything.
 
-Looking back to when we first started chatting at 11:30 PM on August 16, getting to know you has easily been one of the brightest highlights of my days. You have this natural, effortless way of making even the most ordinary conversations fun and comforting. Di man ko showy or unsa (botbota sa dili showy HAHAHAHA), but I’m really grateful for you, your humor, and all our late-night talks.
+Keep pushing toward that dream of becoming a nurse. I know clinicals and the study grind get exhausting, but you have such a caring heart, patience, and dedication—you’re going to make such an amazing, compassionate RN someday. 🩺🤍
 
-Take today completely for yourself: eat lots of yummy food, laugh until your stomach hurts, and celebrate how wonderful you truly are. You deserve the best birthday, Sammy!
+Whenever school or life feels a bit heavy, I hope this little corner of the web reminds you to pause, breathe, and remember that you’re doing so much better than you realize.
 
-Amping always,
+Always rooting for you from the sidelines. Amping always, Sammy!
+
 Andre</div>
       <div class="letter-footer">
         <button type="button" id="letter-close">Close (Amping always, Sammy!)</button>
@@ -2440,9 +2444,11 @@ Andre</div>
   <div id="site-toast" class="opacity-0 translate-y-2" role="status" aria-live="polite"></div>
 
   <script>
-    /* PWA Service Worker */
+    /* PWA Service Worker with Cache Purge */
     if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
-      navigator.serviceWorker.register("./sw.js").catch(() => {});
+      navigator.serviceWorker.register("./sw.js?v=7").then((reg) => {
+        reg.update();
+      }).catch(() => {});
     }
 
     /* Start Date: August 16, 2026 at 11:30 PM (23:30) Philippine Time (+08:00) */
