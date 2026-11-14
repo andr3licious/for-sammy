@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#fff9f5" id="meta-theme-color">
   <meta name="description" content="A real-time pastel corner of the web, made just for Sammy.">
   <meta property="og:title" content="For Sammy ✨ | A Little Corner of the Web">
-  <meta property="og:description" content="Real-time scrapbook, Polaroids, highlight reels, and smiles since August 16, 2026 — made just for Sammy.">
+  <meta property="og:description" content="Real-time scrapbook, Polaroids, highlight reels, and smiles since August 16, 2026 at 11:30 PM — made just for Sammy.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="./assets/photos/photo1.jpg">
 
@@ -689,6 +689,12 @@
       color: var(--ink);
       border-color: var(--pink-deep);
     }
+    .mood-pill.is-active {
+      background: var(--pink);
+      border-color: var(--pink-deep);
+      color: var(--ink);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
     .daily-mood-status {
       margin-top: 0.85rem;
       font-size: 0.88rem;
@@ -1193,12 +1199,20 @@
       box-shadow: 0 7px 22px rgba(0, 0, 0, 0.06);
       animation: fade-up 0.55s cubic-bezier(0.22, 0.7, 0.25, 1) both;
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.35s ease;
     }
     .quote-card.is-highlighted {
       box-shadow: 0 0 0 3px var(--pink-deep), 0 16px 34px rgba(145, 92, 112, 0.24);
       transform: translateY(-4px) scale(1.02);
     }
+
+    /* Daylight Quote Card Color Variants */
+    .quote-card--c0 { background: #fff1c5; border-color: rgba(240, 215, 140, 0.6); }
+    .quote-card--c1 { background: #e8d7f1; border-color: rgba(210, 185, 230, 0.6); }
+    .quote-card--c2 { background: #cbe4f9; border-color: rgba(185, 215, 245, 0.6); }
+    .quote-card--c3 { background: #ffe5d9; border-color: rgba(245, 205, 185, 0.6); }
+    .quote-card--c4 { background: #d8f3dc; border-color: rgba(190, 230, 195, 0.6); }
+
     .quote-card__top {
       display: flex;
       align-items: center;
@@ -1215,36 +1229,65 @@
       letter-spacing: 0.1em;
       padding: 0.2rem 0.6rem;
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.75);
       color: #634653;
-    }
-    [data-theme="starlight"] .quote-card__badge {
-      background: rgba(30, 20, 27, 0.75);
-      color: #e5ccd6;
     }
     .quote-card__mark {
       font-family: Georgia, serif;
       font-size: 2.1rem;
       line-height: 1;
-      color: rgba(110, 82, 93, 0.2);
+      color: rgba(110, 82, 93, 0.22);
       user-select: none;
     }
     .quote-card__text {
       font-size: 1.02rem;
       font-weight: 700;
       line-height: 1.62;
-      color: #4f3b45;
+      color: #4a3841;
     }
-    [data-theme="starlight"] .quote-card__text { color: #f7eaf0; }
     .quote-card__author {
       margin-top: 1rem;
       text-align: right;
       font-size: 0.76rem;
       font-weight: 800;
       letter-spacing: 0.03em;
-      color: #795e69;
+      color: #795d68;
     }
-    [data-theme="starlight"] .quote-card__author { color: #c9afba; }
+
+    /* Starlight Quote Cards: Deep cozy velvet jewel tones with crisp bright text */
+    [data-theme="starlight"] .quote-card--c0 {
+      background: rgba(68, 50, 32, 0.82);
+      border-color: rgba(245, 210, 140, 0.35);
+    }
+    [data-theme="starlight"] .quote-card--c1 {
+      background: rgba(60, 40, 72, 0.82);
+      border-color: rgba(215, 175, 240, 0.35);
+    }
+    [data-theme="starlight"] .quote-card--c2 {
+      background: rgba(30, 52, 74, 0.82);
+      border-color: rgba(160, 205, 245, 0.35);
+    }
+    [data-theme="starlight"] .quote-card--c3 {
+      background: rgba(72, 42, 50, 0.82);
+      border-color: rgba(240, 170, 185, 0.35);
+    }
+    [data-theme="starlight"] .quote-card--c4 {
+      background: rgba(30, 58, 44, 0.82);
+      border-color: rgba(160, 220, 180, 0.35);
+    }
+    [data-theme="starlight"] .quote-card .quote-card__text {
+      color: #fff2f6;
+    }
+    [data-theme="starlight"] .quote-card .quote-card__author {
+      color: #ffd8e6;
+    }
+    [data-theme="starlight"] .quote-card .quote-card__badge {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffd8e6;
+    }
+    [data-theme="starlight"] .quote-card .quote-card__mark {
+      color: rgba(255, 255, 255, 0.25);
+    }
 
     /* Footer */
     .site-footer {
@@ -1853,14 +1896,14 @@
       <div class="reveal milestone-card">
         <div class="milestone-live-badge">
           <span class="live-pulse-dot" aria-hidden="true"></span>
-          <span>Live Precision Counter · Started Talking August 16, 2026</span>
+          <span>Live Precision Counter · Started Talking August 16, 2026 at 11:30 PM</span>
         </div>
 
         <h2 id="milestone-heading" class="handwriting section-heading" style="font-size:clamp(2.4rem,4.5vw,3.2rem)">
           <span id="milestone-heading-days">90</span> Days and Counting ✨
         </h2>
         <p class="section-desc" style="max-width:34rem;margin:0.5rem auto 0">
-          Counting every single day, hour, minute, and second of great conversations and good laughs since August 16, 2026, bitaw!
+          Started talking August 16, 2026 at 11:30 PM — counting every single day, hour, minute, and second in real time, bitaw!
         </p>
 
         <!-- 4-Column Live Real-Time Precision Ticker -->
@@ -1870,11 +1913,11 @@
             <p class="milestone-label">Days</p>
           </div>
           <div class="milestone-digit-box">
-            <span id="milestone-hours" class="milestone-digit">11</span>
+            <span id="milestone-hours" class="milestone-digit">04</span>
             <p class="milestone-label">Hours</p>
           </div>
           <div class="milestone-digit-box">
-            <span id="milestone-minutes" class="milestone-digit">44</span>
+            <span id="milestone-minutes" class="milestone-digit">57</span>
             <p class="milestone-label">Minutes</p>
           </div>
           <div class="milestone-digit-box">
@@ -2092,7 +2135,7 @@
       <h2 id="letter-title" class="handwriting">A little note for you</h2>
       <div class="handwriting letter-body">Oych Sammy, you found the hidden note diaych. ✨
 
-I know it's only been around <span id="letter-days-text">90 days</span> since we first started talking back on August 16, 2026, but getting to know you has easily been one of the best parts of my recent weeks, bitaw.
+I know it's only been around <span id="letter-days-text">90 days</span> since we first started talking at 11:30 PM back on August 16, 2026, but getting to know you has easily been one of the best parts of my recent weeks, bitaw.
 
 You just have this effortless way of making even the most random conversations feel so fun. Di man ko showy or anything (botbota sa dili showy HAHAHAHA), but I genuinely appreciate you and how comfortable it is to talk to you.
 
@@ -2111,8 +2154,8 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
 
-    /* Start Date: August 16, 2026 */
-    const startDate = new Date(2026, 7, 16, 0, 0, 0); // Month 7 is August
+    /* Start Date: August 16, 2026 at 11:30 PM (23:30) Philippine Time (+08:00) */
+    const startDate = new Date("2026-08-16T23:30:00+08:00");
 
     /* Real-Time Precision Milestone Clock & Dynamic Greetings */
     function updateRealTimeEngine() {
@@ -2194,11 +2237,16 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       try {
         const parsed = JSON.parse(savedMoodData);
         moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
+        const prevBtn = document.querySelector(`.mood-pill[data-mood="${parsed.mood}"]`);
+        if (prevBtn) prevBtn.classList.add("is-active");
       } catch (e) {}
     }
 
     document.querySelectorAll(".mood-pill").forEach(btn => {
       btn.addEventListener("click", () => {
+        document.querySelectorAll(".mood-pill").forEach(p => p.classList.remove("is-active"));
+        btn.classList.add("is-active");
+
         const moodKey = btn.dataset.mood;
         const moodText = btn.textContent;
         const responseText = moodResponses[moodKey] || "Glad you checked in today, Sammy! 🤍";
@@ -2497,7 +2545,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
     noteCloseBtn.addEventListener("click", closeSmileNote);
     noteModal.addEventListener("click", (e) => { if (e.target === noteModal) closeSmileNote(); });
 
-    /* Video Reels Coordination with Posters */
+    /* Video Reels Coordination with Custom Posters */
     const videoCaptions = ["A little scene-stealer 🎞️", "A moment in motion 🌿", "Press play for a smile ✨"];
     const videos = document.getElementById("videos");
     const videoPlayers = [];
@@ -2573,7 +2621,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       watchReveal(card);
     }
 
-    /* Quotes Section */
+    /* Quotes Section with Theme-Aware CSS Classes */
     const quoteData = [
       { type: "motivation", text: "You are capable of amazing things—don't let a bad day trick you into thinking you aren't.", author: "Anonymous" },
       { type: "motivation", text: "Be yourself; everyone else is already taken.", author: "Anonymous" },
@@ -2594,15 +2642,14 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       { type: "laughs", text: "The truth is rarely pure and never simple.", author: "Oscar Wilde" },
       { type: "laughs", text: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.", author: "Jane Austen" }
     ];
-    const quoteColors = ["#fff1c5", "#e8d7f1", "#cbe4f9", "#ffe5d9", "#d8f3dc"];
     const quoteGrid = document.getElementById("quotes");
 
     function renderQuotes(filter) {
       quoteGrid.replaceChildren();
       quoteData.filter(quote => filter === "all" || quote.type === filter).forEach((quote, index) => {
         const card = document.createElement("article");
-        card.className = "quote-card";
-        card.style.backgroundColor = quoteColors[index % quoteColors.length];
+        // Use theme-aware CSS classes so Starlight mode uses high-contrast velvet cards
+        card.className = `quote-card quote-card--c${index % 5}`;
 
         const topRow = document.createElement("div");
         topRow.className = "quote-card__top";
@@ -2698,13 +2745,18 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       touchStartX = null;
     }, { passive: true });
 
-    /* Save as Polaroid Keepsake using Canvas */
-    lightboxSaveBtn.addEventListener("click", () => {
+    /* Save as Polaroid Keepsake with Canvas & Cached Image Support */
+    lightboxSaveBtn.addEventListener("click", async () => {
       const photo = photos[activePhoto];
       const img = new Image();
       img.crossOrigin = "anonymous";
-      img.onload = () => {
+
+      const renderCanvas = async () => {
         try {
+          if (document.fonts && document.fonts.ready) {
+            await document.fonts.ready;
+          }
+
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
           const cardWidth = 800;
@@ -2712,11 +2764,11 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
           canvas.width = cardWidth;
           canvas.height = cardHeight;
 
-          // Polaroid Background
+          // Polaroid White Background
           ctx.fillStyle = "#fffdf9";
           ctx.fillRect(0, 0, cardWidth, cardHeight);
 
-          // Card Border Line
+          // Card Border
           ctx.strokeStyle = "#e8d5dc";
           ctx.lineWidth = 4;
           ctx.strokeRect(4, 4, cardWidth - 8, cardHeight - 8);
@@ -2741,7 +2793,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
           }
           ctx.drawImage(img, sx, sy, sw, sh, photoPadding, photoPadding, photoW, photoH);
 
-          // Inner photo border
+          // Inner photo subtle border
           ctx.strokeStyle = "rgba(0,0,0,0.06)";
           ctx.lineWidth = 2;
           ctx.strokeRect(photoPadding, photoPadding, photoW, photoH);
@@ -2775,7 +2827,15 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
           showToast("Couldn't save Polaroid directly from this view.");
         }
       };
+
+      img.onload = renderCanvas;
+      img.onerror = () => showToast("Couldn't load image for saving.");
       img.src = photo.src;
+
+      // Check if already cached in browser
+      if (img.complete && img.naturalWidth !== 0) {
+        renderCanvas();
+      }
     });
 
     /* Secret Heart Progression & Confetti */
@@ -2893,7 +2953,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
 
     function isMusicPlaying() { return isPlaying; }
     function formatTime(secs) {
-      if (isNaN(secs) || secs < 0) return "0:00";
+      if (isNaN(secs) || secs < 0 || !isFinite(secs)) return "0:00";
       const m = Math.floor(secs / 60);
       const s = Math.floor(secs % 60);
       return `${m}:${s < 10 ? "0" : ""}${s}`;
@@ -2965,7 +3025,9 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       } else {
         if (synthTimer) clearInterval(synthTimer);
         bgAudio.src = track.src;
-        bgAudio.volume = Number(cassetteVolSlider.value);
+        try {
+          bgAudio.volume = Number(cassetteVolSlider.value);
+        } catch (e) {}
         bgAudio.play().then(() => {
           isPlaying = true;
           syncCassetteUI();
@@ -3017,21 +3079,29 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
     });
 
     cassetteVolSlider.addEventListener("input", () => {
-      bgAudio.volume = Number(cassetteVolSlider.value);
+      try {
+        bgAudio.volume = Number(cassetteVolSlider.value);
+      } catch (e) {}
+    });
+
+    bgAudio.addEventListener("loadedmetadata", () => {
+      if (!playlist[currentTrackIdx].isSynth && bgAudio.duration) {
+        cassetteDuration.textContent = formatTime(bgAudio.duration);
+      }
     });
 
     bgAudio.addEventListener("timeupdate", () => {
       if (playlist[currentTrackIdx].isSynth) return;
       cassetteCurrentTime.textContent = formatTime(bgAudio.currentTime);
-      cassetteDuration.textContent = formatTime(bgAudio.duration);
-      if (bgAudio.duration) {
+      if (bgAudio.duration && isFinite(bgAudio.duration)) {
+        cassetteDuration.textContent = formatTime(bgAudio.duration);
         const pct = (bgAudio.currentTime / bgAudio.duration) * 100;
         cassetteProgressFill.style.width = `${pct}%`;
       }
     });
 
     cassetteProgressBar.addEventListener("click", (e) => {
-      if (playlist[currentTrackIdx].isSynth || !bgAudio.duration) return;
+      if (playlist[currentTrackIdx].isSynth || !bgAudio.duration || !isFinite(bgAudio.duration)) return;
       const rect = cassetteProgressBar.getBoundingClientRect();
       const clickPos = (e.clientX - rect.left) / rect.width;
       bgAudio.currentTime = clickPos * bgAudio.duration;
