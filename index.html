@@ -2172,13 +2172,13 @@
       <div class="reveal memories-toolbar" role="group" aria-label="Filter scrapbook photos">
         <div class="filter-group">
           <button type="button" class="gallery-filter-btn" data-gallery-filter="all" aria-pressed="true">
-            All Moments <span class="filter-count">22</span>
+            All Moments <span class="filter-count">20</span>
           </button>
           <button type="button" class="gallery-filter-btn" data-gallery-filter="Sammy" aria-pressed="false">
-            Sammy ✨ <span class="filter-count">11</span>
+            Sammy ✨ <span class="filter-count">10</span>
           </button>
           <button type="button" class="gallery-filter-btn" data-gallery-filter="Pets" aria-pressed="false">
-            Cute Companions 🐾 <span class="filter-count">11</span>
+            Cute Companions 🐾 <span class="filter-count">10</span>
           </button>
         </div>
       </div>
@@ -2422,18 +2422,19 @@
       <button type="button" id="letter-close-x" aria-label="Close letter">×</button>
       <div class="letter-seal" aria-hidden="true">💌</div>
       <h2 id="letter-title" class="handwriting">A little note for you 💌</h2>
-      <div class="handwriting letter-body">Oych Sammy, you found the hidden note diaych. ✨
+      <div class="handwriting letter-body">Oych Sammy, you found the secret note! ✨
 
-I know it’s only been a few months since we first started talking at 11:30 PM back on August 16, 2026, but getting to know you has easily been one of the best parts of my recent days.
+I know it’s only been around 90 days since we first started chatting at 11:30 PM back on August 16, 2026, but getting to know you has easily been one of the best parts of my recent days.
 
-You just have this effortless, natural way of making even the most ordinary conversations fun and comforting. Di man ko showy or anything (botbota sa dili showy HAHAHAHA), but I genuinely appreciate you, your humor, and how easy it is to talk to you about anything.
+You just have this natural, effortless way of making even the most random conversations feel so fun and comforting. Di man ko showy or anything (botbota sa dili showy HAHAHAHA), but I genuinely appreciate you, your humor, and how easy it is to talk to you about anything.
 
-Keep pushing toward that dream of becoming a nurse. I know clinicals and the study grind get exhausting, but you have such a caring heart, patience, and dedication—you’re going to make such an amazing, compassionate RN someday. 🩺🤍
+Keep pushing toward that dream of becoming a nurse. I know clinicals and the study grind get exhausting with all the reviews and early mornings, but you have such a caring heart, patience, and dedication—you’re going to make such an amazing, compassionate RN someday. 🩺🤍
 
-Whenever school or life feels a bit heavy, I hope this little corner of the web reminds you to pause, breathe, and remember that you’re doing so much better than you realize.
+Whenever school, duties, or life feel a bit overwhelming, I hope this little corner of the web gives you a reason to pause, take a deep breath, and smile.
 
-Always rooting for you from the sidelines. Amping always, Sammy!
+Always rooting for you from the sidelines!
 
+Amping always, Sammy!
 Andre</div>
       <div class="letter-footer">
         <button type="button" id="letter-close">Close (Amping always, Sammy!)</button>
@@ -2445,10 +2446,12 @@ Andre</div>
 
   <script>
     /* PWA Service Worker with Cache Purge */
-    if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
-      navigator.serviceWorker.register("./sw.js?v=7").then((reg) => {
-        reg.update();
-      }).catch(() => {});
+    if ("serviceWorker" in navigator) {
+      if (window.location.protocol === "https:" || window.location.hostname === "localhost") {
+        navigator.serviceWorker.register("./sw.js?v=20").then((reg) => {
+          reg.update();
+        }).catch(() => {});
+      }
     }
 
     /* Start Date: August 16, 2026 at 11:30 PM (23:30) Philippine Time (+08:00) */
@@ -2893,6 +2896,22 @@ Andre</div>
         watchReveal(container);
       });
     }
+
+    // Dynamic filter counts
+    function syncFilterCounts() {
+      const sammyCount = photos.filter(p => p.kind === "Sammy").length;
+      const petsCount = photos.filter(p => p.kind !== "Sammy").length;
+      document.querySelectorAll(".gallery-filter-btn").forEach(btn => {
+        const type = btn.dataset.galleryFilter;
+        const countEl = btn.querySelector(".filter-count");
+        if (countEl) {
+          if (type === "all") countEl.textContent = photos.length;
+          else if (type === "Sammy") countEl.textContent = sammyCount;
+          else if (type === "Pets") countEl.textContent = petsCount;
+        }
+      });
+    }
+    syncFilterCounts();
 
     renderGallery("all");
 

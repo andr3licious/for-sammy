@@ -1,4 +1,4 @@
-const CACHE_NAME = "for-sammy-v7";
+const CACHE_NAME = "for-sammy-v20";
 const ASSETS_TO_CACHE = [
   "./manifest.webmanifest",
   "./assets/icon-192.png",
@@ -29,7 +29,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
-  // Navigation requests (HTML) are ALWAYS fetched fresh from network so updates apply immediately
+  // HTML navigation requests ALWAYS go network-first with no-cache header
   if (event.request.mode === "navigate" || event.request.destination === "document") {
     event.respondWith(
       fetch(event.request, { cache: "no-cache" })
@@ -45,7 +45,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Network first with cache fallback for other assets
+  // Network-first for other assets
   event.respondWith(
     fetch(event.request)
       .then((networkResponse) => {
