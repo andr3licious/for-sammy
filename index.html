@@ -662,6 +662,29 @@
       min-height: 1.4rem;
       transition: opacity 0.3s ease;
     }
+    .daily-mood-reset-btn {
+      margin: 0.45rem auto 0;
+      display: inline-flex;
+      min-height: 2.35rem;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.9rem;
+      border-radius: 9999px;
+      background: var(--cream);
+      border: 1px solid var(--card-border);
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--ink-soft);
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .daily-mood-reset-btn:hover {
+        background: var(--pink);
+        border-color: var(--pink-deep);
+        color: var(--ink);
+        transform: translateY(-1px);
+      }
+    }
 
     /* Moments & Memories Section */
     .memories-header {
@@ -2206,13 +2229,14 @@
           </div>
           <p class="handwriting daily-checkin-prompt">Quick check-in: How are you feeling right now?</p>
           <div class="daily-mood-pills" role="group" aria-label="Sammy's daily mood">
-            <button type="button" class="mood-pill" data-mood="happy">🌸 Happy &amp; blooming</button>
-            <button type="button" class="mood-pill" data-mood="busy">☕ Busy &amp; caffeinated</button>
-            <button type="button" class="mood-pill" data-mood="sleepy">😴 Sleepy / need blanket</button>
-            <button type="button" class="mood-pill" data-mood="smile">🥺 Need a gentle smile</button>
-            <button type="button" class="mood-pill" data-mood="great">✨ Ready to conquer</button>
+            <button type="button" class="mood-pill" data-mood="happy" aria-pressed="false">🌸 Happy &amp; blooming</button>
+            <button type="button" class="mood-pill" data-mood="busy" aria-pressed="false">☕ Busy &amp; caffeinated</button>
+            <button type="button" class="mood-pill" data-mood="sleepy" aria-pressed="false">😴 Sleepy / need blanket</button>
+            <button type="button" class="mood-pill" data-mood="smile" aria-pressed="false">🥺 Need a gentle smile</button>
+            <button type="button" class="mood-pill" data-mood="great" aria-pressed="false">✨ Ready to conquer</button>
           </div>
           <p id="daily-mood-status" class="daily-mood-status"></p>
+          <button type="button" id="daily-mood-reset-btn" class="daily-mood-reset-btn hidden">↺ Reset check-in</button>
         </div>
       </div>
     </section>
@@ -2507,6 +2531,13 @@
       } catch (e) {}
     }
 
+    function storageRemove(kind, key) {
+      try {
+        const store = kind === "session" ? window.sessionStorage : window.localStorage;
+        if (store) store.removeItem(key);
+      } catch (e) {}
+    }
+
     function setModalScrollLock(locked) {
       const value = locked ? "hidden" : "";
       document.documentElement.style.overflow = value;
@@ -2516,7 +2547,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v23" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v24" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2526,12 +2557,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-23")) {
-            storageSet("session", "for-sammy-sw-reloaded-23", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-24")) {
+            storageSet("session", "for-sammy-sw-reloaded-24", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=23", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=24", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2601,24 +2632,54 @@
       great: "Unstoppable! Go conquer whatever you're working on today, Sammy 👸🌟"
     };
 
+    const moodStorageKey = "for-sammy-mood-v2";
+    storageRemove("local", "for-sammy-mood");
+
     const moodStatusEl = document.getElementById("daily-mood-status");
-    const savedMoodData = storageGet("local", "for-sammy-mood");
+    const moodResetBtn = document.getElementById("daily-mood-reset-btn");
+    const moodPills = Array.from(document.querySelectorAll(".mood-pill"));
+
+    function resetMoodCheckin(showFeedback = true) {
+      moodPills.forEach((pill) => {
+        pill.classList.remove("is-active");
+        pill.setAttribute("aria-pressed", "false");
+      });
+      moodStatusEl.textContent = "";
+      if (moodResetBtn) moodResetBtn.classList.add("hidden");
+      storageRemove("local", moodStorageKey);
+      if (showFeedback) {
+        showToast("Check-in cleared! Choose a mood anytime 🤍");
+      }
+    }
+
+    const savedMoodData = storageGet("local", moodStorageKey);
     if (savedMoodData) {
       try {
         const parsed = JSON.parse(savedMoodData);
         if (parsed && typeof parsed === "object" && parsed.time && parsed.text) {
           moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
-          document.querySelectorAll(".mood-pill").forEach((pill) => {
-            if (pill.dataset.mood === parsed.mood) pill.classList.add("is-active");
+          moodPills.forEach((pill) => {
+            const isMatch = pill.dataset.mood === parsed.mood;
+            pill.classList.toggle("is-active", isMatch);
+            pill.setAttribute("aria-pressed", String(isMatch));
           });
+          if (moodResetBtn) moodResetBtn.classList.remove("hidden");
         }
       } catch (e) {}
     }
 
-    document.querySelectorAll(".mood-pill").forEach(btn => {
+    moodPills.forEach((btn) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll(".mood-pill").forEach(p => p.classList.remove("is-active"));
-        btn.classList.add("is-active");
+        if (btn.classList.contains("is-active")) {
+          resetMoodCheckin(true);
+          return;
+        }
+
+        moodPills.forEach((p) => {
+          const active = p === btn;
+          p.classList.toggle("is-active", active);
+          p.setAttribute("aria-pressed", String(active));
+        });
 
         const moodKey = btn.dataset.mood;
         const moodText = btn.textContent;
@@ -2626,11 +2687,16 @@
         const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
         moodStatusEl.textContent = responseText;
-        storageSet("local", "for-sammy-mood", JSON.stringify({ mood: moodKey, text: moodText, time: timeStr }));
+        if (moodResetBtn) moodResetBtn.classList.remove("hidden");
+        storageSet("local", moodStorageKey, JSON.stringify({ mood: moodKey, text: moodText, time: timeStr }));
         spawnFloatingReaction("💖", window.innerWidth / 2, window.innerHeight / 2);
         showToast("Check-in saved! 🌸");
       });
     });
+
+    if (moodResetBtn) {
+      moodResetBtn.addEventListener("click", () => resetMoodCheckin(true));
+    }
 
     /* Photos Data with Custom Back-of-Polaroid Notes */
     const photos = [
