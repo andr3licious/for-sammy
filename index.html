@@ -2212,6 +2212,9 @@
           <button type="button" id="view-favorites-btn" class="action-pill" title="View saved favorite notes">
             <span id="fav-count-pill">⭐ Favorites (0)</span>
           </button>
+          <button type="button" id="open-qr-btn" class="action-pill" title="View & download Jar of Appreciation QR code">
+            <span>📱 Keepsake QR</span>
+          </button>
         </div>
       </div>
 
@@ -2379,6 +2382,33 @@
 
       <div class="letter-footer" style="margin-top:1rem;text-align:center">
         <button type="button" id="favorites-close-btn" class="action-pill">Close</button>
+      </div>
+    </article>
+  </div>
+
+  <!-- Jar of Appreciation Keepsake QR Modal -->
+  <div id="qr-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
+    <article class="letter-paper" style="max-height:92vh;display:flex;flex-direction:column;width:100%;max-width:32rem;text-align:center">
+      <button type="button" id="qr-close-x" aria-label="Close QR modal">×</button>
+      <div class="letter-seal" aria-hidden="true">🫙</div>
+      <h2 id="qr-modal-title" class="handwriting" style="font-size:clamp(2rem,3.8vw,2.7rem);color:var(--pink-deep);margin-bottom:0.25rem">Jar of Appreciation QR Code ✨</h2>
+      <p class="section-desc" style="font-size:0.92rem;margin:0 auto">Scan on any phone camera to open Sammy's scrapbook &amp; daily notes, or download the printable card for a gift, letter, or sticker!</p>
+      
+      <div style="margin:0.9rem auto;max-width:16.5rem;width:100%">
+        <img src="./assets/qr/jar-appreciation-card.png" alt="Jar of Appreciation QR Code Keepsake Card for Sammy" style="width:100%;border-radius:1.25rem;border:2px solid var(--card-border);box-shadow:0 12px 30px rgba(0,0,0,0.12);display:block">
+      </div>
+
+      <div class="letter-footer" style="display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center;margin-top:0.5rem">
+        <a href="./assets/qr/jar-appreciation-card.png" download="jar-of-appreciation-sammy-card.png" class="action-pill" style="background:var(--pink);color:var(--ink);font-weight:800;text-decoration:none">
+          <span>📥 Download Card</span>
+        </a>
+        <a href="./assets/qr/qr-code.png" download="sammy-qr-code.png" class="action-pill" style="text-decoration:none">
+          <span>📥 QR Code Only</span>
+        </a>
+        <button type="button" id="copy-qr-link-btn" class="action-pill">
+          <span>📋 Copy Link</span>
+        </button>
+        <button type="button" id="qr-close-btn" class="action-pill">Close</button>
       </div>
     </article>
   </div>
@@ -3171,6 +3201,47 @@ Andre</div>
     favoritesCloseBtn.addEventListener("click", closeFavoritesModal);
     favoritesCloseX.addEventListener("click", closeFavoritesModal);
     favoritesModal.addEventListener("click", (e) => { if (e.target === favoritesModal) closeFavoritesModal(); });
+
+    // QR Code Modal Interactions
+    const openQrBtn = document.getElementById("open-qr-btn");
+    const qrModal = document.getElementById("qr-modal");
+    const qrCloseBtn = document.getElementById("qr-close-btn");
+    const qrCloseX = document.getElementById("qr-close-x");
+    const copyQrLinkBtn = document.getElementById("copy-qr-link-btn");
+
+    function openQrModal() {
+      qrModal.classList.remove("hidden");
+      qrModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      qrCloseBtn.focus();
+    }
+
+    function closeQrModal() {
+      qrModal.classList.add("hidden");
+      qrModal.classList.remove("flex");
+      document.body.style.overflow = "";
+      openQrBtn.focus();
+    }
+
+    if (openQrBtn) openQrBtn.addEventListener("click", openQrModal);
+    if (qrCloseBtn) qrCloseBtn.addEventListener("click", closeQrModal);
+    if (qrCloseX) qrCloseX.addEventListener("click", closeQrModal);
+    if (qrModal) qrModal.addEventListener("click", (e) => { if (e.target === qrModal) closeQrModal(); });
+
+    if (copyQrLinkBtn) {
+      copyQrLinkBtn.addEventListener("click", () => {
+        const url = "https://andr3licious.github.io/for-sammy/";
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(() => {
+            showToast("Website link copied to clipboard! 📋✨");
+          }).catch(() => {
+            showToast(url);
+          });
+        } else {
+          showToast(url);
+        }
+      });
+    }
 
     // Initialize Daily Engine
     updateDailyNoteUI();
