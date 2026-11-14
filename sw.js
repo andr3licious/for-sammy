@@ -1,4 +1,4 @@
-const CACHE_NAME = "for-sammy-v22";
+const CACHE_NAME = "for-sammy-v23";
 const ASSETS_TO_CACHE = [
   "./manifest.webmanifest",
   "./assets/icon-192.png",

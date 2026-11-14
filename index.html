@@ -100,7 +100,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 6rem;
+      scroll-padding-top: calc(6.25rem + env(safe-area-inset-top));
       overflow-x: hidden;
       overflow-x: clip;
       -webkit-text-size-adjust: 100%;
@@ -242,9 +242,28 @@
       margin-left: 0.1rem;
       transition: transform 0.25s ease, background-color 0.2s ease;
     }
-    .theme-toggle-btn:hover {
-      transform: rotate(20deg) scale(1.1);
-      background: rgba(250, 210, 225, 0.5);
+    @media (hover: hover) and (pointer: fine) {
+      .theme-toggle-btn:hover {
+        transform: rotate(20deg) scale(1.1);
+        background: rgba(250, 210, 225, 0.5);
+      }
+    }
+    @media (max-width: 380px) {
+      .quick-nav {
+        gap: 0.14rem;
+        padding: 0.28rem 0.34rem;
+      }
+      .quick-nav__link {
+        padding: 0.28rem 0.48rem;
+        font-size: 0.7rem;
+        gap: 0.18rem;
+      }
+      .theme-toggle-btn {
+        width: 1.82rem;
+        height: 1.82rem;
+        font-size: 0.85rem;
+        margin-left: 0.04rem;
+      }
     }
 
     /* Unified Floating Bottom Dock (guarantees zero collision between reactions & player) */
@@ -297,9 +316,18 @@
     .reaction-trigger-btn:active {
       transform: scale(0.9);
     }
+    @media (max-width: 380px) {
+      .reaction-trigger-btn {
+        width: 1.9rem;
+        height: 1.9rem;
+        font-size: 0.98rem;
+      }
+    }
 
     .floating-reaction {
       position: fixed;
+      top: 0;
+      left: 0;
       pointer-events: none;
       z-index: 9998;
       font-size: 2.5rem;
@@ -516,7 +544,7 @@
     }
 
     .section-block {
-      scroll-margin-top: 5.75rem;
+      scroll-margin-top: calc(6rem + env(safe-area-inset-top));
       padding: 3rem 0;
     }
 
@@ -980,7 +1008,7 @@
       padding: 0.75rem 1.8rem;
       font-size: 0.95rem;
       font-weight: 800;
-      color: #593546;
+      color: var(--ink);
       box-shadow: 0 8px 24px rgba(180, 100, 125, 0.18);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
@@ -1161,7 +1189,8 @@
       border-color: rgba(255, 255, 255, 0.2);
     }
     [data-theme="starlight"] .origami-fav-btn.is-favorited {
-      background: var(--pink-deep);
+      background: var(--pink);
+      border-color: var(--pink-deep);
       color: #fff2f6;
     }
     .jar-unread-dot, .nav-unread-dot {
@@ -1372,6 +1401,7 @@
       border: 1px solid var(--card-border);
       padding: 1.25rem 1.25rem;
       box-shadow: 0 7px 22px rgba(0, 0, 0, 0.06);
+      scroll-margin-top: calc(6rem + env(safe-area-inset-top));
       animation: fade-up 0.55s cubic-bezier(0.22, 0.7, 0.25, 1) both;
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.35s ease;
@@ -1573,6 +1603,8 @@
       bottom: calc(100% + 0.55rem);
       width: min(17.5rem, calc(100vw - 1.3rem));
       max-width: calc(100vw - 1.3rem);
+      max-height: calc(100dvh - 5.5rem);
+      overflow-y: auto;
       border-radius: 1.35rem;
       background: var(--paper);
       border: 2px solid var(--pink-deep);
@@ -1989,7 +2021,7 @@
 
     /* Responsive Breakpoints (Tablet & Desktop) */
     @media (min-width: 640px) {
-      html { scroll-padding-top: 5rem; }
+      html { scroll-padding-top: calc(5rem + env(safe-area-inset-top)); }
       .quick-nav {
         top: 0.85rem;
         display: inline-flex;
@@ -2050,7 +2082,7 @@
       .sparkle--mobile-hide { display: block; }
       .main-container { padding: 0 1.75rem 6rem; }
       .section-block {
-        scroll-margin-top: 4.5rem;
+        scroll-margin-top: calc(4.75rem + env(safe-area-inset-top));
         padding: 4.75rem 0;
       }
       .checkin-card {
@@ -2099,6 +2131,16 @@
     }
     @media (min-width: 1280px) {
       #gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-height: 500px) {
+      #lightbox {
+        overflow-y: auto;
+        padding: 0.85rem 4.25rem;
+      }
+      #photo-prev { left: 0.75rem; top: 50%; bottom: auto; transform: translateY(-50%); }
+      #photo-next { right: 0.75rem; top: 50%; bottom: auto; transform: translateY(-50%); }
+      .lightbox-figure { max-height: none; }
+      #lightbox-image { max-height: 56dvh; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2449,10 +2491,32 @@
   <div id="site-toast" class="opacity-0 translate-y-2" role="status" aria-live="polite"></div>
 
   <script>
+    function storageGet(kind, key) {
+      try {
+        const store = kind === "session" ? window.sessionStorage : window.localStorage;
+        return store ? store.getItem(key) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function storageSet(kind, key, value) {
+      try {
+        const store = kind === "session" ? window.sessionStorage : window.localStorage;
+        if (store) store.setItem(key, value);
+      } catch (e) {}
+    }
+
+    function setModalScrollLock(locked) {
+      const value = locked ? "hidden" : "";
+      document.documentElement.style.overflow = value;
+      document.body.style.overflow = value;
+    }
+
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v22" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v23" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2462,12 +2526,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!sessionStorage.getItem("for-sammy-sw-reloaded-22")) {
-            sessionStorage.setItem("for-sammy-sw-reloaded-22", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-23")) {
+            storageSet("session", "for-sammy-sw-reloaded-23", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=22", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=23", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2538,13 +2602,16 @@
     };
 
     const moodStatusEl = document.getElementById("daily-mood-status");
-    const savedMoodData = localStorage.getItem("for-sammy-mood");
+    const savedMoodData = storageGet("local", "for-sammy-mood");
     if (savedMoodData) {
       try {
         const parsed = JSON.parse(savedMoodData);
-        moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
-        const prevBtn = document.querySelector(`.mood-pill[data-mood="${parsed.mood}"]`);
-        if (prevBtn) prevBtn.classList.add("is-active");
+        if (parsed && typeof parsed === "object" && parsed.time && parsed.text) {
+          moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
+          document.querySelectorAll(".mood-pill").forEach((pill) => {
+            if (pill.dataset.mood === parsed.mood) pill.classList.add("is-active");
+          });
+        }
       } catch (e) {}
     }
 
@@ -2559,7 +2626,7 @@
         const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
         moodStatusEl.textContent = responseText;
-        localStorage.setItem("for-sammy-mood", JSON.stringify({ mood: moodKey, text: moodText, time: timeStr }));
+        storageSet("local", "for-sammy-mood", JSON.stringify({ mood: moodKey, text: moodText, time: timeStr }));
         spawnFloatingReaction("💖", window.innerWidth / 2, window.innerHeight / 2);
         showToast("Check-in saved! 🌸");
       });
@@ -2722,13 +2789,14 @@
     const themeToggleBtn = document.getElementById("theme-toggle");
     const metaThemeColor = document.getElementById("meta-theme-color");
     function setTheme(mode) {
-      document.documentElement.setAttribute("data-theme", mode);
-      localStorage.setItem("for-sammy-theme", mode);
-      themeToggleBtn.textContent = mode === "starlight" ? "☀️" : "🌙";
-      themeToggleBtn.setAttribute("aria-label", mode === "starlight" ? "Switch to Daylight Pastel Theme" : "Switch to Cozy Starlight Theme");
-      metaThemeColor.setAttribute("content", mode === "starlight" ? "#1e151b" : "#fff9f5");
+      const normalized = mode === "starlight" ? "starlight" : "daylight";
+      document.documentElement.setAttribute("data-theme", normalized);
+      storageSet("local", "for-sammy-theme", normalized);
+      themeToggleBtn.textContent = normalized === "starlight" ? "☀️" : "🌙";
+      themeToggleBtn.setAttribute("aria-label", normalized === "starlight" ? "Switch to Daylight Pastel Theme" : "Switch to Cozy Starlight Theme");
+      metaThemeColor.setAttribute("content", normalized === "starlight" ? "#1e151b" : "#fff9f5");
     }
-    const savedTheme = localStorage.getItem("for-sammy-theme") || "daylight";
+    const savedTheme = storageGet("local", "for-sammy-theme") === "starlight" ? "starlight" : "daylight";
     setTheme(savedTheme);
     themeToggleBtn.addEventListener("click", () => {
       const current = document.documentElement.getAttribute("data-theme") || "daylight";
@@ -2744,7 +2812,7 @@
 
     document.addEventListener("pointerdown", (event) => {
       if (reduceMotion) return;
-      if (event.target.closest("button, a, input, video, .reactions-dock, .cassette-box, .quick-nav")) return;
+      if (event.target.closest("button, a, input, video, [role='button'], .reactions-dock, .cassette-box, .quick-nav, .modal-backdrop")) return;
 
       for (let i = 0; i < 3; i++) {
         const p = document.createElement("span");
@@ -2771,7 +2839,10 @@
     document.querySelectorAll(".reaction-trigger-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
         const emoji = btn.dataset.reaction;
-        spawnFloatingReaction(emoji, e.clientX, e.clientY);
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX || (rect.left + rect.width / 2);
+        const y = e.clientY || (rect.top + rect.height / 2);
+        spawnFloatingReaction(emoji, x, y);
         showToast(`Sent a little ${emoji} for Sammy!`);
       });
     });
@@ -2785,8 +2856,8 @@
           r.textContent = emoji;
           const drift = (Math.random() - 0.5) * 140;
           const rot = (Math.random() - 0.5) * 70;
-          r.style.setProperty("--rx", `${(originX || window.innerWidth / 2) + (Math.random() - 0.5) * 30}px`);
-          r.style.setProperty("--ry", `${(originY || window.innerHeight - 80) + (Math.random() - 0.5) * 20}px`);
+          r.style.setProperty("--rx", `${(originX || window.innerWidth / 2) - 20 + (Math.random() - 0.5) * 30}px`);
+          r.style.setProperty("--ry", `${(originY || window.innerHeight - 80) - 20 + (Math.random() - 0.5) * 20}px`);
           r.style.setProperty("--drift", `${drift}px`);
           r.style.setProperty("--rot", `${rot}deg`);
           document.body.appendChild(r);
@@ -2809,7 +2880,7 @@
           entry.target.classList.add("is-visible");
           revealObserver.unobserve(entry.target);
         });
-      }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
+      }, { threshold: 0.01, rootMargin: "0px 0px 40px 0px" });
       document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
     }
 
@@ -2850,7 +2921,7 @@
               </div>
             </article>
 
-            <article class="polaroid-face polaroid-face--back">
+            <article class="polaroid-face polaroid-face--back" aria-hidden="true">
               <div class="postcard-header">
                 <div>
                   <p class="postcard-postmark">Postcard for Sammy</p>
@@ -2872,10 +2943,21 @@
           </div>
         `;
 
+        const frontFace = container.querySelector(".polaroid-face--front");
+        const backFace = container.querySelector(".polaroid-face--back");
         const frame = container.querySelector(".polaroid-frame");
         const flipBtn = container.querySelector(".flip-btn");
         const backFlipBtn = container.querySelector(".back-flip-btn");
         const viewFromBackBtn = container.querySelector(".view-from-back-btn");
+
+        const syncCardFaces = (flipped) => {
+          container.classList.toggle("is-flipped", flipped);
+          frontFace.inert = flipped;
+          frontFace.setAttribute("aria-hidden", String(flipped));
+          backFace.inert = !flipped;
+          backFace.setAttribute("aria-hidden", String(!flipped));
+        };
+        syncCardFaces(false);
 
         frame.addEventListener("click", () => openPhoto(index, frame));
         frame.addEventListener("keydown", (e) => {
@@ -2887,11 +2969,13 @@
 
         flipBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          container.classList.toggle("is-flipped");
+          syncCardFaces(true);
+          backFlipBtn.focus({ preventScroll: true });
         });
         backFlipBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          container.classList.remove("is-flipped");
+          syncCardFaces(false);
+          flipBtn.focus({ preventScroll: true });
         });
         viewFromBackBtn.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -2966,18 +3050,26 @@
     const favoritesList = document.getElementById("favorites-list");
 
     let currentNoteData = { text: "", isToday: true, badge: "" };
+    let lastFocusedBeforeNoteModal = null;
+    let lastFocusedBeforeFavModal = null;
+    let lastFocusedBeforeQrModal = null;
 
     // Get current calendar day in Philippine Time (PST, UTC+8)
     function getManilaDateInfo() {
       const now = new Date();
-      const dayFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" });
-      const dateKey = dayFormatter.format(now); // YYYY-MM-DD
+      const partsList = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Manila",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(now);
+      const partMap = Object.fromEntries(partsList.map((p) => [p.type, p.value]));
+      const dateKey = `${partMap.year}-${partMap.month}-${partMap.day}`;
 
       const prettyFormatter = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Manila", weekday: "short", month: "short", day: "numeric", year: "numeric" });
       const prettyDate = prettyFormatter.format(now);
 
-      const parts = dateKey.split("-").map(Number);
-      const seed = (parts[0] * 372 + parts[1] * 31 + parts[2]);
+      const seed = (Number(partMap.year) * 372 + Number(partMap.month) * 31 + Number(partMap.day));
 
       return { dateKey, prettyDate, seed };
     }
@@ -3001,8 +3093,9 @@
     // Favorites persistence
     function getFavorites() {
       try {
-        const raw = localStorage.getItem("for-sammy-fav-notes");
-        return raw ? JSON.parse(raw) : [];
+        const raw = storageGet("local", "for-sammy-fav-notes");
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed.filter(item => item && typeof item.text === "string") : [];
       } catch (e) {
         return [];
       }
@@ -3010,7 +3103,7 @@
 
     function saveFavorites(list) {
       try {
-        localStorage.setItem("for-sammy-fav-notes", JSON.stringify(list));
+        storageSet("local", "for-sammy-fav-notes", JSON.stringify(list));
       } catch (e) {}
       updateFavoritesCounter();
     }
@@ -3067,7 +3160,7 @@
     function updateDailyNoteUI() {
       const { dateKey, prettyDate } = getManilaDateInfo();
       const readKey = "for-sammy-daily-read-" + dateKey;
-      const isRead = localStorage.getItem(readKey) === "true";
+      const isRead = storageGet("local", readKey) === "true";
 
       if (dailyNotePillDate) {
         dailyNotePillDate.textContent = `📅 ${prettyDate}`;
@@ -3083,7 +3176,9 @@
         if (jarBtnLabel) jarBtnLabel.textContent = "Open Today's Note ✨";
         const today = getTodayNote();
         if (dailyNotePreviewSnippet) {
-          dailyNotePreviewSnippet.textContent = `“${today.text.slice(0, 80)}...”`;
+          const chars = Array.from(today.text);
+          const preview = chars.length > 80 ? `${chars.slice(0, 80).join("").trimEnd()}…` : today.text;
+          dailyNotePreviewSnippet.textContent = `“${preview}”`;
         }
       } else {
         if (dailyNoteStatusIndicator) {
@@ -3100,7 +3195,10 @@
       updateFavoritesCounter();
     }
 
-    function displayNoteInModal(text, badgeText, isToday = false) {
+    function displayNoteInModal(text, badgeText, isToday = false, triggerElement = null) {
+      if (noteModal.classList.contains("hidden")) {
+        lastFocusedBeforeNoteModal = triggerElement || document.activeElement;
+      }
       currentNoteData = { text, badge: badgeText, isToday };
       origamiMessage.textContent = text;
       origamiModeBadge.textContent = badgeText;
@@ -3124,14 +3222,14 @@
       noteModal.classList.remove("hidden");
       noteModal.classList.add("flex");
       noteModal.scrollTop = 0;
-      document.body.style.overflow = "hidden";
+      setModalScrollLock(true);
       (noteCloseX || noteCloseBtn).focus({ preventScroll: true });
     }
 
     function openTodayNote() {
       const today = getTodayNote();
       const readKey = "for-sammy-daily-read-" + today.info.dateKey;
-      localStorage.setItem(readKey, "true");
+      storageSet("local", readKey, "true");
       updateDailyNoteUI();
       displayNoteInModal(today.text, `📅 Today's Note · ${today.info.prettyDate}`, true);
     }
@@ -3149,11 +3247,17 @@
     function closeSmileNote() {
       noteModal.classList.add("hidden");
       noteModal.classList.remove("flex");
-      document.body.style.overflow = "";
-      jarButton.focus();
+      setModalScrollLock(false);
+      const restoreTarget = lastFocusedBeforeNoteModal && lastFocusedBeforeNoteModal.isConnected
+        ? lastFocusedBeforeNoteModal
+        : jarButton;
+      if (restoreTarget && typeof restoreTarget.focus === "function") {
+        restoreTarget.focus({ preventScroll: true });
+      }
+      lastFocusedBeforeNoteModal = null;
     }
 
-    function openFavoritesModal() {
+    function renderFavoritesList() {
       const favs = getFavorites();
       favoritesList.replaceChildren();
 
@@ -3168,51 +3272,85 @@
           <p style="font-size:0.88rem;margin-top:0.4rem">When you pull a note you love from the jar, tap the <strong>⭐ Favorite</strong> button to keep it safe here!</p>
         `;
         favoritesList.appendChild(emptyState);
-      } else {
-        favs.forEach((fav, i) => {
-          const item = document.createElement("article");
-          item.className = "favorite-item";
-          item.innerHTML = `
-            <p class="handwriting favorite-item__text">“${fav.text}”</p>
-            <div class="favorite-item__bottom">
-              <span>Saved ${fav.savedAt || "recently"}</span>
-              <div>
-                <button type="button" class="favorite-item__read-btn action-pill" style="font-size:0.75rem;padding:0.2rem 0.6rem;margin-right:0.35rem">Read in jar 🔍</button>
-                <button type="button" class="favorite-item__del" aria-label="Remove from favorites">Remove ✕</button>
-              </div>
-            </div>
-          `;
-
-          item.querySelector(".favorite-item__read-btn").addEventListener("click", () => {
-            closeFavoritesModal();
-            displayNoteInModal(fav.text, "⭐ From Your Favorites", false);
-          });
-
-          item.querySelector(".favorite-item__del").addEventListener("click", () => {
-            let list = getFavorites();
-            list = list.filter(x => x.text !== fav.text);
-            saveFavorites(list);
-            openFavoritesModal();
-            syncFavButtonUI();
-            showToast("Removed from favorites.");
-          });
-
-          favoritesList.appendChild(item);
-        });
+        return;
       }
 
+      favs.forEach((fav) => {
+        const item = document.createElement("article");
+        item.className = "favorite-item";
+
+        const textEl = document.createElement("p");
+        textEl.className = "handwriting favorite-item__text";
+        textEl.textContent = `“${fav.text}”`;
+
+        const bottomEl = document.createElement("div");
+        bottomEl.className = "favorite-item__bottom";
+
+        const dateEl = document.createElement("span");
+        dateEl.textContent = `Saved ${fav.savedAt || "recently"}`;
+
+        const actionsEl = document.createElement("div");
+        const readBtn = document.createElement("button");
+        readBtn.type = "button";
+        readBtn.className = "favorite-item__read-btn action-pill";
+        readBtn.style.cssText = "font-size:0.75rem;padding:0.2rem 0.6rem;margin-right:0.35rem";
+        readBtn.textContent = "Read in jar 🔍";
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "favorite-item__del";
+        delBtn.setAttribute("aria-label", "Remove from favorites");
+        delBtn.textContent = "Remove ✕";
+
+        readBtn.addEventListener("click", () => {
+          const restoreTarget = lastFocusedBeforeFavModal || viewFavoritesBtn;
+          closeFavoritesModal({ restoreFocus: false, unlockScroll: false });
+          displayNoteInModal(fav.text, "⭐ From Your Favorites", false, restoreTarget);
+        });
+
+        delBtn.addEventListener("click", () => {
+          let list = getFavorites();
+          list = list.filter(x => x.text !== fav.text);
+          saveFavorites(list);
+          renderFavoritesList();
+          syncFavButtonUI();
+          (favoritesCloseX || favoritesCloseBtn).focus({ preventScroll: true });
+          showToast("Removed from favorites.");
+        });
+
+        actionsEl.append(readBtn, delBtn);
+        bottomEl.append(dateEl, actionsEl);
+        item.append(textEl, bottomEl);
+        favoritesList.appendChild(item);
+      });
+    }
+
+    function openFavoritesModal() {
+      if (favoritesModal.classList.contains("hidden")) {
+        lastFocusedBeforeFavModal = document.activeElement;
+      }
+      renderFavoritesList();
       favoritesModal.classList.remove("hidden");
       favoritesModal.classList.add("flex");
       favoritesModal.scrollTop = 0;
-      document.body.style.overflow = "hidden";
+      setModalScrollLock(true);
       (favoritesCloseX || favoritesCloseBtn).focus({ preventScroll: true });
     }
 
-    function closeFavoritesModal() {
+    function closeFavoritesModal(options = {}) {
+      const { restoreFocus = true, unlockScroll = true } = options;
       favoritesModal.classList.add("hidden");
       favoritesModal.classList.remove("flex");
-      document.body.style.overflow = "";
-      viewFavoritesBtn.focus();
+      if (unlockScroll) setModalScrollLock(false);
+      if (restoreFocus) {
+        const restoreTarget = lastFocusedBeforeFavModal && lastFocusedBeforeFavModal.isConnected
+          ? lastFocusedBeforeFavModal
+          : viewFavoritesBtn;
+        if (restoreTarget && typeof restoreTarget.focus === "function") {
+          restoreTarget.focus({ preventScroll: true });
+        }
+      }
+      lastFocusedBeforeFavModal = null;
     }
 
     // Attach Event Listeners
@@ -3249,24 +3387,49 @@
     const copyQrLinkBtn = document.getElementById("copy-qr-link-btn");
 
     function openQrModal() {
+      if (qrModal.classList.contains("hidden")) {
+        lastFocusedBeforeQrModal = document.activeElement;
+      }
       qrModal.classList.remove("hidden");
       qrModal.classList.add("flex");
       qrModal.scrollTop = 0;
-      document.body.style.overflow = "hidden";
+      setModalScrollLock(true);
       (qrCloseX || qrCloseBtn).focus({ preventScroll: true });
     }
 
     function closeQrModal() {
       qrModal.classList.add("hidden");
       qrModal.classList.remove("flex");
-      document.body.style.overflow = "";
-      openQrBtn.focus();
+      setModalScrollLock(false);
+      const restoreTarget = lastFocusedBeforeQrModal && lastFocusedBeforeQrModal.isConnected
+        ? lastFocusedBeforeQrModal
+        : openQrBtn;
+      if (restoreTarget && typeof restoreTarget.focus === "function") {
+        restoreTarget.focus({ preventScroll: true });
+      }
+      lastFocusedBeforeQrModal = null;
     }
 
     if (openQrBtn) openQrBtn.addEventListener("click", openQrModal);
     if (qrCloseBtn) qrCloseBtn.addEventListener("click", closeQrModal);
     if (qrCloseX) qrCloseX.addEventListener("click", closeQrModal);
     if (qrModal) qrModal.addEventListener("click", (e) => { if (e.target === qrModal) closeQrModal(); });
+
+    function fallbackCopyText(text) {
+      try {
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.setAttribute("readonly", "");
+        helper.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0;";
+        document.body.appendChild(helper);
+        helper.select();
+        const copied = document.execCommand("copy");
+        helper.remove();
+        return copied;
+      } catch (e) {
+        return false;
+      }
+    }
 
     if (copyQrLinkBtn) {
       copyQrLinkBtn.addEventListener("click", () => {
@@ -3275,10 +3438,10 @@
           navigator.clipboard.writeText(url).then(() => {
             showToast("Website link copied to clipboard! 📋✨");
           }).catch(() => {
-            showToast(url);
+            showToast(fallbackCopyText(url) ? "Website link copied to clipboard! 📋✨" : url);
           });
         } else {
-          showToast(url);
+          showToast(fallbackCopyText(url) ? "Website link copied to clipboard! 📋✨" : url);
         }
       });
     }
@@ -3428,15 +3591,17 @@
       });
     });
 
+    let quoteHighlightTimer = null;
     document.getElementById("quote-surprise").addEventListener("click", () => {
       const cards = Array.from(quoteGrid.querySelectorAll(".quote-card"));
       if (!cards.length) return;
+      clearTimeout(quoteHighlightTimer);
       cards.forEach(c => c.classList.remove("is-highlighted"));
       const picked = cards[Math.floor(Math.random() * cards.length)];
       picked.classList.add("is-highlighted");
-      picked.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
+      picked.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
       showToast("Picked a little note just for you ✨");
-      setTimeout(() => picked.classList.remove("is-highlighted"), 2600);
+      quoteHighlightTimer = setTimeout(() => picked.classList.remove("is-highlighted"), 2600);
     });
 
     /* Lightbox Modal & Canvas Polaroid Download */
@@ -3447,6 +3612,7 @@
     const lightboxSaveBtn = document.getElementById("lightbox-save-btn");
     let activePhoto = 0;
     let touchStartX = null;
+    let touchStartY = null;
     let lastFocusedBeforeLightbox = null;
 
     function showPhoto(index) {
@@ -3463,17 +3629,18 @@
       showPhoto(index);
       lightbox.classList.remove("hidden");
       lightbox.classList.add("flex");
-      document.body.style.overflow = "hidden";
-      document.querySelector(".lightbox-close").focus();
+      setModalScrollLock(true);
+      document.querySelector(".lightbox-close").focus({ preventScroll: true });
     }
 
     function closePhoto() {
       lightbox.classList.add("hidden");
       lightbox.classList.remove("flex");
-      document.body.style.overflow = "";
-      if (lastFocusedBeforeLightbox && typeof lastFocusedBeforeLightbox.focus === "function") {
-        lastFocusedBeforeLightbox.focus();
+      setModalScrollLock(false);
+      if (lastFocusedBeforeLightbox && lastFocusedBeforeLightbox.isConnected && typeof lastFocusedBeforeLightbox.focus === "function") {
+        lastFocusedBeforeLightbox.focus({ preventScroll: true });
       }
+      lastFocusedBeforeLightbox = null;
     }
 
     document.getElementById("photo-prev").addEventListener("click", () => showPhoto(activePhoto - 1));
@@ -3481,21 +3648,50 @@
     document.querySelector(".lightbox-close").addEventListener("click", closePhoto);
     lightbox.addEventListener("click", event => { if (event.target === lightbox) closePhoto(); });
 
-    lightbox.addEventListener("touchstart", event => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
-    lightbox.addEventListener("touchend", event => {
-      if (touchStartX === null) return;
-      const delta = event.changedTouches[0].screenX - touchStartX;
-      if (Math.abs(delta) > 45) showPhoto(activePhoto + (delta < 0 ? 1 : -1));
+    lightbox.addEventListener("touchstart", event => {
+      if (event.touches.length !== 1) {
+        touchStartX = null;
+        touchStartY = null;
+        return;
+      }
+      touchStartX = event.touches[0].screenX;
+      touchStartY = event.touches[0].screenY;
+    }, { passive: true });
+    lightbox.addEventListener("touchcancel", () => {
       touchStartX = null;
+      touchStartY = null;
+    }, { passive: true });
+    lightbox.addEventListener("touchend", event => {
+      if (touchStartX === null || touchStartY === null || event.changedTouches.length !== 1) {
+        touchStartX = null;
+        touchStartY = null;
+        return;
+      }
+      const deltaX = event.changedTouches[0].screenX - touchStartX;
+      const deltaY = event.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+        showPhoto(activePhoto + (deltaX < 0 ? 1 : -1));
+      }
+      touchStartX = null;
+      touchStartY = null;
     }, { passive: true });
 
     /* Save as Polaroid Keepsake with Canvas & Cached Image Support */
-    lightboxSaveBtn.addEventListener("click", async () => {
-      const photo = photos[activePhoto];
+    lightboxSaveBtn.addEventListener("click", () => {
+      const targetIndex = activePhoto;
+      const photo = photos[targetIndex];
       const img = new Image();
-      img.crossOrigin = "anonymous";
+      try {
+        const resolvedUrl = new URL(photo.src, window.location.href);
+        if (resolvedUrl.origin !== window.location.origin) {
+          img.crossOrigin = "anonymous";
+        }
+      } catch (e) {}
 
+      let handled = false;
       const renderCanvas = async () => {
+        if (handled) return;
+        handled = true;
         try {
           if (document.fonts && document.fonts.ready) {
             await document.fonts.ready;
@@ -3522,20 +3718,32 @@
           const photoW = cardWidth - (photoPadding * 2);
           const photoH = 740;
 
-          ctx.fillStyle = "#f3eaed";
+          ctx.fillStyle = photo.fit === "contain" ? "#f4ece9" : "#f3eaed";
           ctx.fillRect(photoPadding, photoPadding, photoW, photoH);
 
-          const imgAspect = img.width / img.height;
-          const targetAspect = photoW / photoH;
-          let sx = 0, sy = 0, sw = img.width, sh = img.height;
-          if (imgAspect > targetAspect) {
-            sw = img.height * targetAspect;
-            sx = (img.width - sw) / 2;
+          if (photo.fit === "contain") {
+            const scale = Math.min(photoW / img.width, photoH / img.height);
+            const dw = img.width * scale;
+            const dh = img.height * scale;
+            const dx = photoPadding + (photoW - dw) / 2;
+            const dy = photoPadding + (photoH - dh) / 2;
+            ctx.drawImage(img, dx, dy, dw, dh);
           } else {
-            sh = img.width / targetAspect;
-            sy = (img.height - sh) * 0.3;
+            const imgAspect = img.width / img.height;
+            const targetAspect = photoW / photoH;
+            let sx = 0, sy = 0, sw = img.width, sh = img.height;
+            const posParts = (photo.pos || "50% 30%").split(/\s+/).map((v) => parseFloat(v) / 100);
+            const posX = Number.isFinite(posParts[0]) ? posParts[0] : 0.5;
+            const posY = Number.isFinite(posParts[1]) ? posParts[1] : 0.3;
+            if (imgAspect > targetAspect) {
+              sw = img.height * targetAspect;
+              sx = (img.width - sw) * posX;
+            } else {
+              sh = img.width / targetAspect;
+              sy = (img.height - sh) * posY;
+            }
+            ctx.drawImage(img, sx, sy, sw, sh, photoPadding, photoPadding, photoW, photoH);
           }
-          ctx.drawImage(img, sx, sy, sw, sh, photoPadding, photoPadding, photoW, photoH);
 
           // Inner photo subtle border
           ctx.strokeStyle = "rgba(0,0,0,0.06)";
@@ -3554,7 +3762,7 @@
           ctx.fillStyle = "#5d444f";
           ctx.font = "bold 44px 'Caveat', cursive, sans-serif";
           ctx.textAlign = "center";
-          ctx.fillText(photo.caption, cardWidth / 2, 855);
+          ctx.fillText(photo.caption, cardWidth / 2, 855, cardWidth - 80);
 
           // Watermark Signature
           ctx.fillStyle = "#aa939c";
@@ -3562,7 +3770,7 @@
           ctx.fillText("FOR SAMMY ✨ · LITTLE CORNER OF THE WEB", cardWidth / 2, 920);
 
           const link = document.createElement("a");
-          link.download = `for-sammy-polaroid-${activePhoto + 1}.png`;
+          link.download = `for-sammy-polaroid-${targetIndex + 1}.png`;
           link.href = canvas.toDataURL("image/png");
           link.click();
           showToast("Polaroid saved to downloads! 📸✨");
@@ -3572,7 +3780,11 @@
       };
 
       img.onload = renderCanvas;
-      img.onerror = () => showToast("Couldn't load image for saving.");
+      img.onerror = () => {
+        if (handled) return;
+        handled = true;
+        showToast("Couldn't load image for saving.");
+      };
       img.src = photo.src;
 
       // Check if already cached in browser
@@ -3639,24 +3851,6 @@
       });
     }
 
-    document.addEventListener("keydown", event => {
-      if (!lightbox.classList.contains("hidden")) {
-        if (event.key === "Escape") closePhoto();
-        if (event.key === "ArrowLeft") showPhoto(activePhoto - 1);
-        if (event.key === "ArrowRight") showPhoto(activePhoto + 1);
-      } else if (!noteModal.classList.contains("hidden") && event.key === "Escape") {
-        closeSmileNote();
-      } else if (!favoritesModal.classList.contains("hidden") && event.key === "Escape") {
-        closeFavoritesModal();
-      } else if (qrModal && !qrModal.classList.contains("hidden") && event.key === "Escape") {
-        closeQrModal();
-      } else if (event.key === "Escape" && !cassetteBox.classList.contains("is-collapsed")) {
-        cassetteBox.classList.add("is-collapsed");
-        musicPillArrow.textContent = "▲";
-        musicPill.setAttribute("aria-expanded", "false");
-      }
-    });
-
     /* Vintage Cassette Engine */
     const playlist = [
       { title: "Beautiful Dream", artist: "Diego Nava · Soft Piano", src: "./assets/audio/bgm.mp3" },
@@ -3688,6 +3882,38 @@
     let musicPausedForVideo = false;
     let synthTimer = null;
     let synthCtx = null;
+    let synthMasterGain = null;
+    let loadedTrackSrc = bgAudio.getAttribute("src") || "";
+
+    function setCassetteExpanded(expanded) {
+      cassetteBox.classList.toggle("is-collapsed", !expanded);
+      musicPillArrow.textContent = expanded ? "▼" : "▲";
+      musicPill.setAttribute("aria-expanded", String(expanded));
+      musicPill.setAttribute("aria-label", expanded ? "Close music player" : "Open music player");
+    }
+
+    document.addEventListener("keydown", event => {
+      if (!lightbox.classList.contains("hidden")) {
+        if (event.key === "Escape") closePhoto();
+        if (event.key === "ArrowLeft") showPhoto(activePhoto - 1);
+        if (event.key === "ArrowRight") showPhoto(activePhoto + 1);
+      } else if (!noteModal.classList.contains("hidden") && event.key === "Escape") {
+        closeSmileNote();
+      } else if (!favoritesModal.classList.contains("hidden") && event.key === "Escape") {
+        closeFavoritesModal();
+      } else if (qrModal && !qrModal.classList.contains("hidden") && event.key === "Escape") {
+        closeQrModal();
+      } else if (event.key === "Escape" && !cassetteBox.classList.contains("is-collapsed")) {
+        setCassetteExpanded(false);
+        musicPill.focus({ preventScroll: true });
+      }
+    });
+
+    document.addEventListener("click", event => {
+      if (!cassetteBox.classList.contains("is-collapsed") && !event.target.closest(".cassette-player-widget")) {
+        setCassetteExpanded(false);
+      }
+    });
 
     function isMusicPlaying() { return isPlaying; }
     function formatTime(secs) {
@@ -3708,6 +3934,7 @@
       }
 
       cassettePlayBtn.textContent = isPlaying ? "⏸" : "▶";
+      cassettePlayBtn.setAttribute("aria-label", isPlaying ? "Pause music" : "Play music");
       musicPillIcon.textContent = isPlaying ? "⏸" : "▶";
       spoolLeft.classList.toggle("is-spinning", isPlaying);
       spoolRight.classList.toggle("is-spinning", isPlaying);
@@ -3721,14 +3948,36 @@
     ];
     let chordIndex = 0;
 
+    function ensureSynthNodes() {
+      if (!synthCtx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        synthCtx = new AudioCtx();
+      }
+      if (!synthMasterGain) {
+        synthMasterGain = synthCtx.createGain();
+        synthMasterGain.connect(synthCtx.destination);
+      }
+      if (synthCtx.state === "suspended") synthCtx.resume();
+    }
+
+    function silenceSynth() {
+      if (synthTimer) {
+        clearInterval(synthTimer);
+        synthTimer = null;
+      }
+      if (synthCtx && synthMasterGain) {
+        try {
+          synthMasterGain.gain.setTargetAtTime(0, synthCtx.currentTime, 0.02);
+        } catch (e) {}
+      }
+    }
+
     function playSynthChord() {
       if (!isPlaying || !playlist[currentTrackIdx].isSynth) return;
       try {
-        if (!synthCtx) {
-          const AudioCtx = window.AudioContext || window.webkitAudioContext;
-          synthCtx = new AudioCtx();
-        }
-        if (synthCtx.state === "suspended") synthCtx.resume();
+        ensureSynthNodes();
+        const masterVol = Math.max(0, Number(cassetteVolSlider.value) * 0.12);
+        synthMasterGain.gain.setTargetAtTime(masterVol, synthCtx.currentTime, 0.03);
 
         const notes = chordPitches[chordIndex % chordPitches.length];
         chordIndex++;
@@ -3736,17 +3985,16 @@
 
         notes.forEach((freq, i) => {
           const osc = synthCtx.createOscillator();
-          const gain = synthCtx.createGain();
+          const env = synthCtx.createGain();
           osc.type = "sine";
           osc.frequency.setValueAtTime(freq, now + i * 0.08);
 
-          const vol = Number(cassetteVolSlider.value) * 0.12;
-          gain.gain.setValueAtTime(0.001, now + i * 0.08);
-          gain.gain.exponentialRampToValueAtTime(vol, now + i * 0.08 + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 2.8);
+          env.gain.setValueAtTime(0.001, now + i * 0.08);
+          env.gain.exponentialRampToValueAtTime(1.0, now + i * 0.08 + 0.1);
+          env.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 2.8);
 
-          osc.connect(gain);
-          gain.connect(synthCtx.destination);
+          osc.connect(env);
+          env.connect(synthMasterGain);
 
           osc.start(now + i * 0.08);
           osc.stop(now + i * 0.08 + 3.0);
@@ -3760,13 +4008,19 @@
         bgAudio.pause();
         isPlaying = true;
         syncCassetteUI();
+        cassetteCurrentTime.textContent = "0:00";
+        cassetteProgressFill.style.width = "0%";
         cassetteDuration.textContent = "∞";
         if (synthTimer) clearInterval(synthTimer);
         playSynthChord();
         synthTimer = setInterval(playSynthChord, 3200);
       } else {
-        if (synthTimer) clearInterval(synthTimer);
-        bgAudio.src = track.src;
+        silenceSynth();
+        if (loadedTrackSrc !== track.src) {
+          loadedTrackSrc = track.src;
+          bgAudio.src = track.src;
+          bgAudio.load();
+        }
         try {
           bgAudio.volume = Number(cassetteVolSlider.value);
         } catch (e) {}
@@ -3781,9 +4035,22 @@
       }
     }
 
+    function switchTrack(delta) {
+      currentTrackIdx = (currentTrackIdx + delta + playlist.length) % playlist.length;
+      silenceSynth();
+      bgAudio.pause();
+      try {
+        bgAudio.currentTime = 0;
+      } catch (e) {}
+      cassetteCurrentTime.textContent = "0:00";
+      cassetteProgressFill.style.width = "0%";
+      cassetteDuration.textContent = playlist[currentTrackIdx].isSynth ? "∞" : "--:--";
+      startCurrentTrack();
+    }
+
     function pauseMusic(forVideo = false) {
       if (forVideo) musicPausedForVideo = true;
-      if (synthTimer) clearInterval(synthTimer);
+      silenceSynth();
       bgAudio.pause();
       isPlaying = false;
       syncCassetteUI();
@@ -3807,29 +4074,26 @@
         else startCurrentTrack();
         return;
       }
-      cassetteBox.classList.toggle("is-collapsed");
-      const isExpanded = !cassetteBox.classList.contains("is-collapsed");
-      musicPillArrow.textContent = isExpanded ? "▼" : "▲";
-      musicPill.setAttribute("aria-expanded", String(isExpanded));
+      setCassetteExpanded(cassetteBox.classList.contains("is-collapsed"));
     });
 
-    cassetteNextBtn.addEventListener("click", () => {
-      currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
-      startCurrentTrack();
-    });
-    cassettePrevBtn.addEventListener("click", () => {
-      currentTrackIdx = (currentTrackIdx - 1 + playlist.length) % playlist.length;
-      startCurrentTrack();
-    });
+    cassetteNextBtn.addEventListener("click", () => switchTrack(1));
+    cassettePrevBtn.addEventListener("click", () => switchTrack(-1));
 
     cassetteVolSlider.addEventListener("input", () => {
+      const vol = Number(cassetteVolSlider.value);
       try {
-        bgAudio.volume = Number(cassetteVolSlider.value);
+        bgAudio.volume = vol;
       } catch (e) {}
+      if (synthCtx && synthMasterGain && isPlaying && playlist[currentTrackIdx].isSynth) {
+        try {
+          synthMasterGain.gain.setTargetAtTime(Math.max(0, vol * 0.12), synthCtx.currentTime, 0.03);
+        } catch (e) {}
+      }
     });
 
     bgAudio.addEventListener("loadedmetadata", () => {
-      if (!playlist[currentTrackIdx].isSynth && bgAudio.duration) {
+      if (!playlist[currentTrackIdx].isSynth && bgAudio.duration && isFinite(bgAudio.duration)) {
         cassetteDuration.textContent = formatTime(bgAudio.duration);
       }
     });
@@ -3847,7 +4111,8 @@
     cassetteProgressBar.addEventListener("click", (e) => {
       if (playlist[currentTrackIdx].isSynth || !bgAudio.duration || !isFinite(bgAudio.duration)) return;
       const rect = cassetteProgressBar.getBoundingClientRect();
-      const clickPos = (e.clientX - rect.left) / rect.width;
+      if (!rect.width) return;
+      const clickPos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       bgAudio.currentTime = clickPos * bgAudio.duration;
     });
 
