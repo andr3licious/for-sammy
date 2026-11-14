@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fff9f5" id="meta-theme-color">
-  <meta name="description" content="A little pastel corner of the web, made just for Sammy.">
+  <meta name="description" content="A real-time pastel corner of the web, made just for Sammy.">
   <meta property="og:title" content="For Sammy ✨ | A Little Corner of the Web">
-  <meta property="og:description" content="Two months of great conversations, good laughs, Polaroids, highlight reels, and little secrets — made just for Sammy.">
+  <meta property="og:description" content="Real-time scrapbook, Polaroids, highlight reels, and smiles since August 16, 2026 — made just for Sammy.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="./assets/photos/photo1.jpg">
 
@@ -21,7 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
 
   <style>
-    /* Daylight Theme Variables (Default) */
+    /* Daylight Theme (Default) */
     :root, [data-theme="daylight"] {
       color-scheme: light;
       --ink: #4a3c43;
@@ -419,8 +419,8 @@
 
     .hero-subtitle {
       margin-top: 1.35rem;
-      max-width: 34rem;
-      font-size: clamp(1.02rem, 2vw, 1.16rem);
+      max-width: 36rem;
+      font-size: clamp(1.02rem, 2vw, 1.18rem);
       font-weight: 600;
       line-height: 1.65;
       color: var(--ink-soft);
@@ -515,38 +515,85 @@
       color: var(--muted);
     }
 
-    /* Milestone Keepsake Card */
+    /* Milestone Keepsake Card with Real-Time Precision Seconds Ticker */
     .milestone-card {
       margin: 2.5rem auto 0;
-      max-width: 52rem;
+      max-width: 54rem;
       border-radius: 2rem;
       border: 1px solid var(--card-border);
       background: var(--paper);
-      padding: 2rem 1.75rem;
+      padding: 2.25rem 1.75rem;
       box-shadow: var(--shadow-card);
       text-align: center;
       position: relative;
       overflow: hidden;
     }
+
+    .milestone-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      background: var(--cream);
+      border: 1px solid var(--card-border);
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--ink-soft);
+      margin-bottom: 0.85rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .live-pulse-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+      animation: live-pulse 2s infinite;
+    }
+    @keyframes live-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+      70% { box-shadow: 0 0 0 9px rgba(52, 211, 153, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+    }
+
     .milestone-counter-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 0.85rem;
       margin: 1.5rem auto;
-      max-width: 28rem;
+      max-width: 38rem;
     }
+    @media (min-width: 640px) {
+      .milestone-counter-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
     .milestone-digit-box {
       border-radius: 1.25rem;
       background: var(--cream);
       border: 1px solid var(--card-border);
-      padding: 0.85rem 0.5rem;
+      padding: 1rem 0.5rem;
+      position: relative;
+      overflow: hidden;
     }
     .milestone-digit {
-      font-size: clamp(2rem, 4vw, 2.85rem);
+      display: block;
+      font-size: clamp(2.2rem, 4.5vw, 3rem);
       font-weight: 900;
       line-height: 1;
       color: var(--pink-deep);
+      font-variant-numeric: tabular-nums;
     }
+    .milestone-digit.seconds-pulse {
+      animation: sec-pulse 1s ease-in-out infinite;
+    }
+    @keyframes sec-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.035); }
+    }
+
     .milestone-label {
       font-size: 0.72rem;
       font-weight: 800;
@@ -555,6 +602,7 @@
       color: var(--muted);
       margin-top: 0.35rem;
     }
+
     .milestone-pills {
       display: flex;
       flex-wrap: wrap;
@@ -576,6 +624,80 @@
       color: var(--ink-soft);
     }
 
+    /* Real-Time Daily Check-In & Local Clock Box */
+    .daily-checkin-box {
+      margin-top: 2rem;
+      padding-top: 1.75rem;
+      border-top: 1px dashed var(--card-border);
+      text-align: center;
+    }
+    .daily-checkin-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+    .live-clock-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      background: var(--cream);
+      border: 1px solid var(--card-border);
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--ink-soft);
+      font-variant-numeric: tabular-nums;
+    }
+    .daily-checkin-greeting {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .daily-checkin-prompt {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0.4rem 0 1rem;
+    }
+    .daily-mood-pills {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .mood-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      background: var(--cream);
+      border: 1px solid var(--card-border);
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--ink-soft);
+      transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .mood-pill:hover {
+      transform: translateY(-2px);
+      background: var(--pink);
+      color: var(--ink);
+      border-color: var(--pink-deep);
+    }
+    .daily-mood-status {
+      margin-top: 0.85rem;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--pink-deep);
+      min-height: 1.4rem;
+      transition: opacity 0.3s ease;
+    }
+
     /* Moments & Memories Section */
     .memories-header {
       margin-bottom: 2rem;
@@ -583,7 +705,6 @@
       flex-direction: column;
       gap: 1rem;
     }
-
     .memories-toolbar {
       margin-bottom: 2.25rem;
       display: flex;
@@ -592,7 +713,6 @@
       justify-content: space-between;
       gap: 0.85rem;
     }
-
     .filter-group {
       display: flex;
       flex-wrap: wrap;
@@ -653,7 +773,6 @@
       min-height: 380px;
       transition: transform 0.5s cubic-bezier(0.22, 0.7, 0.25, 1);
     }
-
     .polaroid-inner {
       position: relative;
       width: 100%;
@@ -661,7 +780,6 @@
       transform-style: preserve-3d;
       transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.25, 1);
     }
-
     .polaroid-card-container.is-flipped .polaroid-inner {
       transform: rotateY(180deg);
     }
@@ -719,7 +837,6 @@
       box-shadow: inset 0 0 0 1px rgba(80, 60, 68, 0.06);
       cursor: pointer;
     }
-
     .gallery-photo {
       width: 100%;
       height: 100%;
@@ -790,7 +907,7 @@
       transform: scale(1.05);
     }
 
-    /* Back of Polaroid (Postcard Layout) */
+    /* Postcard Layout */
     .postcard-header {
       display: flex;
       align-items: flex-start;
@@ -842,7 +959,7 @@
       border-top: 1px dashed rgba(214, 168, 183, 0.5);
     }
 
-    /* Washi Tapes */
+    /* Washi Tape Variants */
     .washi {
       position: absolute;
       z-index: 4;
@@ -871,9 +988,7 @@
     }
 
     /* Jar of Smiles Section */
-    .jar-section {
-      text-align: center;
-    }
+    .jar-section { text-align: center; }
     .jar-wrapper {
       margin: 2rem auto;
       max-width: 20rem;
@@ -886,12 +1001,9 @@
       transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.25, 1);
       filter: drop-shadow(0 12px 28px rgba(180, 110, 135, 0.18));
     }
-    .jar-graphic:hover {
-      transform: translateY(-6px) scale(1.04);
-    }
-    .jar-graphic:active {
-      transform: scale(0.96);
-    }
+    .jar-graphic:hover { transform: translateY(-6px) scale(1.04); }
+    .jar-graphic:active { transform: scale(0.96); }
+
     .jar-btn {
       margin-top: 1.25rem;
       display: inline-flex;
@@ -914,9 +1026,7 @@
     }
 
     /* Origami Note Modal */
-    #note-modal {
-      z-index: 65;
-    }
+    #note-modal { z-index: 65; }
     .origami-paper {
       position: relative;
       margin: auto;
@@ -964,7 +1074,6 @@
       grid-template-columns: repeat(1, minmax(0, 1fr));
       gap: 1.5rem;
     }
-
     .video-card {
       overflow: hidden;
       border-radius: 1.65rem;
@@ -974,7 +1083,6 @@
       box-shadow: var(--shadow-card);
       backdrop-filter: blur(10px);
     }
-
     .video-stage {
       position: relative;
       overflow: hidden;
@@ -982,7 +1090,6 @@
       border: 4px solid rgba(248, 230, 236, 0.7);
       background: #f4eaed;
     }
-
     .video-player {
       display: block;
       aspect-ratio: 16 / 9;
@@ -990,7 +1097,6 @@
       object-fit: cover;
       background: #2b2126;
     }
-
     .video-play {
       position: absolute;
       top: 50%;
@@ -1016,7 +1122,6 @@
       background: #ffffff;
       box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.24), 0 12px 26px rgba(45, 31, 39, 0.22);
     }
-
     .video-mute {
       position: absolute;
       right: 0.75rem;
@@ -1038,7 +1143,6 @@
       transform: scale(1.08);
       background: #ffffff;
     }
-
     .video-caption-row {
       display: flex;
       align-items: center;
@@ -1072,13 +1176,11 @@
       justify-content: center;
       gap: 0.55rem;
     }
-
     #quotes {
       display: grid;
       grid-template-columns: repeat(1, minmax(0, 1fr));
       gap: 1.15rem;
     }
-
     .quote-card {
       position: relative;
       display: flex;
@@ -1097,14 +1199,12 @@
       box-shadow: 0 0 0 3px var(--pink-deep), 0 16px 34px rgba(145, 92, 112, 0.24);
       transform: translateY(-4px) scale(1.02);
     }
-
     .quote-card__top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.65rem;
     }
-
     .quote-card__badge {
       display: inline-flex;
       align-items: center;
@@ -1122,7 +1222,6 @@
       background: rgba(30, 20, 27, 0.75);
       color: #e5ccd6;
     }
-
     .quote-card__mark {
       font-family: Georgia, serif;
       font-size: 2.1rem;
@@ -1130,17 +1229,13 @@
       color: rgba(110, 82, 93, 0.2);
       user-select: none;
     }
-
     .quote-card__text {
       font-size: 1.02rem;
       font-weight: 700;
       line-height: 1.62;
       color: #4f3b45;
     }
-    [data-theme="starlight"] .quote-card__text {
-      color: #f7eaf0;
-    }
-
+    [data-theme="starlight"] .quote-card__text { color: #f7eaf0; }
     .quote-card__author {
       margin-top: 1rem;
       text-align: right;
@@ -1149,9 +1244,7 @@
       letter-spacing: 0.03em;
       color: #795e69;
     }
-    [data-theme="starlight"] .quote-card__author {
-      color: #c9afba;
-    }
+    [data-theme="starlight"] .quote-card__author { color: #c9afba; }
 
     /* Footer */
     .site-footer {
@@ -1164,7 +1257,6 @@
       padding: 3.5rem 1.25rem 7.5rem;
       text-align: center;
     }
-
     .footer-title {
       font-size: 2.1rem;
       font-weight: 600;
@@ -1244,7 +1336,7 @@
       white-space: nowrap;
     }
 
-    /* Vintage Cassette Music Player Widget */
+    /* Vintage Cassette Player */
     .cassette-player-widget {
       position: fixed;
       bottom: 1rem;
@@ -1254,9 +1346,7 @@
       flex-direction: column;
       align-items: flex-end;
       gap: 0.5rem;
-      transition: transform 0.3s ease;
     }
-
     .cassette-box {
       width: 17.5rem;
       border-radius: 1.35rem;
@@ -1268,10 +1358,7 @@
       -webkit-backdrop-filter: blur(14px);
       transition: all 0.35s cubic-bezier(0.2, 0.8, 0.25, 1);
     }
-    .cassette-box.is-collapsed {
-      display: none;
-    }
-
+    .cassette-box.is-collapsed { display: none; }
     .cassette-deck {
       position: relative;
       height: 4.8rem;
@@ -1287,7 +1374,6 @@
     [data-theme="starlight"] .cassette-deck {
       background: linear-gradient(135deg, rgba(145, 90, 111, 0.45), rgba(69, 99, 83, 0.35));
     }
-
     .cassette-window {
       width: 10.5rem;
       height: 2.5rem;
@@ -1311,9 +1397,7 @@
     .cassette-spool.is-spinning {
       animation: spin-spool 2.5s linear infinite;
     }
-    @keyframes spin-spool {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin-spool { to { transform: rotate(360deg); } }
     .cassette-tape-strip {
       width: 4rem;
       height: 0.55rem;
@@ -1321,7 +1405,6 @@
       border-radius: 2px;
       box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
     }
-
     .cassette-info {
       text-align: center;
       margin-bottom: 0.5rem;
@@ -1339,7 +1422,6 @@
       color: var(--muted);
       font-weight: 700;
     }
-
     .cassette-progress-row {
       display: flex;
       align-items: center;
@@ -1366,7 +1448,6 @@
       border-radius: 9999px;
       transition: width 0.2s linear;
     }
-
     .cassette-controls-row {
       display: flex;
       align-items: center;
@@ -1402,7 +1483,6 @@
       background: var(--pink-deep);
       transform: scale(1.1);
     }
-
     .cassette-vol-wrapper {
       display: flex;
       align-items: center;
@@ -1415,7 +1495,6 @@
       accent-color: var(--pink-deep);
       cursor: pointer;
     }
-
     .cassette-pill-toggle {
       display: inline-flex;
       min-height: 3.25rem;
@@ -1432,9 +1511,7 @@
       backdrop-filter: blur(12px);
       transition: transform 0.2s ease;
     }
-    .cassette-pill-toggle:hover {
-      transform: translateY(-2px);
-    }
+    .cassette-pill-toggle:hover { transform: translateY(-2px); }
 
     /* Modals (Lightbox & Secret Letter) */
     .modal-backdrop {
@@ -1446,18 +1523,10 @@
       align-items: center;
       justify-content: center;
     }
-    #lightbox {
-      z-index: 50;
-      padding: 1rem;
-    }
-    #letter-modal {
-      z-index: 60;
-      overflow-y: auto;
-      padding: 1rem;
-    }
+    #lightbox { z-index: 50; padding: 1rem; }
+    #letter-modal { z-index: 60; overflow-y: auto; padding: 1rem; }
 
-    .lightbox-close,
-    .lightbox-nav {
+    .lightbox-close, .lightbox-nav {
       position: absolute;
       z-index: 10;
       display: flex;
@@ -1473,25 +1542,13 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
       transition: transform 0.2s ease, background-color 0.2s ease;
     }
-    .lightbox-close:hover,
-    .lightbox-nav:hover {
+    .lightbox-close:hover, .lightbox-nav:hover {
       background: #ffffff;
       transform: scale(1.06);
     }
-    .lightbox-close {
-      top: 1rem;
-      right: 1rem;
-    }
-    #photo-prev {
-      left: 0.65rem;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    #photo-next {
-      right: 0.65rem;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+    .lightbox-close { top: 1rem; right: 1rem; }
+    #photo-prev { left: 0.65rem; top: 50%; transform: translateY(-50%); }
+    #photo-next { right: 0.65rem; top: 50%; transform: translateY(-50%); }
 
     .lightbox-figure {
       max-height: 88vh;
@@ -1530,7 +1587,6 @@
       letter-spacing: 0.14em;
       color: rgba(255, 255, 255, 0.9);
     }
-
     .lightbox-download-btn {
       display: inline-flex;
       align-items: center;
@@ -1549,7 +1605,7 @@
       background: #ffffff;
     }
 
-    /* Secret Letter Article */
+    /* Secret Letter */
     .letter-paper {
       position: relative;
       margin: auto;
@@ -1569,7 +1625,6 @@
         #2a1e27;
       color: #fcecf2;
     }
-
     #letter-close-x {
       position: absolute;
       right: 0.85rem;
@@ -1588,7 +1643,6 @@
       background: var(--pink);
       color: var(--ink);
     }
-
     .letter-seal {
       margin: 0 auto 1rem;
       display: flex;
@@ -1602,7 +1656,6 @@
       font-size: 1.75rem;
       box-shadow: 0 6px 16px rgba(196, 134, 154, 0.2);
     }
-
     #letter-title {
       margin-bottom: 1rem;
       text-align: center;
@@ -1610,19 +1663,16 @@
       font-weight: 700;
       color: var(--pink-ink);
     }
-
     .letter-body {
       white-space: pre-line;
       font-size: clamp(1.42rem, 2.5vw, 1.65rem);
       line-height: 1.58;
       color: var(--ink);
     }
-
     .letter-footer {
       margin-top: 1.85rem;
       text-align: center;
     }
-
     #letter-close {
       min-height: 3rem;
       border-radius: 9999px;
@@ -1635,9 +1685,7 @@
       box-shadow: 0 4px 12px rgba(173, 118, 136, 0.18);
       transition: transform 0.2s ease, background-color 0.2s ease;
     }
-    #letter-close:hover {
-      transform: translateY(-2px);
-    }
+    #letter-close:hover { transform: translateY(-2px); }
 
     /* Site Toast */
     #site-toast {
@@ -1668,19 +1716,13 @@
     .translate-y-0 { transform: translate(-50%, 0) !important; }
 
     /* Reveal Animations */
-    .reveal {
-      opacity: 1;
-      transform: none;
-    }
+    .reveal { opacity: 1; transform: none; }
     .motion-ready .reveal {
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 0.7, 0.25, 1);
     }
-    .motion-ready .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
     .modal-backdrop.flex { animation: backdrop-in 0.22s ease both; }
     #lightbox.flex figure { animation: modal-in 0.32s cubic-bezier(0.2, 0.75, 0.25, 1) both; }
@@ -1708,17 +1750,14 @@
       from { opacity: 0; transform: translateY(14px) scale(0.975); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    @keyframes backdrop-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
     @keyframes secretHintFade {
       0% { opacity: 0.25; transform: translateY(2px) scale(0.98); }
       50% { opacity: 0.75; }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Responsive Breakpoints */
+    /* Responsive */
     @media (min-width: 640px) {
       .hero-wash, .hero-content { min-height: 650px; }
       .main-container { padding: 0 1.75rem 6rem; }
@@ -1733,17 +1772,14 @@
       .letter-paper { padding: 2.5rem 2.75rem; }
       .hide-on-sm { display: none; }
     }
-
     @media (min-width: 768px) {
       #videos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-
     @media (min-width: 1024px) {
       #gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       #videos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       #quotes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
-
     @media (min-width: 1280px) {
       #gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
@@ -1755,21 +1791,17 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
-      .motion-ready .reveal {
-        opacity: 1 !important;
-        transform: none !important;
-      }
+      .motion-ready .reveal { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
 <body>
-  <!-- Floating Tap Sparkles Container -->
   <div id="tap-fx-container" aria-hidden="true"></div>
 
   <!-- Sticky Quick Nav Bar -->
   <nav class="quick-nav" aria-label="Page sections">
     <a class="quick-nav__link is-active" href="#top" data-nav-link="top">🌸 Top</a>
-    <a class="quick-nav__link" href="#milestone" data-nav-link="milestone">⏳ Milestone</a>
+    <a class="quick-nav__link" href="#milestone" data-nav-link="milestone">⏳ Real-Time</a>
     <a class="quick-nav__link" href="#memories" data-nav-link="memories">📸 Memories</a>
     <a class="quick-nav__link" href="#jar-of-smiles" data-nav-link="jar-of-smiles">🫙 Jar</a>
     <a class="quick-nav__link" href="#reels" data-nav-link="reels">🎞️ Reels</a>
@@ -1787,7 +1819,7 @@
     <button type="button" class="reaction-trigger-btn" data-reaction="✨" aria-label="Send sparkles reaction" title="Sparkles">✨</button>
   </div>
 
-  <!-- Hero Header -->
+  <!-- Hero Header with Real-Time Greeting & Live Days -->
   <header id="top" class="hero-wash">
     <div class="hero-glow hero-glow--pink" aria-hidden="true"></div>
     <div class="hero-glow hero-glow--sage" aria-hidden="true"></div>
@@ -1800,9 +1832,9 @@
 
     <div class="hero-content">
       <span class="hero-badge">🌸 A Little Corner of the Web</span>
-      <p class="handwriting hero-kicker">a little something for you</p>
+      <p id="hero-greeting" class="handwriting hero-kicker">a little something for you</p>
       <h1 class="hero-title">Just for You,<br class="hide-on-sm"> Sammy <span style="display:inline-block;color:#e6a8b8">✨</span></h1>
-      <p class="hero-subtitle">Two months of great conversations and good laughs.</p>
+      <p id="hero-subtitle" class="hero-subtitle"><span id="hero-days-text">90</span> days of great conversations, good laughs, and counting every second.</p>
       <div class="hero-actions">
         <a href="#memories" class="hero-cta">Wander a little <span aria-hidden="true">↓</span></a>
         <a href="#jar-of-smiles" class="hero-cta">Jar of Smiles 🫙✨</a>
@@ -1816,25 +1848,38 @@
   </header>
 
   <main class="main-container">
-    <!-- Milestone Keepsake Card -->
+    <!-- Real-Time Precision Milestone Clock & Daily Check-In -->
     <section id="milestone" class="section-block" style="padding-top:2.5rem;padding-bottom:1.5rem">
       <div class="reveal milestone-card">
-        <p class="section-eyebrow" style="color:var(--pink-deep)">conversations &amp; good laughs milestone</p>
-        <h2 class="handwriting section-heading" style="font-size:clamp(2.4rem,4.5vw,3.2rem)">Two Months and Counting ✨</h2>
-        <p class="section-desc" style="max-width:32rem;margin:0.5rem auto 0">Counting every day, hour, and minute of great conversations since day one, bitaw!</p>
+        <div class="milestone-live-badge">
+          <span class="live-pulse-dot" aria-hidden="true"></span>
+          <span>Live Precision Counter · Started Talking August 16, 2026</span>
+        </div>
 
+        <h2 id="milestone-heading" class="handwriting section-heading" style="font-size:clamp(2.4rem,4.5vw,3.2rem)">
+          <span id="milestone-heading-days">90</span> Days and Counting ✨
+        </h2>
+        <p class="section-desc" style="max-width:34rem;margin:0.5rem auto 0">
+          Counting every single day, hour, minute, and second of great conversations and good laughs since August 16, 2026, bitaw!
+        </p>
+
+        <!-- 4-Column Live Real-Time Precision Ticker -->
         <div class="milestone-counter-grid">
           <div class="milestone-digit-box">
-            <span id="milestone-days" class="milestone-digit">70</span>
-            <p class="milestone-label">Days Together</p>
+            <span id="milestone-days" class="milestone-digit">90</span>
+            <p class="milestone-label">Days</p>
           </div>
           <div class="milestone-digit-box">
-            <span id="milestone-hours" class="milestone-digit">14</span>
+            <span id="milestone-hours" class="milestone-digit">11</span>
             <p class="milestone-label">Hours</p>
           </div>
           <div class="milestone-digit-box">
-            <span id="milestone-minutes" class="milestone-digit">28</span>
+            <span id="milestone-minutes" class="milestone-digit">44</span>
             <p class="milestone-label">Minutes</p>
+          </div>
+          <div class="milestone-digit-box">
+            <span id="milestone-seconds" class="milestone-digit seconds-pulse">00</span>
+            <p class="milestone-label">Seconds</p>
           </div>
         </div>
 
@@ -1842,6 +1887,23 @@
           <span class="milestone-pill">💬 Endless good chats</span>
           <span class="milestone-pill">😸 Top-tier cat memes</span>
           <span class="milestone-pill">☕ Infinite smiles</span>
+        </div>
+
+        <!-- Real-Time Interactive Check-In & Live Clock -->
+        <div class="daily-checkin-box">
+          <div class="daily-checkin-top">
+            <span class="live-clock-pill">🕒 <span id="live-clock-time">--:--:--</span></span>
+            <span class="daily-checkin-greeting" id="daily-checkin-greeting">Hope you are having a lovely day, Sammy 🤍</span>
+          </div>
+          <p class="handwriting daily-checkin-prompt">Quick check-in: How are you feeling right now?</p>
+          <div class="daily-mood-pills" role="group" aria-label="Sammy's daily mood">
+            <button type="button" class="mood-pill" data-mood="happy">🌸 Happy &amp; blooming</button>
+            <button type="button" class="mood-pill" data-mood="busy">☕ Busy &amp; caffeinated</button>
+            <button type="button" class="mood-pill" data-mood="sleepy">😴 Sleepy / need blanket</button>
+            <button type="button" class="mood-pill" data-mood="smile">🥺 Need a gentle smile</button>
+            <button type="button" class="mood-pill" data-mood="great">✨ Ready to conquer</button>
+          </div>
+          <p id="daily-mood-status" class="daily-mood-status"></p>
         </div>
       </div>
     </section>
@@ -1873,7 +1935,7 @@
       <div id="gallery"></div>
     </section>
 
-    <!-- Jar of Smiles Interactive Section -->
+    <!-- Jar of Smiles Section -->
     <section id="jar-of-smiles" class="section-block jar-section">
       <div class="reveal section-header-center">
         <p class="section-eyebrow" style="color:#e092a8">open whenever you need a boost</p>
@@ -1883,14 +1945,11 @@
 
       <div class="reveal jar-wrapper">
         <svg id="jar-trigger" class="jar-graphic" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="button" aria-label="Pick an origami note from the Jar of Smiles" tabindex="0">
-          <!-- Glass Jar Body -->
           <rect x="35" y="42" width="130" height="18" rx="7" fill="#fce4ec" stroke="#f48fb1" stroke-width="3"/>
           <path d="M50 60 H150 V80 C150 95 168 105 168 125 V210 C168 225 155 235 140 235 H60 C45 235 32 225 32 210 V125 C32 105 50 95 50 80 Z" fill="rgba(255, 245, 248, 0.72)" stroke="#f48fb1" stroke-width="3"/>
-          <!-- Lid & Cork -->
           <rect x="60" y="22" width="80" height="20" rx="6" fill="#dfbe99" stroke="#b08b68" stroke-width="2.5"/>
           <path d="M72 42 H128" stroke="#8d6e63" stroke-width="2"/>
           <path d="M58 50 C95 54 105 54 142 50" stroke="#f8bbd0" stroke-width="2"/>
-          <!-- Folded Origami Stars inside jar -->
           <circle cx="70" cy="190" r="14" fill="#fad2e1"/>
           <text x="64" y="196" font-size="14">⭐</text>
           <circle cx="130" cy="185" r="15" fill="#d8f3dc"/>
@@ -1903,7 +1962,6 @@
           <text x="118" y="147" font-size="15">⭐</text>
           <circle cx="100" cy="205" r="13" fill="#d4eafc"/>
           <text x="94" y="211" font-size="13">♡</text>
-          <!-- Glass highlight reflection -->
           <path d="M46 115 C46 100 56 90 56 80" stroke="rgba(255,255,255,0.85)" stroke-width="4" stroke-linecap="round"/>
           <path d="M46 135 V195" stroke="rgba(255,255,255,0.75)" stroke-width="4" stroke-linecap="round"/>
         </svg>
@@ -1957,7 +2015,7 @@
     <p id="heart-toast" class="opacity-0" role="status" aria-live="polite"></p>
   </footer>
 
-  <!-- Vintage Cassette / Music Player Widget -->
+  <!-- Vintage Cassette Player -->
   <div class="cassette-player-widget">
     <div id="cassette-box" class="cassette-box is-collapsed">
       <div class="cassette-deck">
@@ -2026,7 +2084,7 @@
     </article>
   </div>
 
-  <!-- Secret Letter Modal -->
+  <!-- Secret Letter Modal with Real-Time Milestone -->
   <div id="letter-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="letter-title">
     <article class="letter-paper">
       <button type="button" id="letter-close-x" aria-label="Close letter">×</button>
@@ -2034,7 +2092,7 @@
       <h2 id="letter-title" class="handwriting">A little note for you</h2>
       <div class="handwriting letter-body">Oych Sammy, you found the hidden note diaych. ✨
 
-I know it's only been around two months since we met, but getting to know you has easily been one of the best parts of my recent weeks, bitaw.
+I know it's only been around <span id="letter-days-text">90 days</span> since we first started talking back on August 16, 2026, but getting to know you has easily been one of the best parts of my recent weeks, bitaw.
 
 You just have this effortless way of making even the most random conversations feel so fun. Di man ko showy or anything (botbota sa dili showy HAHAHAHA), but I genuinely appreciate you and how comfortable it is to talk to you.
 
@@ -2045,16 +2103,115 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
     </article>
   </div>
 
-  <!-- Site Toast Message -->
   <div id="site-toast" class="opacity-0 translate-y-2" role="status" aria-live="polite"></div>
 
   <script>
-    /* PWA Service Worker Registration */
+    /* PWA Service Worker */
     if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
 
-    /* Photos Data with Back-of-Polaroid Notes */
+    /* Start Date: August 16, 2026 */
+    const startDate = new Date(2026, 7, 16, 0, 0, 0); // Month 7 is August
+
+    /* Real-Time Precision Milestone Clock & Dynamic Greetings */
+    function updateRealTimeEngine() {
+      const now = new Date();
+      const diff = Math.max(0, now - startDate);
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (3600 * 24));
+      const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = Math.floor(totalSeconds % 60);
+
+      // Milestone counter digits
+      const daysEl = document.getElementById("milestone-days");
+      const hoursEl = document.getElementById("milestone-hours");
+      const minsEl = document.getElementById("milestone-minutes");
+      const secsEl = document.getElementById("milestone-seconds");
+      if (daysEl) daysEl.textContent = days;
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
+      if (minsEl) minsEl.textContent = String(minutes).padStart(2, "0");
+      if (secsEl) secsEl.textContent = String(seconds).padStart(2, "0");
+
+      // Dynamic Hero Greeting by time of day
+      const hr = now.getHours();
+      let timeGreeting = "a little something for you";
+      let checkinGreeting = "Hope you are having a lovely day, Sammy 🤍";
+      if (hr >= 5 && hr < 12) {
+        timeGreeting = "Good morning, Sammy 🌅";
+        checkinGreeting = "Hope your morning is off to a gentle, lovely start 🌸";
+      } else if (hr >= 12 && hr < 17) {
+        timeGreeting = "Good afternoon, Sammy ☀️";
+        checkinGreeting = "Hope your afternoon is going smoothly and easily ☕";
+      } else if (hr >= 17 && hr < 22) {
+        timeGreeting = "Good evening, Sammy 🌇";
+        checkinGreeting = "Time to wind down and relax for the evening 🌿";
+      } else {
+        timeGreeting = "Late night thoughts for Sammy 🌙";
+        checkinGreeting = "Quiet late night hours — get some sweet rest soon 💤";
+      }
+
+      const heroGreetingEl = document.getElementById("hero-greeting");
+      if (heroGreetingEl) heroGreetingEl.textContent = timeGreeting;
+
+      const checkinGreetingEl = document.getElementById("daily-checkin-greeting");
+      if (checkinGreetingEl) checkinGreetingEl.textContent = checkinGreeting;
+
+      // Dynamic text elements
+      const heroDaysEl = document.getElementById("hero-days-text");
+      if (heroDaysEl) heroDaysEl.textContent = days;
+
+      const milestoneHeadingDays = document.getElementById("milestone-heading-days");
+      if (milestoneHeadingDays) milestoneHeadingDays.textContent = days;
+
+      const letterDaysText = document.getElementById("letter-days-text");
+      if (letterDaysText) letterDaysText.textContent = `${days} days`;
+
+      // Live clock pill
+      const liveClockEl = document.getElementById("live-clock-time");
+      if (liveClockEl) {
+        liveClockEl.textContent = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      }
+    }
+
+    updateRealTimeEngine();
+    setInterval(updateRealTimeEngine, 1000);
+
+    /* Real-Time Daily Mood Check-In */
+    const moodResponses = {
+      happy: "Love that for you, Sammy! Keep shining that bright, lovely energy today! ✨🌸",
+      busy: "Pahuway pud panagsa, Sammy! Grab some water and take it one step at a time. You got this! ☕💪",
+      sleepy: "Sending cozy blanket burrito vibes your way! Sneak in a quick power nap whenever you can 🐾🛌",
+      smile: "Emergency warm hug & smiles incoming! Check out the Jar of Smiles or cute cat memes below 🤍🥺",
+      great: "Unstoppable! Go conquer whatever you're working on today, Sammy 👸🌟"
+    };
+
+    const moodStatusEl = document.getElementById("daily-mood-status");
+    const savedMoodData = localStorage.getItem("for-sammy-mood");
+    if (savedMoodData) {
+      try {
+        const parsed = JSON.parse(savedMoodData);
+        moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
+      } catch (e) {}
+    }
+
+    document.querySelectorAll(".mood-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const moodKey = btn.dataset.mood;
+        const moodText = btn.textContent;
+        const responseText = moodResponses[moodKey] || "Glad you checked in today, Sammy! 🤍";
+        const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+        moodStatusEl.textContent = responseText;
+        localStorage.setItem("for-sammy-mood", JSON.stringify({ mood: moodKey, text: moodText, time: timeStr }));
+        spawnFloatingReaction("💖", window.innerWidth / 2, window.innerHeight / 2);
+        showToast("Check-in saved! 🌸");
+      });
+    });
+
+    /* Photos Data with Custom Back-of-Polaroid Notes */
     const photos = [
       { src: "./assets/photos/photo1.jpg", caption: "Pink birds and a little side-eye 🐦", alt: "Sammy looking upward as a playful filter adds pink birds around her head", kind: "Sammy", pos: "50% 28%", note: "Pink birds and side-eye — the official filter of 'did you really just say that?' 😂" },
       { src: "./assets/photos/photo14.jpeg", caption: "Those eyes are asking very politely 🥺", alt: "A close-up of a white cat with oversized, pleading eyes", kind: "Cat", pos: "50% 40%", note: "The sweetest pleading eyes in the world. Who could ever say no to that face?" },
@@ -2065,7 +2222,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       { src: "./assets/photos/photo4.jpg", caption: "A distinguished little disguise 🎩", alt: "Sammy wearing oversized black glasses and a curled moustache filter", kind: "Sammy", pos: "50% 36%", note: "Sir Sammy and the distinguished moustache disguise. Very sophisticated, 1800s gentleman vibes! 🎩" },
       { src: "./assets/photos/photo13.jpeg", caption: "Two moods, one very expressive kitty 😹", alt: "A two-panel meme showing a white cat looking calm and then opening its mouth", kind: "Cat", pos: "50% 50%", fit: "contain", note: "From polite gentleman to full-blown gasp in 0.2 seconds. A timeless classic meme." },
       { src: "./assets/photos/photo5.jpg", caption: "The dramatic warm-filter era 🎞️", alt: "Sammy in a striped top using a dramatic warm filter, with filter options below", kind: "Sammy", pos: "50% 18%", note: "The dramatic warm filter playlist era. The vibes were undeniably immaculate 🎞️" },
-      { src: "./assets/photos/photo21.jpeg", caption: "Seeing your pretty face 😵‍💫", alt: "A gray tabby cat opening its mouth with a CapCut watermark", kind: "Cat", pos: "50% 38%", note: "Total sensory overload kitty. Exactly how I feel trying to process how fast two months flew by!" },
+      { src: "./assets/photos/photo21.jpeg", caption: "Seeing your pretty face 😵‍💫", alt: "A gray tabby cat opening its mouth with a CapCut watermark", kind: "Cat", pos: "50% 38%", note: "Total sensory overload kitty. Exactly how I feel trying to process how fast 90 days flew by!" },
       { src: "./assets/photos/photo6.jpg", caption: "Three lovely looks in a row 🤍", alt: "A three-photo collage of Sammy taking selfies in a black-and-white striped top", kind: "Sammy", pos: "50% 50%", fit: "contain", note: "Three striped selfies in a row. Truly one of the best looks, hands down 🤍" },
       { src: "./assets/photos/photo17.jpeg", caption: "Cuddle pile, no personal space 🐈", alt: "Two cats cuddled close together, nose to nose", kind: "Cat", pos: "50% 42%", note: "Zero personal space cuddle pile. Pure, unadulterated cozy energy." },
       { src: "./assets/photos/photo7.jpg", caption: "A little match-day mood ⚽", alt: "Sammy taking a selfie in a black Manchester United jersey", kind: "Sammy", pos: "50% 32%", note: "Manchester United match-day fit! Rocking black like an absolute champion ⚽" },
@@ -2091,35 +2248,16 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       "Sending you the coziest virtual hug and a mug of whatever warm drink makes you happiest. ☕✨",
       "May your day be filled with unexpected good news, fast Wi-Fi, and top-tier memes! 😂",
       "Amping always, Sammy! Don't let anyone dull your sparkle today. You're one of one. 👸✨",
-      "Remember how far you've come. Even on quiet days, you're growing and shining. 🌙",
+      "Remember how far you've come since August. Even on quiet days, you're growing and shining. 🌙",
       "Emergency cute cat meowah coming right up: *mwah!* 🐾💋",
       "Just wanted to remind you that your presence makes the day a whole lot lighter. Bitaw! 💌",
       "Whatever goal you're working toward today, you're capable of getting there. Rooting for you! 🌟",
       "Take a deep breath in... and let go of any stress you've been carrying. You're safe, capable, and valued. 🌷",
-      "Two months in and every conversation with you is still a highlight of my week. 🤍",
+      "Every single conversation with you is still a highlight of my week. 🤍",
       "Here’s an official pass to take a guilt-free 15-minute nap or snack break. You earned it! 🍪"
     ];
 
-    /* Days Milestone Counter (calculates live since ~Sep 6, 2026 / 70+ days) */
-    const startDate = new Date(2026, 8, 5, 12, 0, 0); // Sep 5, 2026
-    function updateMilestoneCounter() {
-      const now = new Date();
-      const diff = Math.max(0, now - startDate);
-      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-      const daysEl = document.getElementById("milestone-days");
-      const hoursEl = document.getElementById("milestone-hours");
-      const minsEl = document.getElementById("milestone-minutes");
-      if (daysEl) daysEl.textContent = totalDays;
-      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
-      if (minsEl) minsEl.textContent = String(minutes).padStart(2, "0");
-    }
-    updateMilestoneCounter();
-    setInterval(updateMilestoneCounter, 60000);
-
-    /* Theme Toggle (Daylight / Starlight Cozy Mode) */
+    /* Theme Toggle */
     const themeToggleBtn = document.getElementById("theme-toggle");
     const metaThemeColor = document.getElementById("meta-theme-color");
     function setTheme(mode) {
@@ -2168,7 +2306,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       }
     });
 
-    /* Interactive Reaction Dock */
+    /* Reactions Dock */
     document.querySelectorAll(".reaction-trigger-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
         const emoji = btn.dataset.reaction;
@@ -2238,7 +2376,6 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
 
         container.innerHTML = `
           <div class="polaroid-inner">
-            <!-- Front Face -->
             <article class="polaroid-face polaroid-face--front">
               <span class="washi ${washiClass}" aria-hidden="true"></span>
               <div class="polaroid-frame" role="button" tabindex="0" aria-label="Open photo ${index + 1} in viewer">
@@ -2252,7 +2389,6 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
               </div>
             </article>
 
-            <!-- Back Face (Vintage Postcard) -->
             <article class="polaroid-face polaroid-face--back">
               <div class="postcard-header">
                 <div>
@@ -2361,7 +2497,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
     noteCloseBtn.addEventListener("click", closeSmileNote);
     noteModal.addEventListener("click", (e) => { if (e.target === noteModal) closeSmileNote(); });
 
-    /* Highlight Reels Video Coordination with Custom Posters */
+    /* Video Reels Coordination with Posters */
     const videoCaptions = ["A little scene-stealer 🎞️", "A moment in motion 🌿", "Press play for a smile ✨"];
     const videos = document.getElementById("videos");
     const videoPlayers = [];
@@ -2576,7 +2712,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
           canvas.width = cardWidth;
           canvas.height = cardHeight;
 
-          // Polaroid Card Background
+          // Polaroid Background
           ctx.fillStyle = "#fffdf9";
           ctx.fillRect(0, 0, cardWidth, cardHeight);
 
@@ -2593,7 +2729,6 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
           ctx.fillStyle = "#f3eaed";
           ctx.fillRect(photoPadding, photoPadding, photoW, photoH);
 
-          // Calculate aspect ratio crop
           const imgAspect = img.width / img.height;
           const targetAspect = photoW / photoH;
           let sx = 0, sy = 0, sw = img.width, sh = img.height;
@@ -2602,11 +2737,11 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
             sx = (img.width - sw) / 2;
           } else {
             sh = img.width / targetAspect;
-            sy = (img.height - sh) * 0.3; // slightly top-weighted for portraits
+            sy = (img.height - sh) * 0.3;
           }
           ctx.drawImage(img, sx, sy, sw, sh, photoPadding, photoPadding, photoW, photoH);
 
-          // Inner photo subtle shadow
+          // Inner photo border
           ctx.strokeStyle = "rgba(0,0,0,0.06)";
           ctx.lineWidth = 2;
           ctx.strokeRect(photoPadding, photoPadding, photoW, photoH);
@@ -2625,10 +2760,11 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
           ctx.textAlign = "center";
           ctx.fillText(photo.caption, cardWidth / 2, 855);
 
-          // Watermark / Date
+          // Real-time Watermark Date
+          const liveDays = Math.floor(Math.max(0, new Date() - startDate) / (1000 * 60 * 60 * 24));
           ctx.fillStyle = "#aa939c";
           ctx.font = "bold 20px 'Nunito', sans-serif";
-          ctx.fillText("FOR SAMMY ✨ · TWO MONTHS MILESTONE", cardWidth / 2, 920);
+          ctx.fillText(`FOR SAMMY ✨ · ${liveDays} DAYS & COUNTING · AUG 16, 2026`, cardWidth / 2, 920);
 
           const link = document.createElement("a");
           link.download = `for-sammy-polaroid-${activePhoto + 1}.png`;
@@ -2724,7 +2860,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       }
     });
 
-    /* Vintage Cassette Player Engine */
+    /* Vintage Cassette Engine */
     const playlist = [
       { title: "Beautiful Dream", artist: "Diego Nava · Soft Piano", src: "./assets/audio/bgm.mp3" },
       { title: "Starlight Lofi Melody", artist: "Acoustic Chime Progression", isSynth: true }
@@ -2755,10 +2891,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
     let synthTimer = null;
     let synthCtx = null;
 
-    function isMusicPlaying() {
-      return isPlaying;
-    }
-
+    function isMusicPlaying() { return isPlaying; }
     function formatTime(secs) {
       if (isNaN(secs) || secs < 0) return "0:00";
       const m = Math.floor(secs / 60);
@@ -2778,12 +2911,11 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       spoolRight.classList.toggle("is-spinning", isPlaying);
     }
 
-    // Gentle Web Audio Synthesizer for Track 2 (Starlight Lofi Chords)
     const chordPitches = [
-      [329.63, 392.00, 493.88, 587.33], // Em9
-      [261.63, 329.63, 392.00, 523.25], // Cmaj7
-      [293.66, 369.99, 440.00, 587.33], // D6
-      [220.00, 261.63, 329.63, 392.00]  // Am7
+      [329.63, 392.00, 493.88, 587.33],
+      [261.63, 329.63, 392.00, 523.25],
+      [293.66, 369.99, 440.00, 587.33],
+      [220.00, 261.63, 329.63, 392.00]
     ];
     let chordIndex = 0;
 
@@ -2907,7 +3039,7 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
 
     syncCassetteUI();
 
-    /* Site Toast Function */
+    /* Site Toast */
     let toastTimer;
     function showToast(message) {
       const toast = document.getElementById("site-toast");
