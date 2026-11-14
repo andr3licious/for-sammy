@@ -1065,6 +1065,211 @@
       gap: 0.75rem;
     }
 
+    /* Daily Note Card & Favorites */
+    .daily-note-card {
+      margin: 0 auto 2.2rem;
+      max-width: 36rem;
+      background: var(--paper);
+      border: 2px dashed rgba(244, 169, 196, 0.55);
+      border-radius: 1.85rem;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 12px 32px rgba(180, 100, 125, 0.12);
+      text-align: center;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .daily-note-card:hover {
+      box-shadow: 0 16px 38px rgba(180, 100, 125, 0.18);
+    }
+    [data-theme="starlight"] .daily-note-card {
+      background: rgba(34, 22, 30, 0.85);
+      border-color: rgba(244, 169, 196, 0.28);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+    .daily-note-card__top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 0.75rem;
+    }
+    .daily-note-pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      background: rgba(242, 169, 188, 0.25);
+      color: var(--pink-deep);
+    }
+    [data-theme="starlight"] .daily-note-pill {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd8e6;
+    }
+    .daily-note-pill--status {
+      background: #e6f9ed;
+      color: #237844;
+      border: 1px solid rgba(35, 120, 68, 0.22);
+    }
+    .daily-note-pill--status.is-read {
+      background: rgba(230, 220, 228, 0.6);
+      color: var(--muted);
+      border-color: transparent;
+    }
+    [data-theme="starlight"] .daily-note-pill--status {
+      background: rgba(35, 90, 55, 0.5);
+      color: #a3f0c0;
+      border-color: rgba(163, 240, 192, 0.3);
+    }
+    [data-theme="starlight"] .daily-note-pill--status.is-read {
+      background: rgba(255, 255, 255, 0.08);
+      color: #c9afba;
+      border-color: transparent;
+    }
+    .daily-note-card__heading {
+      font-size: clamp(2rem, 3.8vw, 2.6rem);
+      color: var(--pink-deep);
+      margin-bottom: 0.45rem;
+      line-height: 1.25;
+    }
+    .daily-note-card__snippet {
+      font-size: 0.94rem;
+      color: var(--muted);
+      margin: 0.4rem auto 1.4rem;
+      max-width: 28rem;
+      line-height: 1.5;
+    }
+    .daily-note-card__btns {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+    }
+    .origami-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.95rem;
+      flex-wrap: wrap;
+    }
+    .origami-mode-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      background: rgba(242, 169, 188, 0.22);
+      color: var(--pink-deep);
+    }
+    [data-theme="starlight"] .origami-mode-badge {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd8e6;
+    }
+    .origami-fav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 9999px;
+      padding: 0.3rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .origami-fav-btn:hover {
+      transform: scale(1.04);
+    }
+    .origami-fav-btn.is-favorited {
+      background: var(--pink);
+      border-color: var(--pink-deep);
+      color: #593546;
+    }
+    [data-theme="starlight"] .origami-fav-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd8e6;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    [data-theme="starlight"] .origami-fav-btn.is-favorited {
+      background: var(--pink-deep);
+      color: #fff2f6;
+    }
+    .jar-unread-dot, .nav-unread-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e0537d;
+      vertical-align: middle;
+      animation: pulse-pink 2s infinite;
+    }
+    .jar-unread-dot {
+      margin-right: 6px;
+    }
+    .nav-unread-dot {
+      margin-left: 4px;
+    }
+    @keyframes pulse-pink {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(224, 83, 125, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(224, 83, 125, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(224, 83, 125, 0); }
+    }
+    .favorites-list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      max-height: 52vh;
+      overflow-y: auto;
+      padding: 0.5rem 0.25rem;
+      text-align: left;
+    }
+    .favorite-item {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--card-border);
+      border-radius: 1.15rem;
+      padding: 1rem 1.25rem;
+      position: relative;
+    }
+    [data-theme="starlight"] .favorite-item {
+      background: rgba(45, 30, 40, 0.8);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .favorite-item__text {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .favorite-item__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .favorite-item__del {
+      background: none;
+      border: none;
+      color: #e0537d;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+    }
+    .favorite-item__del:hover {
+      text-decoration: underline;
+    }
+
+
     /* Highlight Reels Section */
     .section-header-center {
       margin-bottom: 2.4rem;
@@ -1846,7 +2051,7 @@
     <a class="quick-nav__link is-active" href="#top" data-nav-link="top">🌸 Top</a>
     <a class="quick-nav__link" href="#milestone" data-nav-link="milestone">⏳ Real-Time</a>
     <a class="quick-nav__link" href="#memories" data-nav-link="memories">📸 Memories</a>
-    <a class="quick-nav__link" href="#jar-of-smiles" data-nav-link="jar-of-smiles">🫙 Jar</a>
+    <a class="quick-nav__link" href="#jar-of-smiles" data-nav-link="jar-of-smiles">🫙 Notes <span id="nav-unread-dot" class="nav-unread-dot hidden" aria-label="New note today"></span></a>
     <a class="quick-nav__link" href="#reels" data-nav-link="reels">🎞️ Reels</a>
     <a class="quick-nav__link" href="#kind-words" data-nav-link="kind-words">💌 Words</a>
     <a class="quick-nav__link" href="#footer-secret" data-nav-link="footer-secret">♡ Secret</a>
@@ -1978,12 +2183,36 @@
       <div id="gallery"></div>
     </section>
 
-    <!-- Jar of Smiles Section -->
+    <!-- Jar of Smiles & Daily Note Section -->
     <section id="jar-of-smiles" class="section-block jar-section">
       <div class="reveal section-header-center">
-        <p class="section-eyebrow" style="color:#e092a8">open whenever you need a boost</p>
-        <h2 class="handwriting section-heading">Jar of Smiles 🫙✨</h2>
-        <p class="section-desc">Whenever you're having a long day, studying hard, or just need a gentle reminder that you are deeply appreciated — tap to pull an origami note from the jar.</p>
+        <p class="section-eyebrow" style="color:#e092a8">a fresh note for you every single day</p>
+        <h2 class="handwriting section-heading">Jar of Smiles &amp; Daily Notes 🫙✨</h2>
+        <p class="section-desc">A new origami note unlocks every day at midnight just for you. Unfold today's note for a little daily boost, generate brand-new thoughts, or draw surprise smiles anytime!</p>
+      </div>
+
+      <!-- Today's Daily Note Showcase Card -->
+      <div class="reveal daily-note-card">
+        <div class="daily-note-card__top">
+          <span class="daily-note-pill" id="daily-note-pill-date">📅 Today's Note</span>
+          <span class="daily-note-pill daily-note-pill--status" id="daily-note-status-indicator">✨ Unopened Today</span>
+        </div>
+        <h3 class="handwriting daily-note-card__heading">Today's Note for Sammy 💌</h3>
+        <p class="daily-note-card__snippet" id="daily-note-preview-snippet">A little daily boost waiting just for you. Tap below to unfold!</p>
+        <div class="daily-note-card__btns">
+          <button type="button" id="open-today-note-btn" class="action-pill" style="background:var(--pink);color:var(--ink);font-weight:800">
+            <span>💌 Unfold Today's Note</span>
+          </button>
+          <button type="button" id="open-random-note-btn" class="action-pill">
+            <span>🎲 Draw Random Note</span>
+          </button>
+          <button type="button" id="open-compose-note-btn" class="action-pill">
+            <span>✨ Compose Fresh Note</span>
+          </button>
+          <button type="button" id="view-favorites-btn" class="action-pill" title="View saved favorite notes">
+            <span id="fav-count-pill">⭐ Favorites (0)</span>
+          </button>
+        </div>
       </div>
 
       <div class="reveal jar-wrapper">
@@ -2011,7 +2240,8 @@
 
         <div>
           <button type="button" id="jar-button" class="jar-btn">
-            <span>Draw a Smile Note ✨</span>
+            <span class="jar-unread-dot" id="jar-unread-dot" aria-hidden="true"></span>
+            <span id="jar-btn-label">Unfold Today's Note ✨</span>
           </button>
         </div>
       </div>
@@ -2118,11 +2348,37 @@
   <div id="note-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="note-modal-title">
     <article class="origami-paper">
       <div class="origami-star" aria-hidden="true">⭐</div>
+      <div class="origami-meta-row">
+        <span id="origami-mode-badge" class="origami-mode-badge">📅 Today's Note</span>
+        <button type="button" id="origami-fav-btn" class="origami-fav-btn" aria-label="Save to favorite notes" title="Save to favorites">
+          <span id="origami-fav-star">☆</span> <span id="origami-fav-label">Favorite</span>
+        </button>
+      </div>
       <h2 id="note-modal-title" class="handwriting" style="font-size:clamp(2.2rem,4vw,2.8rem);color:var(--pink-deep);font-weight:700">A Little Note for You</h2>
       <p id="origami-message-text" class="handwriting origami-message">Message text</p>
       <div class="origami-actions">
-        <button type="button" id="note-another-btn" class="action-pill" style="background:var(--pink);color:var(--ink)">Pick Another Note ✨</button>
+        <button type="button" id="note-today-btn" class="action-pill" style="display:none">📅 Read Today's Note</button>
+        <button type="button" id="note-another-btn" class="action-pill" style="background:var(--pink);color:var(--ink)">🎲 Draw Another Note ✨</button>
+        <button type="button" id="note-compose-btn" class="action-pill">✨ Compose Fresh Note</button>
         <button type="button" id="note-close-btn" class="action-pill">Keep with me 🤍</button>
+      </div>
+    </article>
+  </div>
+
+  <!-- Saved Favorite Notes Modal -->
+  <div id="favorites-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="favorites-title">
+    <article class="letter-paper" style="max-height:85vh;display:flex;flex-direction:column;width:100%;max-width:36rem">
+      <button type="button" id="favorites-close-x" aria-label="Close favorites">×</button>
+      <div class="letter-seal" aria-hidden="true">⭐</div>
+      <h2 id="favorites-title" class="handwriting" style="font-size:clamp(2rem,3.5vw,2.6rem);color:var(--pink-deep);text-align:center">Saved Favorite Notes</h2>
+      <p class="section-desc" style="text-align:center;margin:0.25rem 0 1rem">All the smile notes you have bookmarked to keep with you 🤍</p>
+      
+      <div id="favorites-list" class="favorites-list-container" style="flex:1">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="letter-footer" style="margin-top:1rem;text-align:center">
+        <button type="button" id="favorites-close-btn" class="action-pill">Close</button>
       </div>
     </article>
   </div>
@@ -2285,24 +2541,133 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       { src: "./assets/photos/photo20.jpeg", caption: "Sending you a little meowah 💋", alt: "A close-up kitten meme with the words mwah above its face", kind: "Cat", pos: "50% 18%", note: "Sending you the biggest cat mwah! Hope this brought a genuine smile to your face 💋" }
     ];
 
-    /* Jar of Smiles Messages */
+    /* 104 Handcrafted Jar of Smiles & Daily Notes */
     const jarMessages = [
-      "Oych Sammy! Just in case nobody told you today: your laugh is genuinely infectious, bitaw. Keep smiling! ✨",
-      "Reminder: You don't have to have everything figured out today. One step at a time, you're doing amazing. 🌸",
-      "Pahuway pud panagsa, Sammy! Drink some water, stretch, and treat yourself to your favorite snack today. 🍰",
-      "You have this effortless way of making conversations feel so safe and fun. That's a rare superpower. 🤍",
-      "If today felt a little heavy, remember: tomorrow is a fresh page. And you've got people rooting for you always! 🌿",
-      "A quick reminder that you are appreciated more than you probably realize. (Dili man ko showy pero tinuod ni HAHAHAHA) 🐱",
-      "Sending you the coziest virtual hug and a mug of whatever warm drink makes you happiest. ☕✨",
-      "May your day be filled with unexpected good news, fast Wi-Fi, and top-tier memes! 😂",
-      "Amping always, Sammy! Don't let anyone dull your sparkle today. You're one of one. 👸✨",
-      "Remember how far you've come since August. Even on quiet days, you're growing and shining. 🌙",
-      "Emergency cute cat meowah coming right up: *mwah!* 🐾💋",
-      "Just wanted to remind you that your presence makes the day a whole lot lighter. Bitaw! 💌",
-      "Whatever goal you're working toward today, you're capable of getting there. Rooting for you! 🌟",
-      "Take a deep breath in... and let go of any stress you've been carrying. You're safe, capable, and valued. 🌷",
-      "Every single conversation with you is still a highlight of my week. 🤍",
-      "Here’s an official pass to take a guilt-free 15-minute nap or snack break. You earned it! 🍪"
+      "Oych Sammy! Just in case nobody told you today: your laugh is genuinely infectious, bitaw. Keep smiling! \u2728",
+      "Reminder: You don't have to have everything figured out today. One step at a time, you are doing amazing. \ud83c\udf38",
+      "Pahuway pud panagsa, Sammy! Drink some water, stretch, and treat yourself to your favorite snack today. \ud83c\udf70",
+      "You have this effortless way of making conversations feel so safe and fun. That is a rare superpower. \ud83e\udd0d",
+      "If today felt a little heavy, remember: tomorrow is a fresh page. And you have got people rooting for you always! \ud83c\udf3f",
+      "A quick reminder that you are appreciated more than you probably realize. (Dili man ko showy pero tinuod ni HAHAHAHA) \ud83d\udc31",
+      "Sending you the coziest virtual hug and a mug of whatever warm drink makes you happiest. \u2615\u2728",
+      "May your day be filled with unexpected good news, fast Wi-Fi, and top-tier memes! \ud83d\ude02",
+      "Amping always, Sammy! Don't let anyone dull your sparkle today. You are one of one. \ud83d\udc78\u2728",
+      "Remember how far you have come since August 16. Even on quiet days, you are growing and shining. \ud83c\udf19",
+      "Emergency cute cat meowah coming right up: *mwah!* \ud83d\udc3e\ud83d\udc8b",
+      "Just wanted to remind you that your presence makes the day a whole lot lighter. Bitaw! \ud83d\udc8c",
+      "Whatever goal you are working toward today, you are capable of getting there. Rooting for you! \ud83c\udf1f",
+      "Take a deep breath in... and let go of any stress you have been carrying. You are safe, capable, and valued. \ud83c\udf37",
+      "Every single conversation with you is still a highlight of my week. \ud83e\udd0d",
+      "Here is an official pass to take a guilt-free 15-minute nap or snack break. You earned it! \ud83c\udf6a",
+      "Happy Monday, Sammy! Don't let the week intimidate you. Take it task by task, sip by sip, and remember you are more capable than you think. \u2600\ufe0f",
+      "Monday check-in: Unclench your jaw, drop your shoulders from your ears, and breathe. You are going to do great this week! \ud83c\udf38",
+      "New week, new chances to laugh at ridiculous memes. Sending you high-energy good vibes for today, Sammy! \u2728",
+      "Monday mood: May your coffee or matcha be strong and your to-do list surprisingly easy today. Rooting for you! \u2615",
+      "Oych, Monday na pud! But hey, you have survived 100% of your busy Mondays so far. You have got this, bitaw! \ud83d\udcaa",
+      "Sending you extra patience and positive energy to conquer whatever this Monday throws at you. Amping always! \ud83c\udf3f",
+      "A reminder to start your week with gentleness toward yourself. You don't have to be perfect; just showing up is enough. \ud83e\udd0d",
+      "Happy Tuesday! You are finding your rhythm for the week. Keep shining that effortless charm of yours. \u2728",
+      "Tuesday thought: Even when things feel routine or tiring, remember that you bring so much warmth to the people around you. \ud83c\udf37",
+      "It is Wednesday! Halfway through the grind, Sammy. Give yourself credit for all the effort you have put in so far. \ud83c\udfaf",
+      "Happy humpday! You are officially on the downhill slope to the weekend. Treat yourself to something delicious today! \ud83e\uddcb",
+      "Wednesday reminder: It is okay to take a pause and do nothing for 10 minutes. Your brain deserves a breather! \ud83d\udecb\ufe0f",
+      "Halfway through the week! Just wanted to drop in and say: you are doing so much better than you give yourself credit for. \ud83c\udf1f",
+      "Midweek meme break: Imagine a tiny kitten high-fiving you right now. Because you are rocking this week! \ud83d\udc3e",
+      "Whatever paper, exam, or chore you are tackling today: humana na na soon, Sammy! Kaya kaayo na nimo. \ud83d\udcaf",
+      "Happy Thursday! The weekend is peeking around the corner. Finish strong today, you are almost there! \ud83c\udf08",
+      "Thursday energy: Just one more day until Friday! Sending you an extra boost of stamina and smiles. \ud83d\udd0b",
+      "Hang in there, Sammy! Thursday is just Friday's warm-up act. You have got this! \ud83d\udcab",
+      "TGIF, Sammy! \u2728 You made it through another whole week. Celebrate the small wins today!",
+      "Friday is here! Time to leave all the week's stress at the door and get ready for cozy weekend mode. \ud83e\udd42",
+      "Oych, Friday na jud! Hope your day goes by fast and your evening is full of relaxation and good food. \ud83c\udf55",
+      "Friday appreciation: Thank you for being such a wonderful, grounding presence. Talking to you is always the best end to any week. \ud83e\udd0d",
+      "Weekend countdown: Activated! May your Friday be smooth, stress-free, and full of giggles. \ud83c\udf89",
+      "Happy Saturday, Sammy! Official rule for today: zero unnecessary stress, maximum comfort and yummy snacks. \ud83e\udd5e",
+      "Saturday reminder: You are allowed to sleep in, binge-watch funny reels, and take your sweet time today. \ud83d\udecc",
+      "Hope your Saturday is as sunny, bright, and delightful as your laugh, bitaw! \ud83c\udf3b",
+      "Weekend vibe check: Prioritize yourself today. Do something that makes your soul feel light and happy. \ud83c\udfa8",
+      "Happy Sunday! May your day be slow, warm, and restorative before the new week begins. \u2615",
+      "Sunday self-care: Hydrate, put on your comfiest clothes, and enjoy every quiet second today. You deserve the rest. \ud83e\udd0d",
+      "A gentle Sunday reminder: Tomorrow's worries have no place in today's peace. Soak up every moment of today. \ud83c\udf43",
+      "Sunday evening check-in: Hope your weekend recharged you. No matter what comes tomorrow, you have got people who care about you deeply. \ud83c\udf19",
+      "Hydration check! When was the last time you took a sip of water? Go grab a glass right now, Sammy! \ud83d\udca7",
+      "Posture check: Sit up straight, roll your shoulders back, and take a deep, slow breath. Much better! \ud83e\uddd8\u200d\u2640\ufe0f",
+      "Screen break reminder: Look away from the phone or laptop and gaze at something far away for 20 seconds. Your eyes thank you! \ud83d\udc40",
+      "Did you eat something good today? Please do not skip meals while you are busy or studying. Eat well, Sammy! \ud83c\udf72",
+      "Friendly prescription: At least 8 hours of sleep tonight. No doom-scrolling past midnight! (Bitaw ha, tulog ug tarong!) \ud83d\ude34",
+      "Pahuway sa kadali, Sammy. It is okay to put down your tasks for a little bit and just stare into space with a snack. \ud83c\udf53",
+      "Your worth is not measured by how productive you were today. Simply being you is more than enough. \ud83e\udd0d",
+      "If your head feels full of noise today, step outside or open a window. Feel the fresh air on your face. \ud83c\udf2c\ufe0f",
+      "Take a moment right now to thank your body and mind for carrying you through everything today. You are strong. \ud83c\udf38",
+      "A reminder to speak to yourself as kindly as you would to your best friend. Be gentle with Sammy today. \ud83d\udd4a\ufe0f",
+      "Emergency warmth: Sending a virtual fuzzy blanket right to your shoulders. Cozy up and relax! \ud83e\uddf6",
+      "Treat yourself today: whether it is an iced coffee, a favorite pastry, or extra nap time. You earned it! \ud83c\udf69",
+      "Oych Sammy! Unsa na pud imong gika-busyhan diha? Ayaw kalimot ug ngisi kay ang smile nimo makatambal ug stress! \ud83d\ude02",
+      "Di man ko showy or unsa, but you genuinely make my notifications the ones I actually look forward to, bitaw. \ud83d\udc8c",
+      "Botbota sa dili showy HAHAHAHA, pero tinuod jud: you are one of the coolest people I have gotten to know. \ud83d\udc31",
+      "If there was an award for most effortless laugh, ikaw jud ang champion. Ayaw na pag-contest, accept na lang! \ud83c\udfc6",
+      "Amping kanunay, Sammy! Don't let small annoyances ruin your good day. Kebs ra na sila! \ud83d\udc85",
+      "Kung kapoy na gani, huna-hunaa na lang ang mga iring nga nag-meowah para nimo. Instant recharge! \ud83d\udc3e",
+      "Naa na pud koy nakit-an nga funny meme ganina unya ikaw dayon akong nahunahunaan. Share nako puhon! \ud83d\ude02",
+      "Ka-cute sa filter sa photo #4 bitaw! Sophisticated Sammy with the moustache is still undefeated. \ud83c\udfa9",
+      "Ayaw ka-guol kung medyo messy ang schedule today. Bisan unsa pa ka-busy, kaya kaayo na nimo! \ud83c\udf1f",
+      "Sammy, kung pangutan-on ko unsa'y best part sa recent months: meeting you is definitely top tier, no cap. \u2728",
+      "Basin nag-overthink na pud ka diha ha? Undang na ana, overthinking does not look good on someone as pretty as you. \ud83d\ude1c",
+      "Sending you 100% pure good vibes with zero tax deducted. Dawata na dayon! \ud83d\udce6\ud83d\udc96",
+      "Ayaw palabi ug kape basin mag-palpitate ka! Pero if kailangan jud... sabayan na lang pud ug daghang tubig! \u2615\ud83d\udca6",
+      "Secret fact: Even on days when you feel ordinary, you are leaving a really lovely impression on the world around you. \ud83c\udf37",
+      "Just dropping by your screen to say hi and make sure you are smiling right now. Mission accomplished? \ud83d\ude01",
+      "Here is a tiny imaginary white kitten tapping your shoulder just to say: you are doing amazing! \ud83d\udc3e",
+      "Today's forecast: 100% chance of being adorable, with occasional bursts of unprompted giggles. \ud83c\udf24\ufe0f",
+      "If a cat could talk, it would look at you and say: 10/10 human, would definitely purr on your lap. \ud83d\udc31",
+      "Sending you an emergency meowah: *kiss on your forehead!* Keep shining today, Sammy! \ud83d\udc8b",
+      "May your day be as peaceful as an orange cat taking an afternoon nap in a sunbeam. \u2600\ufe0f\ud83d\udc08",
+      "Whenever you need a laugh, remember photo #14's giant pleading eyes. Nobody can resist that face! \ud83e\udd7a",
+      "Cat wisdom for today: If something does not serve your peace, gently knock it off the table like a glass of water. \ud83d\ude39",
+      "You have that warm energy that makes even the shyest cats want to come over and say hi. \ud83e\udd0d",
+      "Sending you fluffy purrs and sweet paws to dissolve any stress you might be feeling. \ud83d\udc3e\u2728",
+      "Meme of the day in spirit: No thoughts, head full of good memories and gratitude for Sammy. \ud83c\udf3f",
+      "Thinking about how we started chatting at 11:30 PM on August 16... and honestly, every single day since has been brighter. \u2728",
+      "Getting to know you has been such an unexpected and wonderful gift. Thank you for just being yourself, Sammy. \ud83e\udd0d",
+      "You have such a genuine heart. Never change how authentically and warmly you show up in the world. \ud83c\udf37",
+      "Even miles away or through a screen, your energy is so grounding and joyful. I appreciate you so much! \ud83d\udc8c",
+      "Thank you for the late-night talks, the random stories, and making everyday moments feel special. Bitaw. \ud83c\udf19",
+      "Looking at our live days ticker... every single day, hour, and minute is a milestone I am genuinely thankful for. \u23f3\ud83d\udc96",
+      "You make listening so easy and sharing so comfortable. That is a gift not many people have, Sammy. \ud83c\udf38",
+      "I hope you always know how much of an impact your kindness and presence make. You really matter. \ud83c\udf1f",
+      "Whenever I think of genuine good people, you are always right at the top of the list. Proud of who you are! \ud83e\udd0d",
+      "Life gets busy and chaotic, but having someone as cool as you to talk to makes everything feel so much lighter. \ud83c\udf43",
+      "Believe in yourself as much as I believe in you. You have so much talent and potential waiting to unfold! \ud83d\ude80",
+      "Do not let self-doubt whisper lies to you today. You are capable, intelligent, and strong. \ud83d\udc8e",
+      "Whatever dream or goal you have in your heart, take one small brave step toward it today. You can do it! \ud83c\udf1f",
+      "Your journey does not have to look like anyone else's. Bloom at your own pace, Sammy. \ud83c\udf38",
+      "Your kindness is your superpower, not your weakness. Keep shining your light brightly! \u2600\ufe0f",
+      "When you walk into a room, remember that you belong there just as much as anyone else. Head high, Sammy! \ud83d\udc78",
+      "Celebrate how far you have come. The version of you from a year ago would be so proud of who you are today. \ud83e\udd42",
+      "As the night winds down, let go of everything that happened today. Sleep peacefully, Sammy. Tomorrow is new! \ud83c\udf19",
+      "May your dreams be sweet, your blanket be warm, and your sleep be completely uninterrupted tonight. \ud83d\ude34\u2728",
+      "Sending you the gentlest hug and sweetest dreams. Amping always, Sammy! \ud83e\udd0d\u2728"
+];
+
+    /* Procedural Note Synthesis Engine */
+    const noteOpeners = [
+      "Oych Sammy! ✨", "Hoy Sammy! 😂", "Bitaw Sammy 🌸", "Sweet Sammy 🤍",
+      "A little daily reminder 💌", "Morning check-in! ☀️", "Hey Sammy 🌷", "Emergency smile note incoming! 🐱"
+    ];
+    const noteMiddles = [
+      "Just in case you needed to hear this today: you are doing so much better than you give yourself credit for.",
+      "Take a deep breath, drop your shoulders, and remember that you don't have to carry the whole world today.",
+      "Your effortless humor and genuine heart make every conversation feel like a breath of fresh air.",
+      "Don't forget to take a pause today, drink some cool water, and snack on something delicious.",
+      "Even on the quietest, most ordinary days, your presence makes everything feel a whole lot lighter.",
+      "Whatever test, assignment, or busy schedule is in front of you today—you are going to ace it effortlessly.",
+      "Sending you the sweetest imaginary cat head-boop and a whole bouquet of peaceful vibes.",
+      "Never forget how rare and wonderful your sparkle is. The world is genuinely lucky to have you."
+    ];
+    const noteClosers = [
+      "Rooting for you always, bitaw! ✨", "Amping always, Sammy! 🤍", "Keep shining, you're one of one. 🌟",
+      "Dili man ko showy pero tinuod jud ni HAHAHAHA! 💌", "Sending you a warm virtual hug today! 🌸",
+      "Go conquer your day, superstar! 🚀", "Smile na diha, deserve nimo! 😁"
     ];
 
     /* Theme Toggle */
@@ -2501,17 +2866,189 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       });
     });
 
-    /* Jar of Smiles Interaction */
+    /* Daily Note & Jar of Smiles Engine */
     const noteModal = document.getElementById("note-modal");
     const origamiMessage = document.getElementById("origami-message-text");
+    const origamiModeBadge = document.getElementById("origami-mode-badge");
+    const origamiFavBtn = document.getElementById("origami-fav-btn");
+    const origamiFavStar = document.getElementById("origami-fav-star");
+    const origamiFavLabel = document.getElementById("origami-fav-label");
+
     const jarTrigger = document.getElementById("jar-trigger");
     const jarButton = document.getElementById("jar-button");
+    const jarBtnLabel = document.getElementById("jar-btn-label");
+    const jarUnreadDot = document.getElementById("jar-unread-dot");
+    const navUnreadDot = document.getElementById("nav-unread-dot");
+
+    const dailyNotePillDate = document.getElementById("daily-note-pill-date");
+    const dailyNoteStatusIndicator = document.getElementById("daily-note-status-indicator");
+    const dailyNotePreviewSnippet = document.getElementById("daily-note-preview-snippet");
+
+    const openTodayNoteBtn = document.getElementById("open-today-note-btn");
+    const openRandomNoteBtn = document.getElementById("open-random-note-btn");
+    const openComposeNoteBtn = document.getElementById("open-compose-note-btn");
+    const viewFavoritesBtn = document.getElementById("view-favorites-btn");
+    const favCountPill = document.getElementById("fav-count-pill");
+
+    const noteTodayBtn = document.getElementById("note-today-btn");
     const noteAnotherBtn = document.getElementById("note-another-btn");
+    const noteComposeBtn = document.getElementById("note-compose-btn");
     const noteCloseBtn = document.getElementById("note-close-btn");
 
-    function pickSmileNote() {
-      const randomMsg = jarMessages[Math.floor(Math.random() * jarMessages.length)];
-      origamiMessage.textContent = randomMsg;
+    const favoritesModal = document.getElementById("favorites-modal");
+    const favoritesCloseBtn = document.getElementById("favorites-close-btn");
+    const favoritesCloseX = document.getElementById("favorites-close-x");
+    const favoritesList = document.getElementById("favorites-list");
+
+    let currentNoteData = { text: "", isToday: true, badge: "" };
+
+    // Get current calendar day in Philippine Time (PST, UTC+8)
+    function getManilaDateInfo() {
+      const now = new Date();
+      const dayFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" });
+      const dateKey = dayFormatter.format(now); // YYYY-MM-DD
+
+      const prettyFormatter = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Manila", weekday: "short", month: "short", day: "numeric", year: "numeric" });
+      const prettyDate = prettyFormatter.format(now);
+
+      const parts = dateKey.split("-").map(Number);
+      const seed = (parts[0] * 372 + parts[1] * 31 + parts[2]);
+
+      const diffDays = Math.max(0, Math.floor((now - startDate) / (1000 * 60 * 60 * 24)));
+
+      return { dateKey, prettyDate, seed, diffDays };
+    }
+
+    function getTodayNote() {
+      const info = getManilaDateInfo();
+      const index = info.seed % jarMessages.length;
+      return {
+        text: jarMessages[index],
+        info: info
+      };
+    }
+
+    function composeGenerativeNote() {
+      const o = noteOpeners[Math.floor(Math.random() * noteOpeners.length)];
+      const m = noteMiddles[Math.floor(Math.random() * noteMiddles.length)];
+      const c = noteClosers[Math.floor(Math.random() * noteClosers.length)];
+      return `${o} ${m} ${c}`;
+    }
+
+    // Favorites persistence
+    function getFavorites() {
+      try {
+        const raw = localStorage.getItem("for-sammy-fav-notes");
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveFavorites(list) {
+      try {
+        localStorage.setItem("for-sammy-fav-notes", JSON.stringify(list));
+      } catch (e) {}
+      updateFavoritesCounter();
+    }
+
+    function isCurrentNoteFavorited() {
+      if (!currentNoteData.text) return false;
+      const favs = getFavorites();
+      return favs.some(item => item.text === currentNoteData.text);
+    }
+
+    function syncFavButtonUI() {
+      const isFav = isCurrentNoteFavorited();
+      if (isFav) {
+        origamiFavBtn.classList.add("is-favorited");
+        origamiFavStar.textContent = "⭐";
+        origamiFavLabel.textContent = "Favorited ♡";
+        origamiFavBtn.setAttribute("aria-pressed", "true");
+      } else {
+        origamiFavBtn.classList.remove("is-favorited");
+        origamiFavStar.textContent = "☆";
+        origamiFavLabel.textContent = "Favorite";
+        origamiFavBtn.setAttribute("aria-pressed", "false");
+      }
+    }
+
+    function toggleFavoriteCurrentNote() {
+      if (!currentNoteData.text) return;
+      let favs = getFavorites();
+      const idx = favs.findIndex(item => item.text === currentNoteData.text);
+      if (idx !== -1) {
+        favs.splice(idx, 1);
+        saveFavorites(favs);
+        syncFavButtonUI();
+        showToast("Removed from saved favorites.");
+      } else {
+        favs.push({
+          id: Date.now(),
+          text: currentNoteData.text,
+          savedAt: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })
+        });
+        saveFavorites(favs);
+        syncFavButtonUI();
+        showToast("Saved to your favorites! ⭐🤍");
+      }
+    }
+
+    function updateFavoritesCounter() {
+      const count = getFavorites().length;
+      if (favCountPill) {
+        favCountPill.textContent = `⭐ Favorites (${count})`;
+      }
+    }
+
+    function updateDailyNoteUI() {
+      const { dateKey, prettyDate, diffDays } = getManilaDateInfo();
+      const readKey = "for-sammy-daily-read-" + dateKey;
+      const isRead = localStorage.getItem(readKey) === "true";
+
+      if (dailyNotePillDate) {
+        dailyNotePillDate.textContent = `📅 ${prettyDate} · Day ${diffDays}`;
+      }
+
+      if (isRead) {
+        if (dailyNoteStatusIndicator) {
+          dailyNoteStatusIndicator.textContent = "✓ Read Today";
+          dailyNoteStatusIndicator.classList.add("is-read");
+        }
+        if (jarUnreadDot) jarUnreadDot.classList.add("hidden");
+        if (navUnreadDot) navUnreadDot.classList.add("hidden");
+        if (jarBtnLabel) jarBtnLabel.textContent = "Open Today's Note ✨";
+        const today = getTodayNote();
+        if (dailyNotePreviewSnippet) {
+          dailyNotePreviewSnippet.textContent = `“${today.text.slice(0, 80)}...”`;
+        }
+      } else {
+        if (dailyNoteStatusIndicator) {
+          dailyNoteStatusIndicator.textContent = "✨ Unopened Today";
+          dailyNoteStatusIndicator.classList.remove("is-read");
+        }
+        if (jarUnreadDot) jarUnreadDot.classList.remove("hidden");
+        if (navUnreadDot) navUnreadDot.classList.remove("hidden");
+        if (jarBtnLabel) jarBtnLabel.textContent = "Unfold Today's Note ✨";
+        if (dailyNotePreviewSnippet) {
+          dailyNotePreviewSnippet.textContent = "A fresh note for today is waiting for you. Tap below to unfold!";
+        }
+      }
+      updateFavoritesCounter();
+    }
+
+    function displayNoteInModal(text, badgeText, isToday = false) {
+      currentNoteData = { text, badge: badgeText, isToday };
+      origamiMessage.textContent = text;
+      origamiModeBadge.textContent = badgeText;
+      syncFavButtonUI();
+
+      if (isToday) {
+        noteTodayBtn.style.display = "none";
+      } else {
+        noteTodayBtn.style.display = "inline-flex";
+      }
+
       if (typeof confetti === "function") {
         confetti({
           particleCount: 50,
@@ -2520,10 +3057,29 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
           colors: ["#fad2e1", "#f2a9bc", "#d8f3dc", "#ffe5d9", "#d4eafc"]
         });
       }
+
       noteModal.classList.remove("hidden");
       noteModal.classList.add("flex");
       document.body.style.overflow = "hidden";
       noteCloseBtn.focus();
+    }
+
+    function openTodayNote() {
+      const today = getTodayNote();
+      const readKey = "for-sammy-daily-read-" + today.info.dateKey;
+      localStorage.setItem(readKey, "true");
+      updateDailyNoteUI();
+      displayNoteInModal(today.text, `📅 Today's Note · ${today.info.prettyDate}`, true);
+    }
+
+    function openRandomNote() {
+      const randomMsg = jarMessages[Math.floor(Math.random() * jarMessages.length)];
+      displayNoteInModal(randomMsg, "🎲 Surprise Note from Jar", false);
+    }
+
+    function openComposeNote() {
+      const freshNote = composeGenerativeNote();
+      displayNoteInModal(freshNote, "✨ Fresh Generative Note", false);
     }
 
     function closeSmileNote() {
@@ -2533,17 +3089,97 @@ No heavy speeches, just wanted you to know that you're appreciated. Hope this ma
       jarButton.focus();
     }
 
-    jarTrigger.addEventListener("click", pickSmileNote);
+    function openFavoritesModal() {
+      const favs = getFavorites();
+      favoritesList.replaceChildren();
+
+      if (favs.length === 0) {
+        const emptyState = document.createElement("div");
+        emptyState.style.padding = "2rem 1rem";
+        emptyState.style.textAlign = "center";
+        emptyState.style.color = "var(--muted)";
+        emptyState.innerHTML = `
+          <div style="font-size:2.4rem;margin-bottom:0.5rem">⭐</div>
+          <p class="handwriting" style="font-size:1.4rem;color:var(--ink)">No favorite notes saved yet</p>
+          <p style="font-size:0.88rem;margin-top:0.4rem">When you pull a note you love from the jar, tap the <strong>⭐ Favorite</strong> button to keep it safe here!</p>
+        `;
+        favoritesList.appendChild(emptyState);
+      } else {
+        favs.forEach((fav, i) => {
+          const item = document.createElement("article");
+          item.className = "favorite-item";
+          item.innerHTML = `
+            <p class="handwriting favorite-item__text">“${fav.text}”</p>
+            <div class="favorite-item__bottom">
+              <span>Saved ${fav.savedAt || "recently"}</span>
+              <div>
+                <button type="button" class="favorite-item__read-btn action-pill" style="font-size:0.75rem;padding:0.2rem 0.6rem;margin-right:0.35rem">Read in jar 🔍</button>
+                <button type="button" class="favorite-item__del" aria-label="Remove from favorites">Remove ✕</button>
+              </div>
+            </div>
+          `;
+
+          item.querySelector(".favorite-item__read-btn").addEventListener("click", () => {
+            closeFavoritesModal();
+            displayNoteInModal(fav.text, "⭐ From Your Favorites", false);
+          });
+
+          item.querySelector(".favorite-item__del").addEventListener("click", () => {
+            let list = getFavorites();
+            list = list.filter(x => x.text !== fav.text);
+            saveFavorites(list);
+            openFavoritesModal();
+            syncFavButtonUI();
+            showToast("Removed from favorites.");
+          });
+
+          favoritesList.appendChild(item);
+        });
+      }
+
+      favoritesModal.classList.remove("hidden");
+      favoritesModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      favoritesCloseBtn.focus();
+    }
+
+    function closeFavoritesModal() {
+      favoritesModal.classList.add("hidden");
+      favoritesModal.classList.remove("flex");
+      document.body.style.overflow = "";
+      viewFavoritesBtn.focus();
+    }
+
+    // Attach Event Listeners
+    jarTrigger.addEventListener("click", openTodayNote);
     jarTrigger.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        pickSmileNote();
+        openTodayNote();
       }
     });
-    jarButton.addEventListener("click", pickSmileNote);
-    noteAnotherBtn.addEventListener("click", pickSmileNote);
+    jarButton.addEventListener("click", openTodayNote);
+    openTodayNoteBtn.addEventListener("click", openTodayNote);
+    openRandomNoteBtn.addEventListener("click", openRandomNote);
+    openComposeNoteBtn.addEventListener("click", openComposeNote);
+    viewFavoritesBtn.addEventListener("click", openFavoritesModal);
+
+    origamiFavBtn.addEventListener("click", toggleFavoriteCurrentNote);
+    noteTodayBtn.addEventListener("click", openTodayNote);
+    noteAnotherBtn.addEventListener("click", openRandomNote);
+    noteComposeBtn.addEventListener("click", openComposeNote);
     noteCloseBtn.addEventListener("click", closeSmileNote);
     noteModal.addEventListener("click", (e) => { if (e.target === noteModal) closeSmileNote(); });
+
+    favoritesCloseBtn.addEventListener("click", closeFavoritesModal);
+    favoritesCloseX.addEventListener("click", closeFavoritesModal);
+    favoritesModal.addEventListener("click", (e) => { if (e.target === favoritesModal) closeFavoritesModal(); });
+
+    // Initialize Daily Engine
+    updateDailyNoteUI();
+
+    // Check periodically for midnight rollover in Manila time
+    setInterval(updateDailyNoteUI, 30000);
 
     /* Video Reels Coordination with Custom Posters */
     const videoCaptions = ["A little scene-stealer 🎞️", "A moment in motion 🌿", "Press play for a smile ✨"];
