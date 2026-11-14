@@ -2057,7 +2057,6 @@
     <a class="quick-nav__link" href="#jar-of-smiles" data-nav-link="jar-of-smiles">🫙 Notes <span id="nav-unread-dot" class="nav-unread-dot hidden" aria-label="New note today"></span></a>
     <a class="quick-nav__link" href="#reels" data-nav-link="reels">🎞️ Reels</a>
     <a class="quick-nav__link" href="#kind-words" data-nav-link="kind-words">💌 Words</a>
-    <a class="quick-nav__link" href="#footer-secret" data-nav-link="footer-secret">♡ Secret</a>
     <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Cozy Starlight Theme" title="Toggle Cozy Starlight Theme">🌙</button>
   </nav>
 
@@ -2290,7 +2289,7 @@
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/>
       </svg>
     </button>
-    <p id="secret-hint" class="opacity-0">psst… tap the heart</p>
+    <p id="secret-hint" class="opacity-0">tap for a little love 🤍</p>
     <p id="heart-toast" class="opacity-0" role="status" aria-live="polite"></p>
   </footer>
 
@@ -2416,31 +2415,7 @@
     </article>
   </div>
 
-  <!-- Secret Letter Modal with Real-Time Milestone -->
-  <div id="letter-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="letter-title">
-    <article class="letter-paper">
-      <button type="button" id="letter-close-x" aria-label="Close letter">×</button>
-      <div class="letter-seal" aria-hidden="true">💌</div>
-      <h2 id="letter-title" class="handwriting">A little note for you 🤍</h2>
-      <div class="handwriting letter-body">Oych Sammy, you found the secret note. ✨
 
-First of all, I wanted to tell you how truly sorry I am about your dog. I know sakit ug bug-at kaayo ni karon and it's completely okay to grieve and take all the time you need. Just take comfort in knowing nga wala na sya nag lisod and naa na sya sa peaceful place sa heaven. You gave your dog so much love and a wonderful life, and that bond will always stay with you. I'm always here for you, Sam ^^
-
-I know life can feel really heavy lately—between this loss, nursing school, clinicals, and the endless study grind. But please remember to be gentle with yourself. You have such a compassionate, caring heart and so much dedication—traits that already make you so special, and that will make you such an amazing, empathetic RN someday. 🩺🤍
-
-Looking back to when we first started chatting at 11:30 PM on August 16, talking to you has easily been one of the brightest, most comforting highlights of my days. Di man ko showy or anything (botbota sa dili showy HAHAHAHA), but I genuinely appreciate you, your humor, and how easy it is to talk to you about anything.
-
-Whenever duties, school, or grief feel a bit overwhelming, I hope this little corner of the web reminds you to pause, take a deep breath, and know that you are never alone.
-
-Always rooting for you from the sidelines.
-
-Amping always, Sammy!
-Andre</div>
-      <div class="letter-footer">
-        <button type="button" id="letter-close">Close (Amping always, Sammy!)</button>
-      </div>
-    </article>
-  </div>
 
   <div id="site-toast" class="opacity-0 translate-y-2" role="status" aria-live="polite"></div>
 
@@ -3573,8 +3548,7 @@ Andre</div>
       }
     });
 
-    /* Secret Heart Progression & Confetti */
-    const letterModal = document.getElementById("letter-modal");
+    /* Secret Heart Taps & Comforting Sparkles */
     const heart = document.getElementById("secret-heart");
     const heartToast = document.getElementById("heart-toast");
     const secretHint = document.getElementById("secret-hint");
@@ -3582,11 +3556,14 @@ Andre</div>
     let heartToastTimer;
 
     setTimeout(() => {
-      secretHint.classList.remove("opacity-0");
-      secretHint.classList.add("opacity-100");
+      if (secretHint) {
+        secretHint.classList.remove("opacity-0");
+        secretHint.classList.add("opacity-100");
+      }
     }, 1600);
 
     function showHeartToast(message) {
+      if (!heartToast) return;
       heartToast.textContent = message;
       heartToast.classList.remove("opacity-0");
       heartToast.classList.add("opacity-100");
@@ -3594,54 +3571,40 @@ Andre</div>
       heartToastTimer = setTimeout(() => {
         heartToast.classList.add("opacity-0");
         heartToast.classList.remove("opacity-100");
-      }, 1900);
+      }, 2200);
     }
 
-    function openLetter() {
-      if (typeof confetti === "function") {
-        confetti({
-          particleCount: 85,
-          spread: 75,
-          startVelocity: 28,
-          origin: { y: 0.72 },
-          colors: ["#FAD2E1", "#F4B6C2", "#D8F3DC", "#E8D7F1", "#FFF1C5", "#CBE4F9"]
-        });
-      }
-      letterModal.classList.remove("hidden");
-      letterModal.classList.add("flex");
-      document.body.style.overflow = "hidden";
-      document.getElementById("letter-close-x").focus();
+    if (heart) {
+      heart.addEventListener("click", () => {
+        if (secretHint) {
+          secretHint.classList.add("opacity-0");
+          secretHint.classList.remove("opacity-100");
+        }
+        heartTaps++;
+        heart.animate([
+          { transform: "scale(1)" },
+          { transform: "scale(1.3) translateY(-4px)" },
+          { transform: "scale(1)" }
+        ], { duration: 420, easing: "ease-out" });
+
+        if (typeof confetti === "function") {
+          confetti({
+            particleCount: 45,
+            spread: 60,
+            origin: { y: 0.85 },
+            colors: ["#FAD2E1", "#F4B6C2", "#D8F3DC", "#E8D7F1", "#FFF1C5", "#CBE4F9"]
+          });
+        }
+
+        const warmMessages = [
+          "Sending you warmth & comfort 🤍",
+          "You are so deeply appreciated ✨",
+          "One day at a time, you're doing great 🌸",
+          "Sending you a warm virtual hug 🤍"
+        ];
+        showHeartToast(warmMessages[heartTaps % warmMessages.length]);
+      });
     }
-
-    function closeLetter() {
-      letterModal.classList.add("hidden");
-      letterModal.classList.remove("flex");
-      document.body.style.overflow = "";
-      heartTaps = 0;
-      heart.focus();
-    }
-
-    heart.addEventListener("click", () => {
-      secretHint.classList.add("opacity-0");
-      secretHint.classList.remove("opacity-100");
-      heartTaps++;
-      if (heartTaps === 1) {
-        heart.animate([{ transform: "scale(1)" }, { transform: "scale(1.25) translateY(-5px)" }, { transform: "scale(1)" }], { duration: 520, easing: "ease-out" });
-        showHeartToast("Hmm? Tap two more times… 💗");
-      } else if (heartTaps === 2) {
-        heart.animate([{ transform: "scale(1)" }, { transform: "scale(1.28)" }, { transform: "scale(1)" }, { transform: "scale(1.28)" }, { transform: "scale(1)" }], { duration: 560, easing: "ease-in-out" });
-        showHeartToast("Wait... tap one more time ✨");
-      } else {
-        heartTaps = 0;
-        heartToast.classList.add("opacity-0");
-        heartToast.classList.remove("opacity-100");
-        openLetter();
-      }
-    });
-
-    document.getElementById("letter-close").addEventListener("click", closeLetter);
-    document.getElementById("letter-close-x").addEventListener("click", closeLetter);
-    letterModal.addEventListener("click", event => { if (event.target === letterModal) closeLetter(); });
 
     document.addEventListener("keydown", event => {
       if (!lightbox.classList.contains("hidden")) {
@@ -3860,7 +3823,7 @@ Andre</div>
 
     /* Highlight Quick Nav Active Link on Scroll */
     const navLinks = Array.from(document.querySelectorAll(".quick-nav__link"));
-    const observedSections = ["top", "milestone", "memories", "jar-of-smiles", "reels", "kind-words", "footer-secret"]
+    const observedSections = ["top", "milestone", "memories", "jar-of-smiles", "reels", "kind-words"]
       .map(id => document.getElementById(id))
       .filter(Boolean);
 
