@@ -56,7 +56,7 @@ Then open `http://localhost:8000` in your browser.
 The site deploys automatically to GitHub Pages via [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) on every push to `main` (and can also be triggered manually via `workflow_dispatch`).
 
 - **Live URL**: [https://andr3licious.github.io/for-sammy/](https://andr3licious.github.io/for-sammy/)
-- **Cache Busting**: When making site updates, bump the Service Worker cache version (`for-sammy-v28`) in both [`sw.js`](./sw.js) and [`index.html`](./index.html) so returning devices refresh immediately.
+- **Cache Busting**: When making site updates, bump the Service Worker cache version (`for-sammy-v29`) in both [`sw.js`](./sw.js) and [`index.html`](./index.html) so returning devices refresh immediately.
 
 ## Credits
 
