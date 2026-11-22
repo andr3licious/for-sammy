@@ -2259,7 +2259,7 @@
       <div class="reveal section-header-center">
         <p class="section-eyebrow" style="color:#e092a8">a fresh note for you every single day</p>
         <h2 class="handwriting section-heading">Jar of Smiles &amp; Daily Notes 🫙✨</h2>
-        <p class="section-desc">A new origami note unlocks every day at midnight just for you. Unfold today's note for a little daily boost, generate brand-new thoughts, or draw surprise smiles anytime!</p>
+        <p class="section-desc">A new origami note unlocks every day at midnight just for you. Unfold today's note for a little daily boost, mix up a fresh note, or draw a surprise smile anytime!</p>
       </div>
 
       <!-- Today's Daily Note Showcase Card -->
@@ -2278,7 +2278,7 @@
             <span>🎲 Draw Random Note</span>
           </button>
           <button type="button" id="open-compose-note-btn" class="action-pill">
-            <span>✨ Compose Fresh Note</span>
+            <span>✨ Mix a Fresh Note</span>
           </button>
           <button type="button" id="view-favorites-btn" class="action-pill" title="View saved favorite notes">
             <span id="fav-count-pill">⭐ Favorites (0)</span>
@@ -2446,7 +2446,7 @@
       <div class="origami-actions">
         <button type="button" id="note-today-btn" class="action-pill" style="display:none">📅 Read Today's Note</button>
         <button type="button" id="note-another-btn" class="action-pill" style="background:var(--pink);color:var(--ink)">🎲 Draw Another Note ✨</button>
-        <button type="button" id="note-compose-btn" class="action-pill">✨ Compose Fresh Note</button>
+        <button type="button" id="note-compose-btn" class="action-pill">✨ Mix a Fresh Note</button>
         <button type="button" id="note-close-btn" class="action-pill">Keep with me 🤍</button>
       </div>
     </article>
@@ -2534,7 +2534,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v27" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v28" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2544,12 +2544,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-27")) {
-            storageSet("session", "for-sammy-sw-reloaded-27", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-28")) {
+            storageSet("session", "for-sammy-sw-reloaded-28", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=27", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=28", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2614,8 +2614,8 @@
     const moodResponses = {
       happy: "Love that for you, Sammy! Keep shining that bright, lovely energy today! ✨🌸",
       busy: "Pahuway pud panagsa, Sammy! Grab some water and take it one step at a time. You got this! ☕💪",
-      sleepy: "Sending cozy blanket burrito vibes your way! Sneak in a quick power nap whenever you can 🐾🛌",
-      smile: "Emergency warm hug & smiles incoming! Check out the Jar of Smiles or cute cat memes below 🤍🥺",
+      sleepy: "Sending cozy blanket burrito vibes your way! Sneak in a quick power nap whenever you can 🌙🛌",
+      smile: "Emergency warm hug & smiles incoming! Check out the Jar of Smiles or Kind Words & Verses below 🤍🥺",
       great: "Unstoppable! Go conquer whatever you're working on today, Sammy 👸🌟"
     };
 
@@ -2706,12 +2706,12 @@
       "Pahuway pud panagsa, Sammy! Drink some water, stretch, and treat yourself to your favorite snack today. \ud83c\udf70",
       "You have this effortless way of making conversations feel so safe and fun. That is a rare superpower. \ud83e\udd0d",
       "If today felt a little heavy, remember: tomorrow is a fresh page. And you have got people rooting for you always! \ud83c\udf3f",
-      "A quick reminder that you are appreciated more than you probably realize. (Dili man ko showy pero tinuod ni HAHAHAHA) \ud83d\udc31",
+      "A quick reminder that you are appreciated more than you probably realize. (Dili man ko showy pero tinuod ni HAHAHAHA) \u2728",
       "Sending you the coziest virtual hug and a mug of whatever warm drink makes you happiest. \u2615\u2728",
       "May your day be filled with unexpected good news, fast Wi-Fi, and top-tier memes! \ud83d\ude02",
       "Amping always, Sammy! Don't let anyone dull your sparkle today. You are one of one. \ud83d\udc78\u2728",
       "Remember how far you have come since August 16. Even on quiet days, you are growing and shining. \ud83c\udf19",
-      "Emergency cute cat meowah coming right up: *mwah!* \ud83d\udc3e\ud83d\udc8b",
+      "Emergency smile reminder coming right up: unclench your jaw, breathe, and remember you're doing great today! \ud83c\udf38\u2728",
       "Just wanted to remind you that your presence makes the day a whole lot lighter! \ud83d\udc8c",
       "Whatever goal you are working toward today, you are capable of getting there. Rooting for you! \ud83c\udf1f",
       "Take a deep breath in... and let go of any stress you have been carrying. You are safe, capable, and valued. \ud83c\udf37",
@@ -2730,7 +2730,7 @@
       "Happy humpday! You are officially on the downhill slope to the weekend. Treat yourself to something delicious today! \ud83e\uddcb",
       "Wednesday reminder: It is okay to take a pause and do nothing for 10 minutes. Your brain deserves a breather! \ud83d\udecb\ufe0f",
       "Halfway through the week! Just wanted to drop in and say: you are doing so much better than you give yourself credit for. \ud83c\udf1f",
-      "Midweek meme break: Imagine a tiny kitten high-fiving you right now. Because you are rocking this week! \ud83d\udc3e",
+      "Midweek cheer break: sending you a virtual high-five right now because you are rocking this week! \ud83d\ude4c\u2728",
       "Whatever paper, exam, or chore you are tackling today: humana na na soon, Sammy! Kaya kaayo na nimo. \ud83d\udcaf",
       "Happy Thursday! The weekend is peeking around the corner. Finish strong today, you are almost there! \ud83c\udf08",
       "Thursday energy: Just one more day until Friday! Sending you an extra boost of stamina and smiles. \ud83d\udd0b",
@@ -2762,12 +2762,12 @@
       "Treat yourself today: whether it is an iced coffee, a favorite pastry, or extra nap time. You earned it! \ud83c\udf69",
       "Oych Sammy! Unsa na pud imong gika-busyhan diha? Ayaw kalimot ug ngisi kay ang smile nimo makatambal ug stress! \ud83d\ude02",
       "Di man ko showy or unsa, but you genuinely make my notifications the ones I actually look forward to. \ud83d\udc8c",
-      "Botbota sa dili showy HAHAHAHA, pero tinuod jud: you are one of the coolest people I have gotten to know. \ud83d\udc31",
+      "Botbota sa dili showy HAHAHAHA, pero tinuod jud: you are one of the coolest people I have gotten to know. \ud83d\ude04",
       "If there was an award for most effortless laugh, ikaw jud ang champion. Ayaw na pag-contest, accept na lang! \ud83c\udfc6",
       "Amping kanunay, Sammy! Don't let small annoyances ruin your good day. Kebs ra na sila! \ud83d\udc85",
-      "Kung kapoy na gani, huna-hunaa na lang ang mga iring nga nag-meowah para nimo. Instant recharge! \ud83d\udc3e",
+      "Kung kapoy na gani, pahuway sa kadali ug inom ug tubig, future RN! Instant recharge na dayon! \ud83e\ude7a\u2728",
       "Naa na pud koy nakit-an nga funny meme ganina unya ikaw dayon akong nahunahunaan. Share nako puhon! \ud83d\ude02",
-      "Ka-cute sa filter sa photo #7! Sophisticated Sammy with the moustache is still undefeated. \ud83c\udfa9",
+      "Ka-cute sa filter sa photo #4! Sophisticated Sammy with the moustache is still undefeated. \ud83c\udfa9",
       "Ayaw ka-guol kung medyo messy ang schedule today. Bisan unsa pa ka-busy, kaya kaayo na nimo! \ud83c\udf1f",
       "Sammy, kung pangutan-on ko unsa'y best part sa recent months: meeting you is definitely top tier, no cap. \u2728",
       "Basin nag-overthink na pud ka diha ha? Undang na ana, overthinking does not look good on someone as pretty as you. \ud83d\ude1c",
@@ -2775,15 +2775,15 @@
       "Ayaw palabi ug kape basin mag-palpitate ka! Pero if kailangan jud... sabayan na lang pud ug daghang tubig! \u2615\ud83d\udca6",
       "Secret fact: Even on days when you feel ordinary, you are leaving a really lovely impression on the world around you. \ud83c\udf37",
       "Just dropping by your screen to say hi and make sure you are smiling right now. Mission accomplished? \ud83d\ude01",
-      "Here is a tiny imaginary white kitten tapping your shoulder just to say: you are doing amazing! \ud83d\udc3e",
+      "Just a quiet tap on your shoulder from this little corner of the web to say: you are doing amazing! \ud83c\udf38",
       "Today's forecast: 100% chance of being adorable, with occasional bursts of unprompted giggles. \ud83c\udf24\ufe0f",
-      "If a cat could talk, it would look at you and say: 10/10 human, would definitely purr on your lap. \ud83d\udc31",
-      "Sending you an emergency meowah: *kiss on your forehead!* Keep shining today, Sammy! \ud83d\udc8b",
-      "May your day be as peaceful as an orange cat taking an afternoon nap in a sunbeam. \u2600\ufe0f\ud83d\udc08",
-      "Whenever you need a laugh, remember photo #2's giant pleading eyes. Nobody can resist that face! \ud83e\udd7a",
-      "Cat wisdom for today: If something does not serve your peace, gently knock it off the table like a glass of water. \ud83d\ude39",
-      "You have that warm energy that makes even the shyest cats want to come over and say hi. \ud83e\udd0d",
-      "Sending you fluffy purrs and sweet paws to dissolve any stress you might be feeling. \ud83d\udc3e\u2728",
+      "Honest review: 10/10 human, top-tier laugh, and future RN energy all the way! \ud83e\ude7a\ud83c\udf1f",
+      "Sending you an emergency boost of good energy and calm vibes. Keep shining today, Sammy! \u2728\ud83c\udf38",
+      "May your day feel as peaceful as a slow sunny afternoon with your favorite iced drink. \u2600\ufe0f\ud83e\uddcb",
+      "Whenever you need a smile, look back at photo #2's 4-frame sheet mask session — peak self-care icons only! \ud83e\uddf4\u2728",
+      "Gentle wisdom for today: If something does not protect your peace, you are allowed to set it down and walk away. \ud83c\udf3f",
+      "You have that warm, easygoing energy that makes everyone around you feel right at home. \ud83e\udd0d",
+      "Sending you calm skies, warm vibes, and zero stress for the rest of your day. \u2601\ufe0f\u2728",
       "Meme of the day in spirit: No thoughts, head full of good memories and gratitude for Sammy. \ud83c\udf3f",
       "Thinking about how we started chatting at 11:30 PM on August 16... and honestly, every single day since has been brighter. \u2728",
       "Getting to know you has been such an unexpected and wonderful gift. Thank you for just being yourself, Sammy. \ud83e\udd0d",
@@ -2826,7 +2826,7 @@
     /* Procedural Note Synthesis Engine */
     const noteOpeners = [
       "Oych Sammy! ✨", "Hoy Sammy! 😂", "Dear Sammy 🌸", "Sweet Sammy 🤍",
-      "A little daily reminder 💌", "Morning check-in! ☀️", "Hey Sammy 🌷", "Emergency smile note incoming! 🐱"
+      "A little daily reminder 💌", "Morning check-in! ☀️", "Hey Sammy 🌷", "Emergency smile note incoming! 🌸"
     ];
     const noteMiddles = [
       "Just in case you needed to hear this today: you are doing so much better than you give yourself credit for.",
@@ -2835,7 +2835,7 @@
       "Don't forget to take a pause today, drink some cool water, and snack on something delicious.",
       "Even on the quietest, most ordinary days, your presence makes everything feel a whole lot lighter.",
       "Whatever test, assignment, or busy schedule is in front of you today—you are going to ace it effortlessly.",
-      "Sending you the sweetest imaginary cat head-boop and a whole bouquet of peaceful vibes.",
+      "Sending you a whole bouquet of calm vibes and rooting for our future RN every step of the way.",
       "Never forget how rare and wonderful your sparkle is. The world is genuinely lucky to have you."
     ];
     const noteClosers = [
@@ -2950,20 +2950,14 @@
     }
 
     /* Render 3D Flippable Polaroid Gallery */
-    function renderGallery(filter = "all") {
+    function renderGallery() {
       gallery.replaceChildren();
       photos.forEach((photo, index) => {
-        const matches =
-          filter === "all" ||
-          (filter === "Sammy" && photo.kind === "Sammy") ||
-          (filter === "Pets" && photo.kind !== "Sammy");
-        if (!matches) return;
-
         const container = document.createElement("div");
         container.className = `polaroid-card-container ${tiltClasses[index % tiltClasses.length]}`;
         const washiClass = washiVariants[index % washiVariants.length];
         const fitStyle = photo.fit === "contain" ? "object-fit:contain;background:#f4ece9;" : `object-position:${photo.pos || "50% 50%"};`;
-        const tagLabel = photo.kind === "Sammy" ? "Sammy ✨" : "Cute mood 🐾";
+        const tagLabel = "Sammy ✨";
 
         container.innerHTML = `
           <div class="polaroid-inner">
@@ -3046,32 +3040,7 @@
       });
     }
 
-    // Dynamic filter counts
-    function syncFilterCounts() {
-      const sammyCount = photos.filter(p => p.kind === "Sammy").length;
-      const petsCount = photos.filter(p => p.kind !== "Sammy").length;
-      document.querySelectorAll(".gallery-filter-btn").forEach(btn => {
-        const type = btn.dataset.galleryFilter;
-        const countEl = btn.querySelector(".filter-count");
-        if (countEl) {
-          if (type === "all") countEl.textContent = photos.length;
-          else if (type === "Sammy") countEl.textContent = sammyCount;
-          else if (type === "Pets") countEl.textContent = petsCount;
-        }
-      });
-    }
-    syncFilterCounts();
-
-    renderGallery("all");
-
-    document.querySelectorAll(".gallery-filter-btn").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".gallery-filter-btn").forEach(tab => {
-          tab.setAttribute("aria-pressed", String(tab === button));
-        });
-        renderGallery(button.dataset.galleryFilter);
-      });
-    });
+    renderGallery();
 
     /* Daily Note & Jar of Smiles Engine */
     const noteModal = document.getElementById("note-modal");
@@ -3300,7 +3269,7 @@
 
     function openComposeNote() {
       const freshNote = composeGenerativeNote();
-      displayNoteInModal(freshNote, "✨ Fresh Generative Note", false);
+      displayNoteInModal(freshNote, "✨ Freshly Mixed Note", false);
     }
 
     function closeSmileNote() {
