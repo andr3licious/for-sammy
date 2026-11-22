@@ -2331,17 +2331,18 @@
       <div id="videos"></div>
     </section>
 
-    <!-- Kind Words & Giggles Section -->
+    <!-- Kind Words, Verses & Giggles Section -->
     <section id="kind-words" class="section-block">
       <div class="reveal section-header-center">
-        <p class="section-eyebrow" style="color:#a889b5">a little boost, or a little giggle</p>
-        <h2 class="handwriting section-heading">Kind Words &amp; Giggles</h2>
+        <p class="section-eyebrow" style="color:#a889b5">faith, comfort, a little boost, or a giggle</p>
+        <h2 class="handwriting section-heading">Kind Words, Verses &amp; Giggles</h2>
       </div>
-      <div class="reveal quotes-controls" role="group" aria-label="Filter quotes">
+      <div class="reveal quotes-controls" role="group" aria-label="Filter quotes and Bible verses">
         <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="filter-btn" data-filter="bible" aria-pressed="false">📖 Bible Verses</button>
         <button type="button" class="filter-btn" data-filter="motivation" aria-pressed="false">Daily Motivation</button>
         <button type="button" class="filter-btn" data-filter="laughs" aria-pressed="false">Quick Laughs</button>
-        <button type="button" id="quote-surprise" class="action-pill" title="Pick a random note for right now">✨ Surprise me</button>
+        <button type="button" id="quote-surprise" class="action-pill" title="Pick a random verse or quote for right now">✨ Surprise me</button>
       </div>
       <div id="quotes"></div>
     </section>
@@ -2412,7 +2413,7 @@
     </div>
   </div>
 
-  <audio id="background-music" src="./assets/audio/bgm.mp3?v=25" loop preload="none"></audio>
+  <audio id="background-music" src="./assets/audio/bgm.mp3?v=25" loop preload="auto"></audio>
 
   <!-- Fullscreen Lightbox Modal -->
   <div id="lightbox" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Photo viewer">
@@ -2533,7 +2534,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v25" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v27" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2543,12 +2544,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-25")) {
-            storageSet("session", "for-sammy-sw-reloaded-25", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-27")) {
+            storageSet("session", "for-sammy-sw-reloaded-27", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=25", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=27", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2698,7 +2699,7 @@
       { src: "./assets/photos/photo11.jpg", caption: "The original look, captured like a Polaroid 🖤", alt: "A black-and-white portrait of Sammy with a short bob and black top, shown with a filter preview below", kind: "Sammy", pos: "50% 24%", note: "The Polaroid original frame. Effortlessly cool and iconic 🖤" }
     ];
 
-    /* 104 Handcrafted Jar of Smiles & Daily Notes */
+    /* 120 Handcrafted Jar of Smiles, Bible Verses & Daily Notes */
     const jarMessages = [
       "Oych Sammy! Just in case nobody told you today: your laugh is genuinely infectious. Keep smiling! \u2728",
       "Reminder: You don't have to have everything figured out today. One step at a time, you are doing amazing. \ud83c\udf38",
@@ -2803,7 +2804,23 @@
       "Celebrate how far you have come. The version of you from a year ago would be so proud of who you are today. \ud83e\udd42",
       "As the night winds down, let go of everything that happened today. Sleep peacefully, Sammy. Tomorrow is new! \ud83c\udf19",
       "May your dreams be sweet, your blanket be warm, and your sleep be completely uninterrupted tonight. \ud83d\ude34\u2728",
-      "Sending you the gentlest hug and sweetest dreams. Amping always, Sammy! \ud83e\udd0d\u2728"
+      "Sending you the gentlest hug and sweetest dreams. Amping always, Sammy! \ud83e\udd0d\u2728",
+      "\ud83d\udcd6 \u201cThe Lord is near to those who have a broken heart, and saves those who have a crushed spirit.\u201d \u2014 Psalm 34:18 \ud83e\udd0d",
+      "\ud83d\udcd6 \u201cCome to me, all you who labor and are heavily burdened, and I will give you rest.\u201d \u2014 Matthew 11:28 \ud83c\udf3f",
+      "\ud83d\udcd6 \u201cDon\u2019t be afraid, for I am with you. Don\u2019t be dismayed, for I am your God. I will strengthen you. Yes, I will help you.\u201d \u2014 Isaiah 41:10 \u2728",
+      "\ud83d\udcd6 \u201cFor I know the thoughts that I think toward you, says the Lord, thoughts of peace, and not of evil, to give you hope and a future.\u201d \u2014 Jeremiah 29:11 \ud83c\udf38",
+      "\ud83d\udcd6 \u201cGod is within her. She shall not be moved. God will help her at dawn.\u201d \u2014 Psalm 46:5 \ud83c\udf05",
+      "\ud83d\udcd6 \u201cHe heals the broken in heart, and binds up their wounds.\u201d \u2014 Psalm 147:3 \ud83e\udd0d",
+      "\ud83d\udcd6 \u201cCasting all your worries on him, because he cares for you.\u201d \u2014 1 Peter 5:7 \ud83d\udd4a\ufe0f",
+      "\ud83d\udcd6 \u201cBe strong and courageous. Don\u2019t be afraid. Don\u2019t be dismayed, for the Lord your God is with you wherever you go.\u201d \u2014 Joshua 1:9 \ud83c\udf1f",
+      "\ud83d\udcd6 \u201cI can do all things through Christ, who strengthens me.\u201d \u2014 Philippians 4:13 \ud83d\udcaa",
+      "\ud83d\udcd6 \u201cPeace I leave with you. My peace I give to you. Don\u2019t let your heart be troubled, neither let it be fearful.\u201d \u2014 John 14:27 \ud83c\udf43",
+      "\ud83d\udcd6 \u201cBecause of the Lord\u2019s loving kindnesses we are not consumed, because his mercies don\u2019t fail. They are new every morning.\u201d \u2014 Lamentations 3:22\u201323 \u2600\ufe0f",
+      "\ud83d\udcd6 \u201cWeeping may stay for the night, but joy comes in the morning.\u201d \u2014 Psalm 30:5 \ud83c\udf08",
+      "\ud83d\udcd6 \u201cI will give thanks to you, for I am fearfully and wonderfully made. Your works are wonderful.\u201d \u2014 Psalm 139:14 \ud83c\udf37",
+      "\ud83d\udcd6 \u201cTrust in the Lord with all your heart, and don\u2019t lean on your own understanding.\u201d \u2014 Proverbs 3:5 \ud83e\udd0d",
+      "\ud83d\udcd6 \u201cThe Lord bless you, and keep you. The Lord make his face to shine on you, and be gracious to you.\u201d \u2014 Numbers 6:24\u201325 \u2728",
+      "\ud83d\udcd6 \u201cNow may the God of hope fill you with all joy and peace in believing, that you may abound in hope.\u201d \u2014 Romans 15:13 \ud83c\udf38"
 ];
 
     /* Procedural Note Synthesis Engine */
@@ -3570,8 +3587,38 @@
       watchReveal(card);
     }
 
-    /* Quotes Section with Theme-Aware CSS Classes */
+    /* Quotes & Bible Verses Section with Theme-Aware CSS Classes */
     const quoteData = [
+      { type: "bible", text: "The Lord is near to those who have a broken heart, and saves those who have a crushed spirit.", author: "Psalm 34:18" },
+      { type: "bible", text: "Come to me, all you who labor and are heavily burdened, and I will give you rest.", author: "Matthew 11:28" },
+      { type: "bible", text: "Don’t be afraid, for I am with you. Don’t be dismayed, for I am your God. I will strengthen you. Yes, I will help you.", author: "Isaiah 41:10" },
+      { type: "bible", text: "For I know the thoughts that I think toward you, says the Lord, thoughts of peace, and not of evil, to give you hope and a future.", author: "Jeremiah 29:11" },
+      { type: "bible", text: "In nothing be anxious, but in everything, by prayer and petition with thanksgiving, let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts in Christ Jesus.", author: "Philippians 4:6–7" },
+      { type: "bible", text: "I can do all things through Christ, who strengthens me.", author: "Philippians 4:13" },
+      { type: "bible", text: "Trust in the Lord with all your heart, and don’t lean on your own understanding. In all your ways acknowledge him, and he will make your paths straight.", author: "Proverbs 3:5–6" },
+      { type: "bible", text: "Be strong and courageous. Don’t be afraid. Don’t be dismayed, for the Lord your God is with you wherever you go.", author: "Joshua 1:9" },
+      { type: "bible", text: "God is within her. She shall not be moved. God will help her at dawn.", author: "Psalm 46:5" },
+      { type: "bible", text: "I will give thanks to you, for I am fearfully and wonderfully made. Your works are wonderful. My soul knows that very well.", author: "Psalm 139:14" },
+      { type: "bible", text: "He heals the broken in heart, and binds up their wounds.", author: "Psalm 147:3" },
+      { type: "bible", text: "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me. Your rod and your staff, they comfort me.", author: "Psalm 23:4" },
+      { type: "bible", text: "Peace I leave with you. My peace I give to you; not as the world gives, I give to you. Don’t let your heart be troubled, neither let it be fearful.", author: "John 14:27" },
+      { type: "bible", text: "Casting all your worries on him, because he cares for you.", author: "1 Peter 5:7" },
+      { type: "bible", text: "It is because of the Lord’s loving kindnesses that we are not consumed, because his mercies don’t fail. They are new every morning. Great is your faithfulness.", author: "Lamentations 3:22–23" },
+      { type: "bible", text: "But those who wait for the Lord will renew their strength. They will mount up with wings like eagles. They will run, and not be weary. They will walk, and not faint.", author: "Isaiah 40:31" },
+      { type: "bible", text: "Weeping may stay for the night, but joy comes in the morning.", author: "Psalm 30:5" },
+      { type: "bible", text: "We know that all things work together for good for those who love God, for those who are called according to his purpose.", author: "Romans 8:28" },
+      { type: "bible", text: "Blessed be the God and Father of our Lord Jesus Christ, the Father of mercies and God of all comfort, who comforts us in all our affliction.", author: "2 Corinthians 1:3–4" },
+      { type: "bible", text: "Strength and dignity are her clothing. She laughs at the time to come.", author: "Proverbs 31:25" },
+      { type: "bible", text: "The Lord, your God, is among you, a mighty one who will save. He will rejoice over you with joy. He will calm you in his love. He will rejoice over you with singing.", author: "Zephaniah 3:17" },
+      { type: "bible", text: "The Lord bless you, and keep you. The Lord make his face to shine on you, and be gracious to you. The Lord lift up his face toward you, and give you peace.", author: "Numbers 6:24–26" },
+      { type: "bible", text: "Now may the God of hope fill you with all joy and peace in believing, that you may abound in hope, in the power of the Holy Spirit.", author: "Romans 15:13" },
+      { type: "bible", text: "For God didn’t give us a spirit of fear, but of power, love, and self-control.", author: "2 Timothy 1:7" },
+      { type: "bible", text: "The Lord is my light and my salvation. Whom shall I fear? The Lord is the strength of my life. Of whom shall I be afraid?", author: "Psalm 27:1" },
+      { type: "bible", text: "Let’s not be weary in doing good, for we will reap in due season, if we don’t give up.", author: "Galatians 6:9" },
+      { type: "bible", text: "Love is patient and is kind. Love doesn’t envy. Love doesn’t brag, is not proud. It bears all things, believes all things, hopes all things, and endures all things.", author: "1 Corinthians 13:4–7" },
+      { type: "bible", text: "I will lift up my eyes to the hills. Where does my help come from? My help comes from the Lord, who made heaven and earth.", author: "Psalm 121:1–2" },
+      { type: "bible", text: "Blessed are those who mourn, for they shall be comforted.", author: "Matthew 5:4" },
+      { type: "bible", text: "A cheerful heart makes good medicine, but a crushed spirit dries up the bones.", author: "Proverbs 17:22" },
       { type: "motivation", text: "You are capable of amazing things—don't let a bad day trick you into thinking you aren't.", author: "Anonymous" },
       { type: "motivation", text: "Be yourself; everyone else is already taken.", author: "Anonymous" },
       { type: "motivation", text: "Just a reminder: you’ve survived 100% of your hardest days so far. You've got this.", author: "Anonymous" },
@@ -3599,12 +3646,17 @@
         const card = document.createElement("article");
         // Use theme-aware CSS classes so Starlight mode uses high-contrast velvet cards
         card.className = `quote-card quote-card--c${index % 5}`;
+        card.dataset.quoteType = quote.type;
 
         const topRow = document.createElement("div");
         topRow.className = "quote-card__top";
         const badge = document.createElement("span");
         badge.className = "quote-card__badge";
-        badge.textContent = quote.type === "motivation" ? "✨ Gentle boost" : "😄 Little giggle";
+        badge.textContent = quote.type === "bible"
+          ? "📖 Bible verse"
+          : quote.type === "motivation"
+            ? "✨ Gentle boost"
+            : "😄 Little giggle";
         const mark = document.createElement("span");
         mark.className = "quote-card__mark";
         mark.textContent = "“";
@@ -3642,7 +3694,7 @@
       const picked = cards[Math.floor(Math.random() * cards.length)];
       picked.classList.add("is-highlighted");
       picked.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
-      showToast("Picked a little note just for you ✨");
+      showToast(picked.dataset.quoteType === "bible" ? "Picked a Bible verse just for you 📖✨" : "Picked a little note just for you ✨");
       quoteHighlightTimer = setTimeout(() => picked.classList.remove("is-highlighted"), 2600);
     });
 
@@ -3922,6 +3974,10 @@
 
     let isPlaying = false;
     let musicPausedForVideo = false;
+    let userPausedMusic = false;
+    let autoplayPending = true;
+    let autoplayAttempting = false;
+    let autoplayListenersArmed = false;
     let synthTimer = null;
     let synthCtx = null;
     let synthMasterGain = null;
@@ -4044,11 +4100,32 @@
       } catch (err) {}
     }
 
-    function startCurrentTrack() {
+    const autoplayUnlockEvents = ["pointerdown", "touchend", "click", "keydown"];
+
+    function disarmAutoplayListeners() {
+      if (!autoplayListenersArmed) return;
+      autoplayListenersArmed = false;
+      autoplayUnlockEvents.forEach((evt) => {
+        document.removeEventListener(evt, handleFirstInteractionAutoplay, true);
+      });
+    }
+
+    function armAutoplayListeners() {
+      if (autoplayListenersArmed || !autoplayPending || userPausedMusic) return;
+      autoplayListenersArmed = true;
+      autoplayUnlockEvents.forEach((evt) => {
+        document.addEventListener(evt, handleFirstInteractionAutoplay, true);
+      });
+    }
+
+    function startCurrentTrack(options = {}) {
+      const { silentFail = false } = options;
       const track = playlist[currentTrackIdx];
       if (track.isSynth) {
         bgAudio.pause();
         isPlaying = true;
+        autoplayPending = false;
+        disarmAutoplayListeners();
         syncCassetteUI();
         cassetteCurrentTime.textContent = "0:00";
         cassetteProgressFill.style.width = "0%";
@@ -4056,6 +4133,7 @@
         if (synthTimer) clearInterval(synthTimer);
         playSynthChord();
         synthTimer = setInterval(playSynthChord, 3200);
+        return Promise.resolve(true);
       } else {
         silenceSynth();
         if (loadedTrackSrc !== track.src) {
@@ -4066,18 +4144,70 @@
         try {
           bgAudio.volume = Number(cassetteVolSlider.value);
         } catch (e) {}
-        bgAudio.play().then(() => {
+        if (!bgAudio.paused) {
           isPlaying = true;
+          autoplayPending = false;
+          disarmAutoplayListeners();
           syncCassetteUI();
+          return Promise.resolve(true);
+        }
+        const playPromise = bgAudio.play();
+        if (!playPromise || typeof playPromise.then !== "function") {
+          isPlaying = !bgAudio.paused;
+          if (isPlaying) {
+            autoplayPending = false;
+            disarmAutoplayListeners();
+          }
+          syncCassetteUI();
+          return Promise.resolve(isPlaying);
+        }
+        return playPromise.then(() => {
+          isPlaying = true;
+          autoplayPending = false;
+          disarmAutoplayListeners();
+          syncCassetteUI();
+          return true;
         }).catch(() => {
           isPlaying = false;
           syncCassetteUI();
-          showToast("Tap again to allow audio playback.");
+          if (!silentFail) {
+            showToast("Tap again to allow audio playback.");
+          }
+          return false;
         });
       }
     }
 
+    function attemptAutoStartMusic() {
+      if (!autoplayPending || userPausedMusic || isPlaying || autoplayAttempting) return;
+      if (videoPlayers.some(v => !v.paused && !v.muted)) return;
+      autoplayAttempting = true;
+      startCurrentTrack({ silentFail: true }).then((started) => {
+        autoplayAttempting = false;
+        if (!started && autoplayPending && !userPausedMusic) {
+          armAutoplayListeners();
+        }
+      });
+    }
+
+    function handleFirstInteractionAutoplay(event) {
+      if (!autoplayPending || userPausedMusic || isPlaying) {
+        disarmAutoplayListeners();
+        return;
+      }
+      if (event.type === "keydown" && ["Shift", "Control", "Alt", "Meta", "Tab", "Escape"].includes(event.key)) {
+        return;
+      }
+      if (event.target && event.target.closest && event.target.closest("#cassette-play, #music-pill-icon, #cassette-prev, #cassette-next, #videos, video")) {
+        return;
+      }
+      attemptAutoStartMusic();
+    }
+
     function switchTrack(delta) {
+      autoplayPending = false;
+      userPausedMusic = false;
+      disarmAutoplayListeners();
       currentTrackIdx = (currentTrackIdx + delta + playlist.length) % playlist.length;
       silenceSynth();
       bgAudio.pause();
@@ -4100,20 +4230,34 @@
 
     function resumeMusic() {
       musicPausedForVideo = false;
-      startCurrentTrack();
+      if (!userPausedMusic) startCurrentTrack({ silentFail: true });
     }
 
     cassettePlayBtn.addEventListener("click", () => {
       musicPausedForVideo = false;
-      if (isPlaying) pauseMusic();
-      else startCurrentTrack();
+      autoplayPending = false;
+      disarmAutoplayListeners();
+      if (isPlaying) {
+        userPausedMusic = true;
+        pauseMusic();
+      } else {
+        userPausedMusic = false;
+        startCurrentTrack();
+      }
     });
 
     musicPill.addEventListener("click", (e) => {
       if (e.target.closest("#music-pill-icon")) {
         musicPausedForVideo = false;
-        if (isPlaying) pauseMusic();
-        else startCurrentTrack();
+        autoplayPending = false;
+        disarmAutoplayListeners();
+        if (isPlaying) {
+          userPausedMusic = true;
+          pauseMusic();
+        } else {
+          userPausedMusic = false;
+          startCurrentTrack();
+        }
         return;
       }
       setCassetteExpanded(cassetteBox.classList.contains("is-collapsed"));
@@ -4131,6 +4275,15 @@
         try {
           synthMasterGain.gain.setTargetAtTime(Math.max(0, vol * 0.12), synthCtx.currentTime, 0.03);
         } catch (e) {}
+      }
+    });
+
+    bgAudio.addEventListener("play", () => {
+      if (!playlist[currentTrackIdx].isSynth) {
+        isPlaying = true;
+        autoplayPending = false;
+        disarmAutoplayListeners();
+        syncCassetteUI();
       }
     });
 
@@ -4159,6 +4312,7 @@
     });
 
     syncCassetteUI();
+    attemptAutoStartMusic();
 
     /* Site Toast */
     let toastTimer;

@@ -7,11 +7,11 @@ A personal, pastel digital scrapbook and Progressive Web App (PWA) built with ze
 ## Features
 
 - **Real-Time Check-In & Live Clock**: Dynamic time-of-day greetings, a live clock, and a daily mood check-in saved per device in `localStorage` with one-tap toggle or reset.
-- **Moments & Memories Gallery**: 20 interactive 3D-flippable Polaroid cards (10 Sammy, 10 Cute Companions) with category filters, back-of-card notes, a fullscreen lightbox, and client-side Polaroid PNG export.
+- **Moments & Memories Gallery**: 10 interactive 3D-flippable Polaroid cards with back-of-card notes, a fullscreen lightbox, and client-side Polaroid PNG export.
 - **Jar of Smiles & Daily Notes**: Daily Manila-time origami notes, random note draws, a fresh note composer, saved Favorites, and a Keepsake QR modal with downloadable QR assets and one-tap link copying.
 - **Highlight Reels**: 3 short video reels with custom poster thumbnails and coordinated playback/mute controls.
-- **Kind Words & Giggles**: 18 pastel quote cards with category filters (`All`, `Daily Motivation`, `Quick Laughs`) and a `Surprise me` picker.
-- **Mini Cassette Player**: Plays background music (*True Colors* by Anna Kendrick & Justin Timberlake) alongside a built-in Web Audio API Starlight Lofi synth track.
+- **Kind Words, Verses & Giggles**: 48 pastel cards (30 comforting Bible verses, 9 daily motivation quotes, and 9 quick laughs) with category filters and a `Surprise me` picker.
+- **Mini Cassette Player**: Auto-starts background music (*True Colors* by Anna Kendrick & Justin Timberlake) on load or first interaction, alongside a built-in Web Audio API Starlight Lofi synth track.
 - **Daylight & Starlight Themes**: Switchable light and cozy night modes, floating reaction particles, and responsive layouts across desktop, tablet, and mobile viewports.
 - **Installable PWA**: Includes [`manifest.webmanifest`](./manifest.webmanifest) and a network-first Service Worker ([`sw.js`](./sw.js)) for immediate updates with offline asset fallback.
 
@@ -32,7 +32,7 @@ A personal, pastel digital scrapbook and Progressive Web App (PWA) built with ze
     ├── icon-192.png
     ├── icon-512.png
     ├── audio/             # Background music track
-    ├── photos/            # 20 scrapbook gallery photos
+    ├── photos/            # 10 scrapbook gallery photos
     ├── qr/                # Keepsake QR code SVG/PNG and printable card
     └── videos/            # 3 highlight reel videos and poster images
 ```
@@ -56,7 +56,7 @@ Then open `http://localhost:8000` in your browser.
 The site deploys automatically to GitHub Pages via [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) on every push to `main` (and can also be triggered manually via `workflow_dispatch`).
 
 - **Live URL**: [https://andr3licious.github.io/for-sammy/](https://andr3licious.github.io/for-sammy/)
-- **Cache Busting**: When making site updates, bump the Service Worker cache version (`for-sammy-v25`) in both [`sw.js`](./sw.js) and [`index.html`](./index.html) so returning devices refresh immediately.
+- **Cache Busting**: When making site updates, bump the Service Worker cache version (`for-sammy-v27`) in both [`sw.js`](./sw.js) and [`index.html`](./index.html) so returning devices refresh immediately.
 
 ## Credits
 
