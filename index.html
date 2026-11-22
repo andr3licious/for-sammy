@@ -2547,7 +2547,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v24" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v25" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2557,12 +2557,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-24")) {
-            storageSet("session", "for-sammy-sw-reloaded-24", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-25")) {
+            storageSet("session", "for-sammy-sw-reloaded-25", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=24", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=25", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -3499,7 +3499,7 @@
 
     if (copyQrLinkBtn) {
       copyQrLinkBtn.addEventListener("click", () => {
-        const url = "https://andr3licious.github.io/for-sammy/";
+        const url = new URL("./", window.location.href).href;
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(url).then(() => {
             showToast("Website link copied to clipboard! 📋✨");
