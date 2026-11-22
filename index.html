@@ -2366,7 +2366,7 @@
     <p class="handwriting footer-title">That’s all for now, Sammy.</p>
     <p class="footer-sub">Hope this little corner made you smile today.</p>
     <p class="footer-made">made with ♡, just for you</p>
-    <p class="footer-credit">Music: “Beautiful Dream” by Diego Nava · <a href="https://mixkit.co/free-stock-music/mood/romantic/" target="_blank" rel="noopener noreferrer">Mixkit Free Stock Music</a></p>
+    <p class="footer-credit">Music: “True Colors” by Anna Kendrick &amp; Justin Timberlake</p>
     <button id="secret-heart" type="button" aria-label="A tiny secret" title="A tiny secret">
       <svg viewBox="0 0 24 24" fill="#F4B6C2" aria-hidden="true">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/>
@@ -2397,8 +2397,8 @@
           </div>
         </div>
         <div class="cassette-info">
-          <p id="cassette-title" class="cassette-track-title">Beautiful Dream</p>
-          <p id="cassette-artist" class="cassette-track-artist">Diego Nava · Soft Piano</p>
+          <p id="cassette-title" class="cassette-track-title">True Colors</p>
+          <p id="cassette-artist" class="cassette-track-artist">Anna Kendrick &amp; Justin Timberlake</p>
         </div>
         <div class="cassette-progress-row">
           <span id="cassette-current">0:00</span>
@@ -2420,13 +2420,13 @@
 
       <button id="music-pill-toggle" type="button" class="cassette-pill-toggle" aria-label="Open music player" aria-expanded="false">
         <span id="music-pill-icon" class="cassette-btn music-pill-icon-btn">▶</span>
-        <span id="music-pill-label"><span class="music-pill-text-short">Music</span><span class="music-pill-track-extra"> · <span id="music-pill-track-name">Beautiful Dream</span></span></span>
+        <span id="music-pill-label"><span class="music-pill-text-short">Music</span><span class="music-pill-track-extra"> · <span id="music-pill-track-name">True Colors</span></span></span>
         <span id="music-pill-arrow" style="font-size:0.75rem">▲</span>
       </button>
     </div>
   </div>
 
-  <audio id="background-music" src="./assets/audio/bgm.mp3" loop preload="none"></audio>
+  <audio id="background-music" src="./assets/audio/bgm.mp3?v=25" loop preload="none"></audio>
 
   <!-- Fullscreen Lightbox Modal -->
   <div id="lightbox" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Photo viewer">
@@ -2547,7 +2547,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v24" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v25" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2557,12 +2557,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-24")) {
-            storageSet("session", "for-sammy-sw-reloaded-24", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-25")) {
+            storageSet("session", "for-sammy-sw-reloaded-25", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=24", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=25", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -3919,7 +3919,7 @@
 
     /* Vintage Cassette Engine */
     const playlist = [
-      { title: "Beautiful Dream", artist: "Diego Nava · Soft Piano", src: "./assets/audio/bgm.mp3" },
+      { title: "True Colors", artist: "Anna Kendrick & Justin Timberlake", src: "./assets/audio/bgm.mp3?v=25" },
       { title: "Starlight Lofi Melody", artist: "Acoustic Chime Progression", isSynth: true }
     ];
     let currentTrackIdx = 0;

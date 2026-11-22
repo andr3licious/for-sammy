@@ -11,7 +11,7 @@ A personal, pastel digital scrapbook and Progressive Web App (PWA) built with ze
 - **Jar of Smiles & Daily Notes**: Daily Manila-time origami notes, random note draws, a fresh note composer, saved Favorites, and a Keepsake QR modal with downloadable QR assets and one-tap link copying.
 - **Highlight Reels**: 3 short video reels with custom poster thumbnails and coordinated playback/mute controls.
 - **Kind Words & Giggles**: 18 pastel quote cards with category filters (`All`, `Daily Motivation`, `Quick Laughs`) and a `Surprise me` picker.
-- **Mini Cassette Player**: Plays soft piano background music (*Beautiful Dream* by Diego Nava) alongside a built-in Web Audio API Starlight Lofi synth track.
+- **Mini Cassette Player**: Plays background music (*True Colors* by Anna Kendrick & Justin Timberlake) alongside a built-in Web Audio API Starlight Lofi synth track.
 - **Daylight & Starlight Themes**: Switchable light and cozy night modes, floating reaction particles, and responsive layouts across desktop, tablet, and mobile viewports.
 - **Installable PWA**: Includes [`manifest.webmanifest`](./manifest.webmanifest) and a network-first Service Worker ([`sw.js`](./sw.js)) for immediate updates with offline asset fallback.
 
@@ -56,10 +56,10 @@ Then open `http://localhost:8000` in your browser.
 The site deploys automatically to GitHub Pages via [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) on every push to `main` (and can also be triggered manually via `workflow_dispatch`).
 
 - **Live URL**: [https://andr3licious.github.io/for-sammy/](https://andr3licious.github.io/for-sammy/)
-- **Cache Busting**: When making site updates, bump the Service Worker cache version (`for-sammy-v24`) in both [`sw.js`](./sw.js) and [`index.html`](./index.html) so returning devices refresh immediately.
+- **Cache Busting**: When making site updates, bump the Service Worker cache version (`for-sammy-v25`) in both [`sw.js`](./sw.js) and [`index.html`](./index.html) so returning devices refresh immediately.
 
 ## Credits
 
-- Background music: *Beautiful Dream* by Diego Nava via [Mixkit Free Stock Music](https://mixkit.co/free-stock-music/mood/romantic/).
+- Background music: *True Colors* by Anna Kendrick & Justin Timberlake.
 - Fonts: [Nunito](https://fonts.google.com/specimen/Nunito) & [Caveat](https://fonts.google.com/specimen/Caveat) via Google Fonts.
 - Confetti effects: [canvas-confetti](https://github.com/catdad/canvas-confetti).
