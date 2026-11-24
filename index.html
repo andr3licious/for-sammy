@@ -11,7 +11,12 @@
   <meta property="og:title" content="For Sammy ✨ | A Little Corner of the Web">
   <meta property="og:description" content="Real-time pastel scrapbook, Polaroids, daily notes, highlight reels, and smiles — made just for Sammy.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="./assets/photos/photo1.jpg">
+  <meta property="og:url" content="https://andr3licious.github.io/for-sammy/">
+  <meta property="og:image" content="https://andr3licious.github.io/for-sammy/assets/photos/photo1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="For Sammy ✨ | A Little Corner of the Web">
+  <meta name="twitter:description" content="Real-time pastel scrapbook, Polaroids, daily notes, highlight reels, and smiles — made just for Sammy.">
+  <meta name="twitter:image" content="https://andr3licious.github.io/for-sammy/assets/photos/photo1.jpg">
 
   <title>For Sammy ✨ | A Little Corner of the Web</title>
 
@@ -2440,6 +2445,9 @@
         <button type="button" id="origami-fav-btn" class="origami-fav-btn" aria-label="Save to favorite notes" title="Save to favorites">
           <span id="origami-fav-star">☆</span> <span id="origami-fav-label">Favorite</span>
         </button>
+        <button type="button" id="origami-copy-btn" class="origami-fav-btn" aria-label="Copy this note" title="Copy note">
+          <span>📋</span> <span id="origami-copy-label">Copy</span>
+        </button>
       </div>
       <h2 id="note-modal-title" class="handwriting" style="font-size:clamp(2.2rem,4vw,2.8rem);color:var(--pink-deep);font-weight:700">A Little Note for You</h2>
       <p id="origami-message-text" class="handwriting origami-message">Message text</p>
@@ -2534,7 +2542,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v30" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v31" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2544,12 +2552,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-30")) {
-            storageSet("session", "for-sammy-sw-reloaded-30", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-31")) {
+            storageSet("session", "for-sammy-sw-reloaded-31", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=30", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=31", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2643,7 +2651,8 @@
     if (savedMoodData) {
       try {
         const parsed = JSON.parse(savedMoodData);
-        if (parsed && typeof parsed === "object" && parsed.time && parsed.text) {
+        const todayKey = getManilaDateInfo().dateKey;
+        if (parsed && typeof parsed === "object" && parsed.dateKey === todayKey && parsed.time && parsed.text) {
           moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
           moodPills.forEach((pill) => {
             const isMatch = pill.dataset.mood === parsed.mood;
@@ -2651,8 +2660,12 @@
             pill.setAttribute("aria-pressed", String(isMatch));
           });
           if (moodResetBtn) moodResetBtn.classList.remove("hidden");
+        } else {
+          storageRemove("local", moodStorageKey);
         }
-      } catch (e) {}
+      } catch (e) {
+        storageRemove("local", moodStorageKey);
+      }
     }
 
     moodPills.forEach((btn) => {
@@ -2675,7 +2688,12 @@
 
         moodStatusEl.textContent = responseText;
         if (moodResetBtn) moodResetBtn.classList.remove("hidden");
-        storageSet("local", moodStorageKey, JSON.stringify({ mood: moodKey, text: moodText, time: timeStr }));
+        storageSet("local", moodStorageKey, JSON.stringify({
+          dateKey: getManilaDateInfo().dateKey,
+          mood: moodKey,
+          text: moodText,
+          time: timeStr
+        }));
         spawnFloatingReaction("💖", window.innerWidth / 2, window.innerHeight / 2);
         showToast("Check-in saved! 🌸");
       });
@@ -3049,6 +3067,9 @@
     const origamiFavBtn = document.getElementById("origami-fav-btn");
     const origamiFavStar = document.getElementById("origami-fav-star");
     const origamiFavLabel = document.getElementById("origami-fav-label");
+    const origamiCopyBtn = document.getElementById("origami-copy-btn");
+    const origamiCopyLabel = document.getElementById("origami-copy-label");
+    let copyNoteTimer = null;
 
     const jarTrigger = document.getElementById("jar-trigger");
     const jarButton = document.getElementById("jar-button");
@@ -3230,6 +3251,10 @@
       currentNoteData = { text, badge: badgeText, isToday };
       origamiMessage.textContent = text;
       origamiModeBadge.textContent = badgeText;
+      if (origamiCopyLabel) {
+        clearTimeout(copyNoteTimer);
+        origamiCopyLabel.textContent = "Copy";
+      }
       syncFavButtonUI();
 
       if (isToday) {
@@ -3263,7 +3288,10 @@
     }
 
     function openRandomNote() {
-      const randomMsg = jarMessages[Math.floor(Math.random() * jarMessages.length)];
+      let randomMsg = jarMessages[Math.floor(Math.random() * jarMessages.length)];
+      for (let tries = 0; tries < 8 && jarMessages.length > 1 && randomMsg === currentNoteData.text; tries++) {
+        randomMsg = jarMessages[Math.floor(Math.random() * jarMessages.length)];
+      }
       displayNoteInModal(randomMsg, "🎲 Surprise Note from Jar", false);
     }
 
@@ -3396,6 +3424,31 @@
     viewFavoritesBtn.addEventListener("click", openFavoritesModal);
 
     origamiFavBtn.addEventListener("click", toggleFavoriteCurrentNote);
+    if (origamiCopyBtn) {
+      origamiCopyBtn.addEventListener("click", () => {
+        const textToCopy = currentNoteData.text || "";
+        if (!textToCopy) return;
+        const markCopied = () => {
+          if (origamiCopyLabel) {
+            origamiCopyLabel.textContent = "Copied ✓";
+            clearTimeout(copyNoteTimer);
+            copyNoteTimer = setTimeout(() => {
+              if (origamiCopyLabel) origamiCopyLabel.textContent = "Copy";
+            }, 1800);
+          }
+          showToast("Note copied! 📋✨");
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(textToCopy).then(markCopied).catch(() => {
+            if (fallbackCopyText(textToCopy)) markCopied();
+            else showToast(textToCopy);
+          });
+        } else {
+          if (fallbackCopyText(textToCopy)) markCopied();
+          else showToast(textToCopy);
+        }
+      });
+    }
     noteTodayBtn.addEventListener("click", openTodayNote);
     noteAnotherBtn.addEventListener("click", openRandomNote);
     noteComposeBtn.addEventListener("click", openComposeNote);
@@ -4185,7 +4238,14 @@
       } catch (e) {}
       cassetteCurrentTime.textContent = "0:00";
       cassetteProgressFill.style.width = "0%";
-      cassetteDuration.textContent = playlist[currentTrackIdx].isSynth ? "∞" : "--:--";
+      const nextTrack = playlist[currentTrackIdx];
+      if (nextTrack.isSynth) {
+        cassetteDuration.textContent = "∞";
+      } else if (loadedTrackSrc === nextTrack.src && bgAudio.duration && isFinite(bgAudio.duration)) {
+        cassetteDuration.textContent = formatTime(bgAudio.duration);
+      } else {
+        cassetteDuration.textContent = "--:--";
+      }
       startCurrentTrack();
     }
 
@@ -4252,6 +4312,13 @@
         isPlaying = true;
         autoplayPending = false;
         disarmAutoplayListeners();
+        syncCassetteUI();
+      }
+    });
+
+    bgAudio.addEventListener("pause", () => {
+      if (!playlist[currentTrackIdx].isSynth && isPlaying && !bgAudio.ended) {
+        isPlaying = false;
         syncCassetteUI();
       }
     });
