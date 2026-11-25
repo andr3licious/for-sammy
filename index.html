@@ -146,7 +146,7 @@
       outline-offset: 3px;
     }
 
-    img, video, svg {
+    img, svg {
       display: block;
       max-width: 100%;
     }
@@ -2366,11 +2366,11 @@
       <p class="section-desc" style="font-size:0.92rem;margin:0 auto">Scan on any phone camera to open Sammy's scrapbook &amp; daily notes, or download the printable card for a gift, letter, or sticker!</p>
       
       <div style="margin:0.65rem auto;max-width:min(14.5rem, 60vw);width:100%">
-        <img src="./assets/qr/jar-appreciation-card.png" alt="Jar of Appreciation QR Code Keepsake Card for Sammy" style="width:100%;border-radius:1.25rem;border:2px solid var(--card-border);box-shadow:0 12px 30px rgba(0,0,0,0.12);display:block">
+        <img src="./assets/qr/jar-appreciation-card.png?v=33" alt="Jar of Appreciation QR Code Keepsake Card for Sammy" style="width:100%;border-radius:1.25rem;border:2px solid var(--card-border);box-shadow:0 12px 30px rgba(0,0,0,0.12);display:block">
       </div>
 
       <div class="letter-footer" style="display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center;margin-top:0.5rem">
-        <a href="./assets/qr/jar-appreciation-card.png" download="jar-of-appreciation-sammy-card.png" class="action-pill" style="background:var(--pink);color:var(--ink);font-weight:800;text-decoration:none">
+        <a href="./assets/qr/jar-appreciation-card.png?v=33" download="jar-of-appreciation-sammy-card.png" class="action-pill" style="background:var(--pink);color:var(--ink);font-weight:800;text-decoration:none">
           <span>📥 Download Card</span>
         </a>
         <a href="./assets/qr/qr-code.png" download="sammy-qr-code.png" class="action-pill" style="text-decoration:none">
@@ -2421,7 +2421,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v32" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v33" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2431,12 +2431,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-32")) {
-            storageSet("session", "for-sammy-sw-reloaded-32", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-33")) {
+            storageSet("session", "for-sammy-sw-reloaded-33", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=32", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=33", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
