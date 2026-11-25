@@ -9,13 +9,13 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta property="og:title" content="For Sammy ✨ | A Little Corner of the Web">
-  <meta property="og:description" content="Real-time pastel scrapbook, Polaroids, daily notes, highlight reels, and smiles — made just for Sammy.">
+  <meta property="og:description" content="Real-time pastel scrapbook, Polaroids, daily notes, verses, and smiles — made just for Sammy.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://andr3licious.github.io/for-sammy/">
   <meta property="og:image" content="https://andr3licious.github.io/for-sammy/assets/photos/photo1.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="For Sammy ✨ | A Little Corner of the Web">
-  <meta name="twitter:description" content="Real-time pastel scrapbook, Polaroids, daily notes, highlight reels, and smiles — made just for Sammy.">
+  <meta name="twitter:description" content="Real-time pastel scrapbook, Polaroids, daily notes, verses, and smiles — made just for Sammy.">
   <meta name="twitter:image" content="https://andr3licious.github.io/for-sammy/assets/photos/photo1.jpg">
 
   <title>For Sammy ✨ | A Little Corner of the Web</title>
@@ -1290,7 +1290,6 @@
       text-decoration: underline;
     }
 
-    /* Highlight Reels Section */
     .section-header-center {
       margin-bottom: 2rem;
       text-align: center;
@@ -1298,111 +1297,6 @@
     .section-header-center .section-desc {
       margin: 0.65rem auto 0;
       max-width: 32rem;
-    }
-
-    #videos {
-      display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-    .video-card {
-      overflow: hidden;
-      border-radius: 1.65rem;
-      border: 1px solid var(--card-border);
-      background: var(--paper);
-      padding: 0.85rem;
-      box-shadow: var(--shadow-card);
-      backdrop-filter: blur(10px);
-    }
-    .video-stage {
-      position: relative;
-      overflow: hidden;
-      border-radius: 1.15rem;
-      border: 4px solid rgba(248, 230, 236, 0.7);
-      background: #f4eaed;
-    }
-    .video-player {
-      display: block;
-      aspect-ratio: 16 / 9;
-      width: 100%;
-      object-fit: cover;
-      background: #2b2126;
-    }
-    .video-play {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      display: flex;
-      min-height: 3.4rem;
-      min-width: 3.4rem;
-      align-items: center;
-      justify-content: center;
-      transform: translate(-50%, -50%);
-      border: 1px solid rgba(255, 255, 255, 0.88);
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.88);
-      color: #654553;
-      padding-left: 0.2rem;
-      font-size: 1.05rem;
-      box-shadow: 0 8px 22px rgba(45, 31, 39, 0.18);
-      backdrop-filter: blur(8px);
-      transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .video-play:hover {
-        transform: translate(-50%, -50%) scale(1.1);
-        background: #ffffff;
-        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.24), 0 12px 26px rgba(45, 31, 39, 0.22);
-      }
-    }
-    .video-mute {
-      position: absolute;
-      right: 0.75rem;
-      top: 0.75rem;
-      display: flex;
-      min-height: 2.55rem;
-      min-width: 2.55rem;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(242, 208, 219, 0.7);
-      font-size: 1.02rem;
-      box-shadow: 0 4px 12px rgba(45, 31, 39, 0.12);
-      backdrop-filter: blur(6px);
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .video-mute:hover {
-        transform: scale(1.08);
-        background: #ffffff;
-      }
-    }
-    .video-caption-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 0.5rem 0.25rem;
-      gap: 0.5rem;
-    }
-    .video-caption {
-      font-size: clamp(1.28rem, 4.4vw, 1.55rem);
-      font-weight: 600;
-      line-height: 1.2;
-      color: var(--ink);
-    }
-    .video-status-pill {
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.22rem 0.6rem;
-      border-radius: 9999px;
-      background: var(--cream);
-      color: var(--muted);
-      border: 1px solid var(--card-border);
-      white-space: nowrap;
-      flex-shrink: 0;
     }
 
     /* Kind Words & Giggles Section */
@@ -2149,12 +2043,8 @@
       #lightbox-image { max-height: 72vh; }
       .hide-on-sm { display: none; }
     }
-    @media (min-width: 768px) {
-      #videos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
     @media (min-width: 1024px) {
       #gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      #videos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       #quotes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media (min-width: 1280px) {
@@ -2191,7 +2081,6 @@
     <a class="quick-nav__link" href="#checkin" data-nav-link="checkin">💬 Check-In</a>
     <a class="quick-nav__link" href="#memories" data-nav-link="memories">📸 Memories</a>
     <a class="quick-nav__link" href="#jar-of-smiles" data-nav-link="jar-of-smiles">🫙 Notes <span id="nav-unread-dot" class="nav-unread-dot hidden" aria-label="New note today"></span></a>
-    <a class="quick-nav__link" href="#reels" data-nav-link="reels">🎞️ Reels</a>
     <a class="quick-nav__link" href="#kind-words" data-nav-link="kind-words">💌 Words</a>
     <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Cozy Starlight Theme" title="Toggle Cozy Starlight Theme">🌙</button>
   </nav>
@@ -2324,16 +2213,6 @@
           </button>
         </div>
       </div>
-    </section>
-
-    <!-- Highlight Reels Section -->
-    <section id="reels" class="section-block">
-      <div class="reveal section-header-center">
-        <p class="section-eyebrow" style="color:#7da387">press play, stay awhile</p>
-        <h2 class="handwriting section-heading">Highlight Reels</h2>
-        <p class="section-desc">A few little moving memories. Sound is yours to choose.</p>
-      </div>
-      <div id="videos"></div>
     </section>
 
     <!-- Kind Words, Verses & Giggles Section -->
@@ -2542,7 +2421,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v31" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v32" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2552,12 +2431,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-31")) {
-            storageSet("session", "for-sammy-sw-reloaded-31", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-32")) {
+            storageSet("session", "for-sammy-sw-reloaded-32", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=31", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=32", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2889,7 +2768,7 @@
 
     document.addEventListener("pointerdown", (event) => {
       if (reduceMotion) return;
-      if (event.target.closest("button, a, input, video, [role='button'], .reactions-dock, .cassette-box, .quick-nav, .modal-backdrop")) return;
+      if (event.target.closest("button, a, input, [role='button'], .reactions-dock, .cassette-box, .quick-nav, .modal-backdrop")) return;
 
       for (let i = 0; i < 3; i++) {
         const p = document.createElement("span");
@@ -3533,82 +3412,6 @@
     // Check periodically for midnight rollover in Manila time
     setInterval(updateDailyNoteUI, 30000);
 
-    /* Video Reels Coordination with Custom Posters */
-    const videoCaptions = ["A little scene-stealer 🎞️", "A moment in motion 🌿", "Press play for a smile ✨"];
-    const videos = document.getElementById("videos");
-    const videoPlayers = [];
-
-    for (let index = 1; index <= 3; index++) {
-      const card = document.createElement("article");
-      card.className = "video-card";
-      card.innerHTML = `
-        <div class="video-stage">
-          <video class="video-player" src="./assets/videos/video${index}.mp4" poster="./assets/videos/poster${index}.jpg" playsinline preload="metadata" controls aria-label="Highlight reel ${index}"></video>
-          <button type="button" class="video-play" aria-label="Play highlight reel ${index}">▶</button>
-          <button type="button" class="video-mute" aria-label="Unmute highlight reel ${index}" aria-pressed="true">🔇</button>
-        </div>
-        <div class="video-caption-row">
-          <p class="handwriting video-caption">${videoCaptions[index - 1]}</p>
-          <span class="video-status-pill">Reel 0${index}</span>
-        </div>
-      `;
-      const player = card.querySelector("video");
-      const playButton = card.querySelector(".video-play");
-      const muteButton = card.querySelector(".video-mute");
-      player.muted = true;
-      videoPlayers.push(player);
-
-      function syncVideoButtons() {
-        playButton.classList.toggle("hidden", !player.paused);
-        muteButton.textContent = player.muted ? "🔇" : "🔊";
-        muteButton.setAttribute("aria-label", `${player.muted ? "Unmute" : "Mute"} highlight reel ${index}`);
-        muteButton.setAttribute("aria-pressed", String(player.muted));
-      }
-
-      function coordinateAudioWithMusic() {
-        const anyUnmutedVideoPlaying = videoPlayers.some(v => !v.paused && !v.muted);
-        if (anyUnmutedVideoPlaying && isMusicPlaying()) {
-          pauseMusic(true);
-        } else if (!anyUnmutedVideoPlaying && musicPausedForVideo) {
-          resumeMusic();
-        }
-      }
-
-      playButton.addEventListener("click", async () => {
-        if (window.location.protocol === "file:") {
-          showToast("For local media playback, open this page with a local server.");
-          return;
-        }
-        if (player.paused) {
-          try {
-            await player.play();
-          } catch (error) {
-            showToast("This video couldn’t be played. Check the video file and try again.");
-          }
-        } else {
-          player.pause();
-        }
-      });
-
-      player.addEventListener("play", () => {
-        videoPlayers.forEach(other => { if (other !== player && !other.paused) other.pause(); });
-        syncVideoButtons();
-        coordinateAudioWithMusic();
-      });
-      player.addEventListener("pause", () => { syncVideoButtons(); coordinateAudioWithMusic(); });
-      player.addEventListener("ended", () => { syncVideoButtons(); coordinateAudioWithMusic(); });
-      player.addEventListener("volumechange", () => { syncVideoButtons(); coordinateAudioWithMusic(); });
-
-      muteButton.addEventListener("click", () => {
-        player.muted = !player.muted;
-        syncVideoButtons();
-        coordinateAudioWithMusic();
-      });
-
-      videos.append(card);
-      watchReveal(card);
-    }
-
     /* Quotes & Bible Verses Section with Theme-Aware CSS Classes */
     const quoteData = [
       { type: "bible", text: "The Lord is near to those who have a broken heart, and saves those who have a crushed spirit.", author: "Psalm 34:18" },
@@ -3995,7 +3798,6 @@
     const musicPillArrow = document.getElementById("music-pill-arrow");
 
     let isPlaying = false;
-    let musicPausedForVideo = false;
     let userPausedMusic = false;
     let autoplayPending = true;
     let autoplayAttempting = false;
@@ -4202,7 +4004,6 @@
 
     function attemptAutoStartMusic() {
       if (!autoplayPending || userPausedMusic || isPlaying || autoplayAttempting) return;
-      if (videoPlayers.some(v => !v.paused && !v.muted)) return;
       autoplayAttempting = true;
       startCurrentTrack({ silentFail: true }).then((started) => {
         autoplayAttempting = false;
@@ -4220,7 +4021,7 @@
       if (event.type === "keydown" && ["Shift", "Control", "Alt", "Meta", "Tab", "Escape"].includes(event.key)) {
         return;
       }
-      if (event.target && event.target.closest && event.target.closest("#cassette-play, #music-pill-icon, #cassette-prev, #cassette-next, #videos, video")) {
+      if (event.target && event.target.closest && event.target.closest("#cassette-play, #music-pill-icon, #cassette-prev, #cassette-next")) {
         return;
       }
       attemptAutoStartMusic();
@@ -4249,21 +4050,14 @@
       startCurrentTrack();
     }
 
-    function pauseMusic(forVideo = false) {
-      if (forVideo) musicPausedForVideo = true;
+    function pauseMusic() {
       silenceSynth();
       bgAudio.pause();
       isPlaying = false;
       syncCassetteUI();
     }
 
-    function resumeMusic() {
-      musicPausedForVideo = false;
-      if (!userPausedMusic) startCurrentTrack({ silentFail: true });
-    }
-
     cassettePlayBtn.addEventListener("click", () => {
-      musicPausedForVideo = false;
       autoplayPending = false;
       disarmAutoplayListeners();
       if (isPlaying) {
@@ -4277,7 +4071,6 @@
 
     musicPill.addEventListener("click", (e) => {
       if (e.target.closest("#music-pill-icon")) {
-        musicPausedForVideo = false;
         autoplayPending = false;
         disarmAutoplayListeners();
         if (isPlaying) {
@@ -4366,7 +4159,7 @@
 
     /* Highlight Quick Nav Active Link on Scroll */
     const navLinks = Array.from(document.querySelectorAll(".quick-nav__link"));
-    const observedSections = ["top", "checkin", "memories", "jar-of-smiles", "reels", "kind-words"]
+    const observedSections = ["top", "checkin", "memories", "jar-of-smiles", "kind-words"]
       .map(id => document.getElementById(id))
       .filter(Boolean);
 

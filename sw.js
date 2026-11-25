@@ -1,12 +1,9 @@
-const CACHE_NAME = "for-sammy-v31";
+const CACHE_NAME = "for-sammy-v32";
 const ASSETS_TO_CACHE = [
   "./manifest.webmanifest",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
   "./assets/apple-touch-icon.png",
-  "./assets/videos/poster1.jpg",
-  "./assets/videos/poster2.jpg",
-  "./assets/videos/poster3.jpg",
   "./assets/qr/jar-appreciation-card.png",
   "./assets/qr/qr-code.png"
 ];
