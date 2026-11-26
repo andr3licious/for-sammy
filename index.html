@@ -2139,10 +2139,10 @@
     <section id="memories" class="section-block">
       <div class="reveal memories-header">
         <div>
-          <p class="section-eyebrow" style="color:#c48da0">little snapshots, lovely feelings</p>
+          <p class="section-eyebrow" style="color:#c48da0">snapshots &amp; polaroids</p>
           <h2 class="handwriting section-heading">Moments &amp; Memories</h2>
         </div>
-        <p class="section-desc" style="max-width:21rem">A tiny collection of moments, saved here just for you. Tap a photo to view, or tap the note button to read its story ✨</p>
+        <p class="section-desc" style="max-width:21rem">A few favorite photos in one place. Tap any photo to view it bigger, or flip it over for a quick note.</p>
       </div>
 
       <div id="gallery"></div>
@@ -2421,7 +2421,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v33" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v34" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2431,12 +2431,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-33")) {
-            storageSet("session", "for-sammy-sw-reloaded-33", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-34")) {
+            storageSet("session", "for-sammy-sw-reloaded-34", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=33", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=34", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2584,16 +2584,16 @@
 
     /* Photos Data with Custom Back-of-Polaroid Notes */
     const photos = [
-      { src: "./assets/photos/photo1.jpg", caption: "Pink birds and a little side-eye 🐦", alt: "Sammy looking upward as a playful filter adds pink birds around her head", kind: "Sammy", pos: "50% 28%", note: "Pink birds and the side-eye filter. Classic 'did you really just say that?' face 😂" },
-      { src: "./assets/photos/photo2.jpg", caption: "Four frames of sheet mask time 😂", alt: "A four-photo collage of Sammy wearing a sheet face mask", kind: "Sammy", pos: "50% 50%", note: "The 4-photo sheet mask collage. Honestly a solid look 😂" },
-      { src: "./assets/photos/photo3.jpg", caption: "Warm filter era ✨", alt: "Sammy in a striped top with a dramatic warm portrait filter", kind: "Sammy", pos: "50% 34%", note: "That warm dramatic filter actually looked like a movie still ✨" },
-      { src: "./assets/photos/photo4.jpg", caption: "The moustache disguise 🎩", alt: "Sammy wearing oversized black glasses and a curled moustache filter", kind: "Sammy", pos: "50% 36%", note: "Sir Sammy with the oversized glasses and moustache filter. Still undefeated 🎩" },
-      { src: "./assets/photos/photo5.jpg", caption: "Warm filter, part two 🎞️", alt: "Sammy in a striped top using a dramatic warm filter, with filter options below", kind: "Sammy", pos: "50% 18%", note: "Another one from the warm filter phase, still a really good shot 🎞️" },
-      { src: "./assets/photos/photo7.jpg", caption: "Match-day fit ⚽", alt: "Sammy taking a selfie in a black Manchester United jersey", kind: "Sammy", pos: "50% 32%", note: "Black Manchester United jersey fit. Clean look ⚽" },
-      { src: "./assets/photos/photo8.jpg", caption: "Black looks good on you 🖤", alt: "Sammy taking a selfie in a black Manchester United jersey", kind: "Sammy", pos: "50% 30%", note: "Another shot in the black kit. Definitely your color 🖤" },
-      { src: "./assets/photos/photo9.jpg", caption: "Grainy film shot 🌙", alt: "Sammy resting her cheek on her hand in a grainy, warm-toned portrait", kind: "Sammy", pos: "50% 45%", note: "Really nice grainy film look on this one 🌙" },
-      { src: "./assets/photos/photo10.jpg", caption: "Black & white bob-cut collage 🖤", alt: "A black-and-white side-by-side portrait collage of Sammy with a short bob haircut", kind: "Sammy", pos: "50% 50%", fit: "contain", note: "Short bob in black and white, lowkey looks like an indie album cover 🖤" },
-      { src: "./assets/photos/photo11.jpg", caption: "The original Polaroid shot 🖤", alt: "A black-and-white portrait of Sammy with a short bob and black top, shown with a filter preview below", kind: "Sammy", pos: "50% 24%", note: "The original black-and-white frame. Super clean shot 🖤" }
+      { src: "./assets/photos/photo1.jpg", caption: "Side-eye + pink birds 😂", alt: "Sammy looking upward as a playful filter adds pink birds around her head", kind: "Sammy", pos: "50% 28%", note: "Classic side-eye look 😂 still a really nice shot though." },
+      { src: "./assets/photos/photo2.jpg", caption: "Sheet mask collage 😂", alt: "A four-photo collage of Sammy wearing a sheet face mask", kind: "Sammy", pos: "50% 50%", note: "Skincare routine on point 😂" },
+      { src: "./assets/photos/photo3.jpg", caption: "Warm lighting ✨", alt: "Sammy in a striped top with a dramatic warm portrait filter", kind: "Sammy", pos: "50% 34%", note: "Really good lighting on this one, suits you well." },
+      { src: "./assets/photos/photo4.jpg", caption: "The moustache filter 🥸", alt: "Sammy wearing oversized black glasses and a curled moustache filter", kind: "Sammy", pos: "50% 36%", note: "Honestly still cracks me up every time 😂" },
+      { src: "./assets/photos/photo5.jpg", caption: "Part two 🎞️", alt: "Sammy in a striped top using a dramatic warm filter, with filter options below", kind: "Sammy", pos: "50% 18%", note: "Same filter, still a great photo." },
+      { src: "./assets/photos/photo7.jpg", caption: "Jersey fit ⚽", alt: "Sammy taking a selfie in a black Manchester United jersey", kind: "Sammy", pos: "50% 32%", note: "The black Man United jersey looks really good here." },
+      { src: "./assets/photos/photo8.jpg", caption: "All black 🖤", alt: "Sammy taking a selfie in a black Manchester United jersey", kind: "Sammy", pos: "50% 30%", note: "Black really suits you, Sam." },
+      { src: "./assets/photos/photo9.jpg", caption: "Film look 🌙", alt: "Sammy resting her cheek on her hand in a grainy, warm-toned portrait", kind: "Sammy", pos: "50% 45%", note: "Simple shot, but the grain and colors turned out really nice." },
+      { src: "./assets/photos/photo10.jpg", caption: "B&W collage 🖤", alt: "A black-and-white side-by-side portrait collage of Sammy with a short bob haircut", kind: "Sammy", pos: "50% 50%", fit: "contain", note: "The short bob looks great in black and white." },
+      { src: "./assets/photos/photo11.jpg", caption: "Black & white 🖤", alt: "A black-and-white portrait of Sammy with a short bob and black top, shown with a filter preview below", kind: "Sammy", pos: "50% 24%", note: "Clean and simple, one of the best ones here." }
     ];
 
     /* 120 Handcrafted Jar of Smiles, Bible Verses & Daily Notes */
@@ -2874,8 +2874,8 @@
             <article class="polaroid-face polaroid-face--back" aria-hidden="true">
               <div class="postcard-header">
                 <div>
-                  <p class="postcard-postmark">Postcard for Sammy</p>
-                  <p style="font-size:0.65rem;font-weight:700;color:var(--muted)">Memory #${String(index + 1).padStart(2, "0")}</p>
+                  <p class="postcard-postmark">Note</p>
+                  <p style="font-size:0.65rem;font-weight:700;color:var(--muted)">Snap #${String(index + 1).padStart(2, "0")}</p>
                 </div>
                 <div class="postcard-stamp">
                   <span>POST</span>
