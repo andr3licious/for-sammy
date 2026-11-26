@@ -1,4 +1,4 @@
-const CACHE_NAME = "for-sammy-v36";
+const CACHE_NAME = "for-sammy-v37";
 const ASSETS_TO_CACHE = [
   "./manifest.webmanifest",
   "./assets/icon-192.png",
@@ -25,6 +25,8 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+  const requestUrl = new URL(event.request.url);
+  if (requestUrl.origin !== self.location.origin) return;
 
   // Never serve HTML from browser HTTP cache or CacheStorage so updates show immediately
   if (event.request.mode === "navigate" || event.request.destination === "document") {

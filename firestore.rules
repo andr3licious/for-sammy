@@ -1,0 +1,135 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// This security rules file assumes the following data structures
+// for the single-profile personal scrapbook web app (`for-sammy`)
+// using Firebase Anonymous Authentication (`request.auth != null`):
+//
+// Collection: cornerState
+// Document ID: 'sammy' (single fixed profile)
+// Fields (all optional to support partial `setDoc(..., { merge: true })` updates):
+//   - theme: string ('daylight' | 'starlight') - active visual theme
+//   - mood: map | null - latest mood check-in:
+//       - dateKey: string (required, matches '^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+//       - mood: string (required, 'happy' | 'busy' | 'sleepy' | 'smile' | 'great')
+//       - text: string (required, 1..80 chars)
+//       - time: string (required, 1..32 chars)
+//   - lastReadDateKey: string ('' or matches '^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+//   - updatedAt: int (> 0, epoch milliseconds)
+//
+// Subcollection: cornerState/{profileId}/favorites
+// Document ID: {favId} (1..64 chars, profileId == 'sammy')
+// Fields:
+//   - text: string (required, 1..600 chars) - favorite note text
+//   - savedAt: string (required, 1..32 chars) - display timestamp/label
+//   - createdAt: int (required, > 0, epoch milliseconds)
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    // Check if the request comes from an authenticated user (including Anonymous Auth)
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if the caller is authenticated and targeting the single fixed 'sammy' profile
+    function isSammyProfile(profileId) {
+      return isAuthenticated() && profileId == 'sammy';
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    // Validate the optional `mood` object (either null or a strict 4-key map)
+    function isValidMood(mood) {
+      return mood == null || (
+        mood is map &&
+        mood.keys().hasOnly(['dateKey', 'mood', 'text', 'time']) &&
+        mood.keys().hasAll(['dateKey', 'mood', 'text', 'time']) &&
+        mood.dateKey is string &&
+        mood.dateKey.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$') &&
+        mood.mood is string &&
+        mood.mood in ['happy', 'busy', 'sleepy', 'smile', 'great'] &&
+        mood.text is string &&
+        mood.text.size() > 0 &&
+        mood.text.size() <= 80 &&
+        mood.time is string &&
+        mood.time.size() > 0 &&
+        mood.time.size() <= 32
+      );
+    }
+
+    // Validate the `cornerState/sammy` document on both create and update
+    function isValidCornerState(data) {
+      return data.keys().hasOnly(['theme', 'mood', 'lastReadDateKey', 'updatedAt']) &&
+        (!('theme' in data) || (
+          data.theme is string &&
+          data.theme in ['daylight', 'starlight']
+        )) &&
+        (!('lastReadDateKey' in data) || (
+          data.lastReadDateKey is string &&
+          (data.lastReadDateKey == '' ||
+           data.lastReadDateKey.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$'))
+        )) &&
+        (!('mood' in data) || isValidMood(data.mood)) &&
+        (!('updatedAt' in data) || (
+          data.updatedAt is int &&
+          data.updatedAt > 0
+        ));
+    }
+
+    // Validate a `cornerState/sammy/favorites/{favId}` document on both create and update
+    function isValidFavorite(data) {
+      return data.keys().hasOnly(['text', 'savedAt', 'createdAt']) &&
+        data.keys().hasAll(['text', 'savedAt', 'createdAt']) &&
+        data.text is string &&
+        data.text.size() > 0 &&
+        data.text.size() <= 600 &&
+        data.savedAt is string &&
+        data.savedAt.size() > 0 &&
+        data.savedAt.size() <= 32 &&
+        data.createdAt is int &&
+        data.createdAt > 0;
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    match /cornerState/{profileId} {
+      // Allow single-document read for the fixed 'sammy' profile; deny collection queries & deletion
+      allow get: if isSammyProfile(profileId);
+      allow list: if false;
+      allow delete: if false;
+
+      // Validate merged/created payload on both create and update
+      allow create, update: if isSammyProfile(profileId) &&
+        isValidCornerState(request.resource.data);
+
+      match /favorites/{favId} {
+        allow get, list: if isSammyProfile(profileId);
+        allow delete: if isSammyProfile(profileId);
+
+        allow create, update: if isSammyProfile(profileId) &&
+          favId.size() > 0 &&
+          favId.size() <= 64 &&
+          isValidFavorite(request.resource.data);
+      }
+    }
+
+    // Explicit deny-all catch-all for any other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

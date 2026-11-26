@@ -2421,7 +2421,7 @@
     /* PWA Service Worker with Immediate Update & Stale-Cache Purge */
     if ("caches" in window) {
       caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => (k !== "for-sammy-v36" ? caches.delete(k) : null)))
+        Promise.all(keys.map((k) => (k !== "for-sammy-v37" ? caches.delete(k) : null)))
       ).catch(() => {});
     }
     if ("serviceWorker" in navigator) {
@@ -2431,12 +2431,12 @@
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (!hadController || swReloadPending) return;
           swReloadPending = true;
-          if (!storageGet("session", "for-sammy-sw-reloaded-36")) {
-            storageSet("session", "for-sammy-sw-reloaded-36", "1");
+          if (!storageGet("session", "for-sammy-sw-reloaded-37")) {
+            storageSet("session", "for-sammy-sw-reloaded-37", "1");
             window.location.reload();
           }
         });
-        navigator.serviceWorker.register("./sw.js?v=36", { updateViaCache: "none" }).then((reg) => {
+        navigator.serviceWorker.register("./sw.js?v=37", { updateViaCache: "none" }).then((reg) => {
           reg.update().catch(() => {});
         }).catch(() => {});
       }
@@ -2513,7 +2513,7 @@
     const moodResetBtn = document.getElementById("daily-mood-reset-btn");
     const moodPills = Array.from(document.querySelectorAll(".mood-pill"));
 
-    function resetMoodCheckin(showFeedback = true) {
+    function resetMoodCheckin(showFeedback = true, { skipCloud = false } = {}) {
       moodPills.forEach((pill) => {
         pill.classList.remove("is-active");
         pill.setAttribute("aria-pressed", "false");
@@ -2521,9 +2521,23 @@
       moodStatusEl.textContent = "";
       if (moodResetBtn) moodResetBtn.classList.add("hidden");
       storageRemove("local", moodStorageKey);
+      if (!skipCloud && window.SammyCloud && typeof window.SammyCloud.pushState === "function") {
+        window.SammyCloud.pushState({ mood: null });
+      }
       if (showFeedback) {
         showToast("Check-in cleared! Choose a mood anytime 🤍");
       }
+    }
+
+    function applyLocalMoodUI(parsed) {
+      if (!parsed || typeof parsed !== "object" || !parsed.time || !parsed.text) return;
+      moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
+      moodPills.forEach((pill) => {
+        const isMatch = pill.dataset.mood === parsed.mood;
+        pill.classList.toggle("is-active", isMatch);
+        pill.setAttribute("aria-pressed", String(isMatch));
+      });
+      if (moodResetBtn) moodResetBtn.classList.remove("hidden");
     }
 
     const savedMoodData = storageGet("local", moodStorageKey);
@@ -2532,13 +2546,7 @@
         const parsed = JSON.parse(savedMoodData);
         const todayKey = getManilaDateInfo().dateKey;
         if (parsed && typeof parsed === "object" && parsed.dateKey === todayKey && parsed.time && parsed.text) {
-          moodStatusEl.textContent = `Last check-in: ${parsed.time} · ${parsed.text}`;
-          moodPills.forEach((pill) => {
-            const isMatch = pill.dataset.mood === parsed.mood;
-            pill.classList.toggle("is-active", isMatch);
-            pill.setAttribute("aria-pressed", String(isMatch));
-          });
-          if (moodResetBtn) moodResetBtn.classList.remove("hidden");
+          applyLocalMoodUI(parsed);
         } else {
           storageRemove("local", moodStorageKey);
         }
@@ -2567,12 +2575,16 @@
 
         moodStatusEl.textContent = responseText;
         if (moodResetBtn) moodResetBtn.classList.remove("hidden");
-        storageSet("local", moodStorageKey, JSON.stringify({
+        const moodPayload = {
           dateKey: getManilaDateInfo().dateKey,
           mood: moodKey,
           text: moodText,
           time: timeStr
-        }));
+        };
+        storageSet("local", moodStorageKey, JSON.stringify(moodPayload));
+        if (window.SammyCloud && typeof window.SammyCloud.pushState === "function") {
+          window.SammyCloud.pushState({ mood: moodPayload });
+        }
         spawnFloatingReaction("💖", window.innerWidth / 2, window.innerHeight / 2);
         showToast("Check-in saved! 🌸");
       });
@@ -2744,16 +2756,19 @@
     /* Theme Toggle */
     const themeToggleBtn = document.getElementById("theme-toggle");
     const metaThemeColor = document.getElementById("meta-theme-color");
-    function setTheme(mode) {
+    function setTheme(mode, { skipCloud = false } = {}) {
       const normalized = mode === "starlight" ? "starlight" : "daylight";
       document.documentElement.setAttribute("data-theme", normalized);
       storageSet("local", "for-sammy-theme", normalized);
       themeToggleBtn.textContent = normalized === "starlight" ? "☀️" : "🌙";
       themeToggleBtn.setAttribute("aria-label", normalized === "starlight" ? "Switch to Daylight Pastel Theme" : "Switch to Cozy Starlight Theme");
       metaThemeColor.setAttribute("content", normalized === "starlight" ? "#1e151b" : "#fff9f5");
+      if (!skipCloud && window.SammyCloud && typeof window.SammyCloud.pushState === "function") {
+        window.SammyCloud.pushState({ theme: normalized });
+      }
     }
     const savedTheme = storageGet("local", "for-sammy-theme") === "starlight" ? "starlight" : "daylight";
-    setTheme(savedTheme);
+    setTheme(savedTheme, { skipCloud: true });
     themeToggleBtn.addEventListener("click", () => {
       const current = document.documentElement.getAttribute("data-theme") || "daylight";
       const next = current === "daylight" ? "starlight" : "daylight";
@@ -3062,18 +3077,26 @@
       let favs = getFavorites();
       const idx = favs.findIndex(item => item.text === currentNoteData.text);
       if (idx !== -1) {
+        const removedText = currentNoteData.text;
         favs.splice(idx, 1);
         saveFavorites(favs);
         syncFavButtonUI();
+        if (window.SammyCloud && typeof window.SammyCloud.deleteFavorite === "function") {
+          window.SammyCloud.deleteFavorite(removedText);
+        }
         showToast("Removed from saved favorites.");
       } else {
-        favs.push({
+        const entry = {
           id: Date.now(),
           text: currentNoteData.text,
           savedAt: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })
-        });
+        };
+        favs.push(entry);
         saveFavorites(favs);
         syncFavButtonUI();
+        if (window.SammyCloud && typeof window.SammyCloud.pushFavorite === "function") {
+          window.SammyCloud.pushFavorite({ text: entry.text, savedAt: entry.savedAt, createdAt: entry.id });
+        }
         showToast("Saved to your favorites! ⭐🤍");
       }
     }
@@ -3163,6 +3186,9 @@
       const readKey = "for-sammy-daily-read-" + today.info.dateKey;
       storageSet("local", readKey, "true");
       updateDailyNoteUI();
+      if (window.SammyCloud && typeof window.SammyCloud.pushState === "function") {
+        window.SammyCloud.pushState({ lastReadDateKey: today.info.dateKey });
+      }
       displayNoteInModal(today.text, `📅 Today's Note · ${today.info.prettyDate}`, true);
     }
 
@@ -3249,6 +3275,9 @@
           saveFavorites(list);
           renderFavoritesList();
           syncFavButtonUI();
+          if (window.SammyCloud && typeof window.SammyCloud.deleteFavorite === "function") {
+            window.SammyCloud.deleteFavorite(fav.text);
+          }
           (favoritesCloseX || favoritesCloseBtn).focus({ preventScroll: true });
           showToast("Removed from favorites.");
         });
@@ -4175,6 +4204,259 @@
       }, { rootMargin: "-35% 0px -55% 0px" });
       observedSections.forEach(section => navObserver.observe(section));
     }
+
+    /* Cloud Sync UI Bridge */
+    window.__sammyBridge = {
+      applyCloudState(data) {
+        if (!data || typeof data !== "object") return;
+        if (data.theme === "daylight" || data.theme === "starlight") {
+          setTheme(data.theme, { skipCloud: true });
+        }
+        const todayKey = getManilaDateInfo().dateKey;
+        if ("mood" in data) {
+          if (data.mood && typeof data.mood === "object" && data.mood.dateKey === todayKey && data.mood.time && data.mood.text) {
+            storageSet("local", moodStorageKey, JSON.stringify(data.mood));
+            applyLocalMoodUI(data.mood);
+          } else if (data.mood === null) {
+            resetMoodCheckin(false, { skipCloud: true });
+          }
+        }
+        if (typeof data.lastReadDateKey === "string" && data.lastReadDateKey === todayKey) {
+          storageSet("local", "for-sammy-daily-read-" + data.lastReadDateKey, "true");
+          updateDailyNoteUI();
+        }
+      },
+      applyCloudFavorites(items) {
+        const list = (Array.isArray(items) ? items : [])
+          .filter(item => item && typeof item.text === "string" && item.text.length > 0)
+          .sort((a, b) => (Number(a.createdAt) || 0) - (Number(b.createdAt) || 0))
+          .map(item => ({
+            id: Number(item.createdAt) || Date.now(),
+            text: item.text,
+            savedAt: typeof item.savedAt === "string" ? item.savedAt : "recently"
+          }));
+        saveFavorites(list);
+        syncFavButtonUI();
+        if (favoritesModal && !favoritesModal.classList.contains("hidden")) {
+          renderFavoritesList();
+        }
+      },
+      getLocalSnapshot() {
+        const todayKey = getManilaDateInfo().dateKey;
+        let parsedMood = null;
+        try {
+          const rawMood = storageGet("local", moodStorageKey);
+          const candidate = rawMood ? JSON.parse(rawMood) : null;
+          if (candidate && typeof candidate === "object" && candidate.dateKey === todayKey && candidate.mood && candidate.text && candidate.time) {
+            parsedMood = candidate;
+          }
+        } catch (e) {}
+        return {
+          favorites: getFavorites(),
+          theme: storageGet("local", "for-sammy-theme"),
+          mood: parsedMood,
+          lastReadDateKey: storageGet("local", "for-sammy-daily-read-" + todayKey) === "true" ? todayKey : ""
+        };
+      }
+    };
+  </script>
+
+  <!-- Firebase Cross-Device Cloud Sync (Anonymous Auth + Firestore, Offline-Resilient) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import { getFirestore, doc, collection, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBEYYMq2K60ykFqLbqQ0R-ErPsULHvojyw",
+      authDomain: "for-sammy-corner.firebaseapp.com",
+      projectId: "for-sammy-corner",
+      storageBucket: "for-sammy-corner.firebasestorage.app",
+      messagingSenderId: "53776931232",
+      appId: "1:53776931232:web:d0cb0c2812b8f92cafacc5"
+    };
+
+    try {
+      if (navigator.storage && typeof navigator.storage.persist === "function") {
+        navigator.storage.persist().catch(() => {});
+      }
+    } catch (_) {}
+
+    function fnv1aHex(str) {
+      let h1 = 0x811c9dc5;
+      let h2 = 0x01000193;
+      for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i);
+        h1 ^= c;
+        h1 = Math.imul(h1, 0x01000193);
+        h2 ^= (c + i);
+        h2 = Math.imul(h2, 0x85ebca6b);
+      }
+      return (h1 >>> 0).toString(16).padStart(8, "0") + (h2 >>> 0).toString(16).padStart(8, "0");
+    }
+
+    async function favDocId(text) {
+      const normalized = String(text || "");
+      try {
+        if (window.crypto && window.crypto.subtle && typeof TextEncoder !== "undefined") {
+          const digest = await window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(normalized));
+          const hex = Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+          return hex.slice(0, 32);
+        }
+      } catch (_) {}
+      return "f_" + fnv1aHex(normalized);
+    }
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const stateRef = doc(db, "cornerState", "sammy");
+    const favsCol = collection(db, "cornerState", "sammy", "favorites");
+
+    let cloudReady = false;
+    let listenersStarted = false;
+    const pendingOps = [];
+
+    async function runWriteState(patch) {
+      if (!patch || typeof patch !== "object") return;
+      const payload = { updatedAt: Math.max(1, Math.floor(Date.now())) };
+      if ("theme" in patch && (patch.theme === "daylight" || patch.theme === "starlight")) {
+        payload.theme = patch.theme;
+      }
+      if ("lastReadDateKey" in patch && typeof patch.lastReadDateKey === "string") {
+        payload.lastReadDateKey = patch.lastReadDateKey;
+      }
+      if ("mood" in patch) {
+        if (patch.mood === null) {
+          payload.mood = null;
+        } else if (patch.mood && typeof patch.mood === "object") {
+          payload.mood = {
+            dateKey: String(patch.mood.dateKey || "").slice(0, 10),
+            mood: String(patch.mood.mood || "").slice(0, 16),
+            text: String(patch.mood.text || "").slice(0, 80),
+            time: String(patch.mood.time || "").slice(0, 32)
+          };
+        }
+      }
+      await setDoc(stateRef, payload, { merge: true });
+    }
+
+    async function runWriteFavorite(item) {
+      if (!item || typeof item.text !== "string" || !item.text) return;
+      const text = item.text.slice(0, 600);
+      const id = await favDocId(text);
+      const payload = {
+        text,
+        savedAt: String(item.savedAt || "recently").slice(0, 32) || "recently",
+        createdAt: Math.max(1, Math.floor(Number(item.createdAt) || Date.now()))
+      };
+      await setDoc(doc(favsCol, id), payload, { merge: true });
+    }
+
+    async function runDeleteFavorite(text) {
+      if (typeof text !== "string" || !text) return;
+      const id = await favDocId(text.slice(0, 600));
+      await deleteDoc(doc(favsCol, id));
+    }
+
+    function enqueueOrRun(fn) {
+      if (cloudReady) {
+        Promise.resolve().then(fn).catch(() => {});
+      } else {
+        pendingOps.push(fn);
+      }
+    }
+
+    window.SammyCloud = {
+      pushState(patch) {
+        enqueueOrRun(() => runWriteState(patch));
+      },
+      pushFavorite(item) {
+        enqueueOrRun(() => runWriteFavorite(item));
+      },
+      deleteFavorite(text) {
+        enqueueOrRun(() => runDeleteFavorite(text));
+      }
+    };
+
+    async function migrateLocalOnce() {
+      const migratedKey = "for-sammy-cloud-migrated-v1";
+      try {
+        if (window.localStorage && window.localStorage.getItem(migratedKey) === "1") return;
+      } catch (_) {}
+
+      try {
+        const localSnap = window.__sammyBridge ? window.__sammyBridge.getLocalSnapshot() : null;
+        if (!localSnap) return;
+
+        const [stateSnap, favSnap] = await Promise.all([getDoc(stateRef), getDocs(favsCol)]);
+        const cloudData = stateSnap.exists() ? (stateSnap.data() || {}) : {};
+        const cloudFavIds = new Set(favSnap.docs.map((d) => d.id));
+
+        const statePatch = {};
+        if (!cloudData.theme && (localSnap.theme === "daylight" || localSnap.theme === "starlight")) {
+          statePatch.theme = localSnap.theme;
+        }
+        if (!("mood" in cloudData) && localSnap.mood) {
+          statePatch.mood = localSnap.mood;
+        }
+        if (!cloudData.lastReadDateKey && localSnap.lastReadDateKey) {
+          statePatch.lastReadDateKey = localSnap.lastReadDateKey;
+        }
+        if (Object.keys(statePatch).length > 0) {
+          await runWriteState(statePatch);
+        }
+
+        if (Array.isArray(localSnap.favorites) && localSnap.favorites.length > 0) {
+          for (const fav of localSnap.favorites) {
+            if (!fav || typeof fav.text !== "string" || !fav.text) continue;
+            const id = await favDocId(fav.text.slice(0, 600));
+            if (!cloudFavIds.has(id)) {
+              await runWriteFavorite({ text: fav.text, savedAt: fav.savedAt, createdAt: fav.id });
+            }
+          }
+        }
+
+        try {
+          if (window.localStorage) window.localStorage.setItem(migratedKey, "1");
+        } catch (_) {}
+      } catch (_) {}
+    }
+
+    function startCloudListeners() {
+      if (listenersStarted) return;
+      listenersStarted = true;
+
+      onSnapshot(stateRef, (snap) => {
+        if (!snap.exists() || !window.__sammyBridge) return;
+        window.__sammyBridge.applyCloudState(snap.data());
+      }, () => {});
+
+      onSnapshot(favsCol, (snap) => {
+        if (!window.__sammyBridge) return;
+        const docs = snap.docs.map((d) => d.data());
+        window.__sammyBridge.applyCloudFavorites(docs);
+      }, () => {});
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        try {
+          await signInAnonymously(auth);
+        } catch (_) {}
+        return;
+      }
+
+      cloudReady = true;
+      while (pendingOps.length > 0) {
+        const op = pendingOps.shift();
+        try {
+          await op();
+        } catch (_) {}
+      }
+      await migrateLocalOnce();
+      startCloudListeners();
+    });
   </script>
 </body>
 </html>
